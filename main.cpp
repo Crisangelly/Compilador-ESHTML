@@ -9,7 +9,7 @@ int main() {
 
     std:: cout << "Ingresa una palabra: ";
     //std:: cin >> palabra;
-    std:: getline(std::cin, palabra);  //usando método del curso para contar los espacios
+    std:: getline(std::cin, palabra); 
     
     for (int i = 0; i < palabra.length(); i++) {
         //std::cout << palabra[i] << "\n";
