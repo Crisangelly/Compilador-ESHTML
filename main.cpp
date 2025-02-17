@@ -13,9 +13,9 @@ int main() {
 
     std:: cout << "Ingresa una palabra: ";
     //std:: cin >> palabra;
-    std:: getline(std::cin, palabra); // funcion para contar espacios del curso
+    std:: getline(std::cin, palabra); 
 
-    std:: string palabra_nueva = ""; // para ingresar las palabras
+    std:: string palabra_nueva; // para ingresar las palabras
     
     for (int i = 0; i < palabra.length(); i++) {
         //std::cout << palabra[i] << "\n";
