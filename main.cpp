@@ -12,25 +12,40 @@ int main() {
     int num_palabras = 0;
 
     std:: cout << "Ingresa una palabra: ";
-    //std:: cin >> palabra;
+
     std:: getline(std::cin, palabra); 
 
     std:: string palabra_nueva; // para ingresar las palabras
+
+    bool detectar_comillas = false; // detectar inicio y fin de comillas
     
     for (int i = 0; i < palabra.length(); i++) {
         //std::cout << palabra[i] << "\n";
         contador++;
 
-        if  (palabra[i] != ' '){        // sí dentro de la palabra alguno de sus caracteres no es un espacio, se agrega a palabra_nueva
+        if(palabra[i] == '\"'){
+
             palabra_nueva += palabra[i];
 
-        }else{
+            detectar_comillas = !detectar_comillas; //cambiar bandera para detectar apertura o cierre de comillas
+
+        } else if  (palabra[i] != ' '){ // sí dentro de la palabra alguno de sus caracteres no es un espacio, se agrega a palabra_nueva
+ 
+            palabra_nueva += palabra[i];
+
+        } else if (detectar_comillas && palabra[i] == ' '){ //detectar espacios entre comillas
+
+            palabra_nueva += palabra[i];
+
+        } else if (!detectar_comillas){
+
             if (!palabra_nueva.empty() && num_palabras < 15){   // si palabra_nueva no está vacia, se guarda en el array
+                std::cout << "espacio \n";
                 palabras[num_palabras] = palabra_nueva;
                 num_palabras++;                 
                 palabra_nueva = ""; // reinicia la variable
-
             }
+
         }
     }
 
