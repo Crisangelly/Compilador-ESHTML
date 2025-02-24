@@ -1,6 +1,12 @@
 #include <iostream>
 #include <string>
 
+
+//Funciones del compilador
+#include "automata.cpp"
+
+void automata(std:: string palabra_entrante);
+
 int main() {
 
     int contador = 0;
@@ -40,7 +46,7 @@ int main() {
         } else if (!detectar_comillas){
 
             if (!palabra_nueva.empty() && num_palabras < 15){   // si palabra_nueva no está vacia, se guarda en el array
-                std::cout << "espacio \n";
+                //std::cout << "espacio \n";
                 palabras[num_palabras] = palabra_nueva;
                 num_palabras++;                 
                 palabra_nueva = ""; // reinicia la variable
@@ -59,6 +65,8 @@ int main() {
 
     for (int i = 0; i < num_palabras; i++ ){ //recorre el array
         std:: cout << "palabra: " << palabras[i] << "\n"; // muestra las palabras que contiene el array
+
+        automata(palabras[i]);
     }
     
     //std:: cout << palabra << " tiene " << palabra.length() << " letras";
