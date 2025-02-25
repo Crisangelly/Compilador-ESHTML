@@ -2,12 +2,13 @@
 #include <string>
 
 int buscar_en_el_alfabeto(int alfabeto[], int longitud, int caracter){
-  for (int i = 0; i < longitud; i++){
+  int i = 0;
+  for (i ; i < longitud; i++){
     if(alfabeto[i] == caracter){
       return i;
     }
   }
-  return -1;
+  return i;
 }
 
 
@@ -42,13 +43,16 @@ void automata(std:: string palabra_entrante){
 
     int indice;
 
+    std:: string identificado;
+
     /*
 
-     1) Buscar el modo que acepte otros caracteres que no estén en el alfabeto cuando revise una cadena de texto !!!!!!!!!!!!!!!!
-     2) Ver que pasa con los errores personalizados del automata
-     4) Crear una función para ver si la etiqueta ingresada existe en el lenguaje
-     5) Hacer otra función similar para los atributos
-     6) hacer los tokens con la siquiente estructura: 
+    (X) 1) Buscar el modo que acepte otros caracteres que no estén en el alfabeto cuando revise una cadena de texto !!!!!!!!!!!!!!!!
+    (X) 2) Ver que pasa con los errores personalizados del automata
+    (X +-) 3) Revisar que ocurre cuando no se cierra una etiqueta o una cadena
+      4) Crear una función para ver si la etiqueta ingresada existe en el lenguaje
+      5) Hacer otra función similar para los atributos
+      6) hacer los tokens con la siquiente estructura: 
         token = {
           tipo: etiqueta/atributo/etc,
           contenido: <parrafo> lo qu haya escrito el usuario 
@@ -57,43 +61,71 @@ void automata(std:: string palabra_entrante){
     */
 
 
-    while (contador_caracter < palabra_entrante.length()){ 
+    while ((contador_caracter < palabra_entrante.length()) && (estado != 2 && estado != 3 && estado != 5 && estado != 9 && estado != 10 && estado != 11 && estado != 12)){ 
       //std:: cout << "caracter ahora: " << palabra_entrante[contador_caracter] << "\n";
 
       indice = buscar_en_el_alfabeto(alfabeto, longitud_alfabeto, palabra_entrante[contador_caracter]);
 
       //std:: cout << "estado inicial: " << estado << "\n"; 
 
-    // std:: cout << "indice: " << indice << "\n";
+      //std:: cout << "indice: " << indice << "\n";
 
       estado = automata[estado][indice];
 
-     //std:: cout << "estado: " << estado << "\n"; 
+      //std:: cout << "estado: " << estado << "\n"; 
 
       switch (estado){
+        case 0: //Prueba
+          //std:: cout << "la cadena no pudo ser identificada \n";
+          identificado = "la cadena no pudo ser identificada \n";
+        break;
+        case 1: //Prueba
+          //std:: cout << "la etiqueta no a sido cerrada \n";
+          identificado = "la etiqueta no a sido cerrada \n";
+        break;
         case 2:
-          std:: cout << "etiqueta \n"; //Cae
+          //std:: cout << "etiqueta \n"; 
+          identificado = "etiqueta \n";
           break;
         case 3:
-          std:: cout << "error etiqueta incorrecta \n";
+          //std:: cout << "error, etiqueta incorrecta \n";
+          identificado = "error, etiqueta incorrecta \n";
+          break;
+        case 4: //Prueba
+          //std:: cout << "las comillas de la cadena no han sido cerradas \n"; 
+          identificado = "las comillas de la cadena no han sido cerradas \n"; 
           break;
         case 5:
-          std:: cout << "cadena de texto \n"; //Cae
+          //std:: cout << "cadena de texto \n";
+          identificado = "cadena de texto \n";
+          break;
+        case 6: //Prueba
+          //std:: cout << "el atributo esta incompleto \n";
+          identificado = "el atributo esta incompleto \n";
+          break;
+        case 7: //Prueba
+          //std:: cout << "el atributo esta incompleto \n"; 
+          identificado = "el atributo esta incompleto \n";
+          break;
+        case 8: //Prueba
+          //std:: cout << "las comillas del valor del atributo no han sido cerradas \n"; 
+          identificado = "las comillas del valor del atributo no han sido cerradas \n"; 
           break;
         case 9:
-          std:: cout << "atributo \n"; //Cae
+          //std:: cout << "atributo \n"; 
+          identificado = "atributo \n";
           break;
         case 10:
-          std:: cout << "error faltan comillas \n";
+          //std:: cout << "error, faltan comillas \n";
+          identificado = "error, faltan comillas \n";
           break;
         case 11:
-          std:: cout << "error atributo invalido \n";
+          //std:: cout << "error, atributo invalido \n";
+          identificado = "error, atributo invalido \n";
           break;
         case 12:
-          std:: cout << "error, la cadena es incorrecta \n"; //Cae
-          break;
-        
-        default:
+          //std:: cout << "error, la cadena es incorrecta \n"; 
+          identificado = "error, la cadena es incorrecta \n"; 
           break;
       } 
 
@@ -103,4 +135,6 @@ void automata(std:: string palabra_entrante){
 
     } 
     
+    std:: cout << "identificado: " << identificado << "\n"; // muestra las palabras que contiene el array
+
 }
