@@ -2,6 +2,7 @@
 #include <string>
 
 #include "tokens.hpp"
+#include "buscar_cadenas.cpp"
 
 int buscar_en_el_alfabeto(int alfabeto[], int longitud, int caracter){
   int i = 0;
@@ -13,44 +14,11 @@ int buscar_en_el_alfabeto(int alfabeto[], int longitud, int caracter){
   return i;
 }
 
-
-int buscar_etiqueta(std::string posible_etiqueta){
-  std::string etiquetas[] = {"<titulo1>", "<titulo2>", "<titulo3>", "<titulo4>", "<titulo5>", "<titulo6>", 
-    "<parrafo>", "<negrita>", "<italica>", "<resaltar>", "<pequenio>", "<lista_no_ordenada>", "<lista_ordenada>", "<lista_elemento>",
-    "<cursiva>", "<tachar>", "<vinculo>", "<dividir>", "<seccion>", "<pie>", "<cabecera>", "<navegacion>", "<aparte>",
-    "<seleccion>", "<linea_horizontal>", "<tabla>", "<tabla_fila>", "<tabla_celda>", "<tabla_cabecera>", "<formulario>",
-    "<boton>", "<leyenda>", "<campo>", "<imagen>"
-  };
-  int canditad_etiquetas = sizeof(etiquetas) / sizeof(std::string);
-  int i = 0;
-  for (i; i < canditad_etiquetas; i++){
-    if(etiquetas[i] == posible_etiqueta){
-      return i;
-    }
-  }
-  return -1;
-}
-
-int buscar_atributo(std::string posible_atributo){
-  //std:: cout << "llega: " << posible_atributo << "\n"; 
-  std::string atributos[] = {":enlace", ":tipo", ":texto_alternativo"};
-  int canditad_atributos = sizeof(atributos) / sizeof(std::string);
-
-  int i = 0;
-  for (i; i < canditad_atributos; i++){
-    if(atributos[i] == posible_atributo){
-      return i;
-    }
-  }
-  return -1;
-
-}
-
+int buscar_etiqueta(std::string posible_etiqueta);
+int buscar_valor_atributo(std::string posible_atributo, std::string posible_valor, int indice);
+int buscar_atributo(std::string posible_atributo, std::string posible_valor);
 
 void automata(std:: string palabra_entrante){
-   // std:: cout << "aca va el automata \n";
-
-   // std:: cout << "palabra: " << palabra_entrante << "\n";
 
     int automata[][40] = {
       {	1,	12,	12,	4,	6,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	0, 12},
@@ -61,7 +29,7 @@ void automata(std:: string palabra_entrante){
       {	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
       {	11,	11,	6,	11,	11,	7,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	11,	11,	11,	11,	11,	11,	0, 11},
       {	10,	10,	10,	8,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	0, 10},
-      {	8,	8,	8,	9,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	0, 8},
+      {	8,	8,	8,	9,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8, 8},
       {	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
       {	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
       {	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
@@ -155,7 +123,6 @@ void automata(std:: string palabra_entrante){
     token_momento.lexema = palabra_entrante;
     token_momento.longitud_lexema = palabra_entrante.length();
 
-
     //aquí utiliza las funciones para buscar la etiqueta y el atributo
 
     switch (token_momento.tipo){
@@ -173,18 +140,14 @@ void automata(std:: string palabra_entrante){
       atributo = token_momento.lexema.substr(0, posicion_igual);
       valor = token_momento.lexema.substr(posicion_igual + 2, token_momento.lexema.length() - posicion_igual - 3);
 
-      if(buscar_atributo(atributo) == -1){
+      if(buscar_atributo(atributo, valor) == -1){
         token_momento.mensaje_lexema = "error, atributo incorrecto";
         token_momento.tipo = error;
       }
-    
-      //std:: cout << "atributo: " << atributo << "\n"; 
-      //std:: cout << "valor: " << valor << "\n"; 
-
       break; 
     }
 
-    //std:: cout << "identificado: " << token_momento.mensaje_lexema << "\n"; // muestra las palabras que contiene el array
+    std:: cout << "identificado: " << token_momento.mensaje_lexema << "\n"; // muestra las palabras que contiene el array
 
     //std:: cout << "token lexema: " << token_momento.lexema << "\n"; 
    // std:: cout << "token longitud: " << token_momento.longitud_lexema << "\n";
