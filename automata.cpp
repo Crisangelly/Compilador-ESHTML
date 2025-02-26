@@ -1,6 +1,27 @@
 #include <iostream>
 #include <string>
 
+
+//Tokens
+
+enum token_opciones {
+  etiqueta, //0
+  cadena_de_texto, //1
+  atributo, //2
+  error //3
+};
+
+struct token_tipo {
+  std::string lexema;
+  /*char lexema[100];*/
+  int longitud_lexema;
+  enum token_opciones tipo;
+  std::string mensaje_lexema;
+};
+
+typedef struct token_tipo token;
+
+
 int buscar_en_el_alfabeto(int alfabeto[], int longitud, int caracter){
   int i = 0;
   for (i ; i < longitud; i++){
@@ -9,6 +30,39 @@ int buscar_en_el_alfabeto(int alfabeto[], int longitud, int caracter){
     }
   }
   return i;
+}
+
+
+int buscar_etiqueta(std::string posible_etiqueta){
+  std::string etiquetas[] = {"<titulo1>", "<titulo2>", "<titulo3>", "<titulo4>", "<titulo5>", "<titulo6>", 
+    "<parrafo>", "<negrita>", "<italica>", "<resaltar>", "<pequenio>", "<lista_no_ordenada>", "<lista_ordenada>", "<lista_elemento>",
+    "<cursiva>", "<tachar>", "<vinculo>", "<dividir>", "<seccion>", "<pie>", "<cabecera>", "<navegacion>", "<aparte>",
+    "<seleccion>", "<linea_horizontal>", "<tabla>", "<tabla_fila>", "<tabla_celda>", "<tabla_cabecera>", "<formulario>",
+    "<boton>", "<leyenda>", "<campo>", "<imagen>"
+  };
+  int canditad_etiquetas = sizeof(etiquetas) / sizeof(std::string);
+  int i = 0;
+  for (i; i < canditad_etiquetas; i++){
+    if(etiquetas[i] == posible_etiqueta){
+      return i;
+    }
+  }
+  return -1;
+}
+
+int buscar_atributo(std::string posible_atributo){
+  //std:: cout << "llega: " << posible_atributo << "\n"; 
+  std::string atributos[] = {":enlace", ":tipo", ":texto_alternativo"};
+  int canditad_atributos = sizeof(atributos) / sizeof(std::string);
+
+  int i = 0;
+  for (i; i < canditad_atributos; i++){
+    if(atributos[i] == posible_atributo){
+      return i;
+    }
+  }
+  return -1;
+
 }
 
 
@@ -24,7 +78,7 @@ void automata(std:: string palabra_entrante){
       {	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
       {	4,	4,	4,	5,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4},
       {	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
-      {	11,	11,	11,	11,	11,	7,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	11,	11,	11,	11,	11,	11,	0, 11},
+      {	11,	11,	6,	11,	11,	7,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	6,	11,	11,	11,	11,	11,	11,	0, 11},
       {	10,	10,	10,	8,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	10,	0, 10},
       {	8,	8,	8,	9,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	8,	0, 8},
       {	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	0},
@@ -43,23 +97,7 @@ void automata(std:: string palabra_entrante){
 
     int indice;
 
-    std:: string identificado;
-
-    /*
-
-    (X) 1) Buscar el modo que acepte otros caracteres que no estén en el alfabeto cuando revise una cadena de texto !!!!!!!!!!!!!!!!
-    (X) 2) Ver que pasa con los errores personalizados del automata
-    (X +-) 3) Revisar que ocurre cuando no se cierra una etiqueta o una cadena
-      4) Crear una función para ver si la etiqueta ingresada existe en el lenguaje
-      5) Hacer otra función similar para los atributos
-      6) hacer los tokens con la siquiente estructura: 
-        token = {
-          tipo: etiqueta/atributo/etc,
-          contenido: <parrafo> lo qu haya escrito el usuario 
-        }
-
-    */
-
+    token token_momento;
 
     while ((contador_caracter < palabra_entrante.length()) && (estado != 2 && estado != 3 && estado != 5 && estado != 9 && estado != 10 && estado != 11 && estado != 12)){ 
       //std:: cout << "caracter ahora: " << palabra_entrante[contador_caracter] << "\n";
@@ -75,66 +113,100 @@ void automata(std:: string palabra_entrante){
       //std:: cout << "estado: " << estado << "\n"; 
 
       switch (estado){
-        case 0: //Prueba
-          //std:: cout << "la cadena no pudo ser identificada \n";
-          identificado = "la cadena no pudo ser identificada \n";
+        case 0: 
+          token_momento.mensaje_lexema = "la cadena no pudo ser identificada";
+          token_momento.tipo = error;
         break;
-        case 1: //Prueba
-          //std:: cout << "la etiqueta no a sido cerrada \n";
-          identificado = "la etiqueta no a sido cerrada \n";
+        case 1:
+          token_momento.mensaje_lexema = "la etiqueta no a sido cerrada";
+          token_momento.tipo = error;
         break;
         case 2:
-          //std:: cout << "etiqueta \n"; 
-          identificado = "etiqueta \n";
+          token_momento.mensaje_lexema = "etiqueta";
+          token_momento.tipo = etiqueta;
           break;
         case 3:
-          //std:: cout << "error, etiqueta incorrecta \n";
-          identificado = "error, etiqueta incorrecta \n";
+          token_momento.mensaje_lexema = "error, etiqueta incorrecta";
+          token_momento.tipo = error;
           break;
-        case 4: //Prueba
-          //std:: cout << "las comillas de la cadena no han sido cerradas \n"; 
-          identificado = "las comillas de la cadena no han sido cerradas \n"; 
+        case 4: 
+          token_momento.mensaje_lexema = "las comillas de la cadena no han sido cerradas";
+          token_momento.tipo = error; 
           break;
         case 5:
-          //std:: cout << "cadena de texto \n";
-          identificado = "cadena de texto \n";
+          token_momento.mensaje_lexema = "cadena de texto";
+          token_momento.tipo = cadena_de_texto;
           break;
-        case 6: //Prueba
-          //std:: cout << "el atributo esta incompleto \n";
-          identificado = "el atributo esta incompleto \n";
+        case 6:
+          token_momento.mensaje_lexema = "el atributo esta incompleto";
+          token_momento.tipo = error; 
           break;
-        case 7: //Prueba
-          //std:: cout << "el atributo esta incompleto \n"; 
-          identificado = "el atributo esta incompleto \n";
+        case 7:  
+          token_momento.mensaje_lexema = "el atributo esta incompleto";
+          token_momento.tipo = error; 
           break;
-        case 8: //Prueba
-          //std:: cout << "las comillas del valor del atributo no han sido cerradas \n"; 
-          identificado = "las comillas del valor del atributo no han sido cerradas \n"; 
+        case 8: 
+          token_momento.mensaje_lexema = "las comillas del valor del atributo no han sido cerradas"; 
+          token_momento.tipo = error; 
           break;
-        case 9:
-          //std:: cout << "atributo \n"; 
-          identificado = "atributo \n";
+        case 9: 
+          token_momento.mensaje_lexema = "atributo";
+          token_momento.tipo = atributo; 
           break;
         case 10:
-          //std:: cout << "error, faltan comillas \n";
-          identificado = "error, faltan comillas \n";
+          token_momento.mensaje_lexema = "error, faltan comillas";
+          token_momento.tipo = error; 
           break;
         case 11:
-          //std:: cout << "error, atributo invalido \n";
-          identificado = "error, atributo invalido \n";
+          token_momento.mensaje_lexema = "error, atributo invalido";
+          token_momento.tipo = error; 
           break;
         case 12:
-          //std:: cout << "error, la cadena es incorrecta \n"; 
-          identificado = "error, la cadena es incorrecta \n"; 
+          token_momento.mensaje_lexema = "error, la cadena es incorrecta"; 
+          token_momento.tipo = error; 
           break;
       } 
 
       contador_caracter++;
 
-      //estado = 0;
-
     } 
+
+    token_momento.lexema = palabra_entrante;
+    token_momento.longitud_lexema = palabra_entrante.length();
+
+
+    //aquí utiliza las funciones para buscar la etiqueta y el atributo
+
+    switch (token_momento.tipo){
+    case etiqueta:
+      if(buscar_etiqueta(token_momento.lexema) == -1){
+        token_momento.mensaje_lexema = "error, etiqueta incorrecta";
+        token_momento.tipo = error;
+      } 
+      break;
+    case atributo:
+      std::string atributo;
+      std::string valor;
+      int posicion_igual = token_momento.lexema.find('=');
     
-    std:: cout << "identificado: " << identificado << "\n"; // muestra las palabras que contiene el array
+      atributo = token_momento.lexema.substr(0, posicion_igual);
+      valor = token_momento.lexema.substr(posicion_igual + 2, token_momento.lexema.length() - posicion_igual - 3);
+
+      if(buscar_atributo(atributo) == -1){
+        token_momento.mensaje_lexema = "error, atributo incorrecto";
+        token_momento.tipo = error;
+      }
+    
+      //std:: cout << "atributo: " << atributo << "\n"; 
+      //std:: cout << "valor: " << valor << "\n"; 
+
+      break; 
+    }
+
+    //std:: cout << "identificado: " << token_momento.mensaje_lexema << "\n"; // muestra las palabras que contiene el array
+
+    //std:: cout << "token lexema: " << token_momento.lexema << "\n"; 
+   // std:: cout << "token longitud: " << token_momento.longitud_lexema << "\n";
+    std:: cout << "token tipo: " << token_momento.tipo << "\n"; 
 
 }
