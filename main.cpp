@@ -3,7 +3,7 @@
 
 
 //Funciones del compilador
-#include "automata.cpp"
+#include "analisis_lexico.cpp"
 
 void automata(std:: string palabra_entrante);
 
