@@ -1,26 +1,7 @@
 #include <iostream>
 #include <string>
 
-
-//Tokens
-
-enum token_opciones {
-  etiqueta, //0
-  cadena_de_texto, //1
-  atributo, //2
-  error //3
-};
-
-struct token_tipo {
-  std::string lexema;
-  /*char lexema[100];*/
-  int longitud_lexema;
-  enum token_opciones tipo;
-  std::string mensaje_lexema;
-};
-
-typedef struct token_tipo token;
-
+#include "tokens.hpp"
 
 int buscar_en_el_alfabeto(int alfabeto[], int longitud, int caracter){
   int i = 0;
