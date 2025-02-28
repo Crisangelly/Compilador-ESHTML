@@ -2,9 +2,10 @@
 #include <string>
 
 //Funciones del compilador
+#include "tokens.hpp"
 #include "analisis_lexico.cpp"
 
-void automata(std:: string palabra_entrante);
+token automata(std:: string palabra_entrante);
 
 int main() {
 
@@ -62,13 +63,20 @@ int main() {
 
     std::cout << contador << "\n";;
 
-    for (int i = 0; i < num_palabras; i++ ){ //recorre el array
-        std:: cout << "palabra: " << palabras[i] << "\n"; // muestra las palabras que contiene el array
+    token tokens_lexicos[5];
 
-        automata(palabras[i]);
+    for (int i = 0; i < num_palabras; i++ ){ //recorre el array
+        //std:: cout << "palabra: " << palabras[i] << "\n"; // muestra las palabras que contiene el array
+
+        tokens_lexicos[i] = automata(palabras[i]);
     }
     
-    //std:: cout << palabra << " tiene " << palabra.length() << " letras";
+    for (int i = 0; i < 5; i++ ){ //Imprimir Tokens léxicos de momento
+ /*        std:: cout << "token lexema: " << tokens_lexicos[i].lexema << "\n"; 
+        std:: cout << "token longitud_lexema: " << tokens_lexicos[i].longitud_lexema << "\n"; 
+        std:: cout << "token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";  */
+        std:: cout << "token tipo: " << tokens_lexicos[i].tipo << "\n"; 
+    }
 
     return 0;
 }

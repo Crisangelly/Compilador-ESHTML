@@ -12,7 +12,6 @@ enum token_opciones {
 
 struct token_tipo {
   std::string lexema;
-  /*char lexema[100]; */
   int longitud_lexema;
   enum token_opciones tipo;
   std::string mensaje_lexema;

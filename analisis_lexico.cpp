@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "tokens.hpp"
+/*#include "tokens.hpp"*/
 #include "buscar_cadenas.cpp"
 
 int buscar_en_el_alfabeto(int alfabeto[], int longitud, int caracter){
@@ -18,7 +18,7 @@ int buscar_etiqueta(std::string posible_etiqueta);
 int buscar_valor_atributo(std::string posible_atributo, std::string posible_valor, int indice);
 int buscar_atributo(std::string posible_atributo, std::string posible_valor);
 
-void automata(std:: string palabra_entrante){
+token automata(std:: string palabra_entrante){
 
     int automata[][40] = {
       {	1,	12,	12,	4,	6,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	12,	0, 12},
@@ -146,11 +146,7 @@ void automata(std:: string palabra_entrante){
       }
       break; 
     }
-
-    std:: cout << "identificado: " << token_momento.mensaje_lexema << "\n"; // muestra las palabras que contiene el array
-
-    //std:: cout << "token lexema: " << token_momento.lexema << "\n"; 
-   // std:: cout << "token longitud: " << token_momento.longitud_lexema << "\n";
-    std:: cout << "token tipo: " << token_momento.tipo << "\n"; 
+    
+    return token_momento;
 
 }
