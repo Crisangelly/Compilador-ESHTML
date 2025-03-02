@@ -4,10 +4,12 @@
 //Tokens
 
 enum token_opciones {
-  etiqueta, //0
-  cadena_de_texto, //1
-  atributo, //2
-  error //3
+  inicio_etiqueta, //0
+  cierre_etiqueta, //1
+  cadena_de_texto, //2
+  atributo, //3
+  atributo_valor, //4
+  error //5
 };
 
 struct token_tipo {
