@@ -1,0 +1,9 @@
+<division :requerido :atributo="valor"
+  <titulo1 "contenido" >
+  <titulo2 "contenido" >
+  <titulo3 "contenido" >
+  <titulo4 "contenido" >
+  <titulo5 "contenido" >
+  <titulo6 "contenido" >
+  <parrafo "contenido del texto" >
+>
