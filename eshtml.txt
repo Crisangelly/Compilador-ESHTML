@@ -1,9 +1,10 @@
-<division :requerido :atributo="valor"
-  <titulo1 "contenido" >
-  <titulo2 "contenido" >
-  <titulo3 "contenido" >
-  <titulo4 "contenido" >
-  <titulo5 "contenido" >
-  <titulo6 "contenido" >
-  <parrafo "contenido del texto" >
+<dividir
+  <campo :requerido :tipo="texto" :nombre="prueba" :clase="prueba" >
+  <parrafo :clase="prueba" :id="prueba"  "holiwis" >
+  <parrafo :clase="prueba"  "holiwis" >
+  <parrafo :id="hola" "holiwis" >
+>
+
+<lista_ordenada :reverso
+  <lista_elemento :clase="prueba"  "hola" >
 >

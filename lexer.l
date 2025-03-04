@@ -1,20 +1,16 @@
 %{
   #include <stdio.h>
+  #include <stdlib.h>
+  #include "parser.tab.h"
 %}
 %option noyywrap
 
 %%
 
-[<][a-z_]+[1-6]? { fprintf(yyout, "INICIO_ETIQUETA"); }
-["][a-zA-Z ]+["] { fprintf(yyout, "CADENA_DE_TEXTO"); }
-[:][a-z_]+ { fprintf(yyout, "ATRIBUTO"); }
-[:][a-z_]+[=]["][a-zA-Z ]+["] { fprintf(yyout, "ATRIBUTO_VALOR"); }
-[>] { fprintf(yyout, "CIERRE_ETIQUETA"); }
+[<][a-z_]+[1-6]? { return INICIO_ETIQUETA; }
+["][a-zA-Z ]+["] { return CADENA_DE_TEXTO; }
+[>] { return CIERRE_ETIQUETA; }
+[:][a-z_]+ { return ATRIBUTO; }
+[:][a-z_]+[=]["][a-zA-Z ]+["] { return ATRIBUTO_VALOR; }
 
 %%
-
-int main(){
-  yyin = fopen("eshtml.txt", "r");
-  yyout = fopen("html.txt", "w");
-  yylex();
-}

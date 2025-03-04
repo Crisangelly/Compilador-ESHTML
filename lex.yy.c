@@ -289,8 +289,8 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 #define YY_END_OF_BUFFER 7
 static yyconst short int yy_accept[19] =
     {   0,
-        0,    0,    7,    6,    6,    6,    6,    5,    0,    3,
-        1,    2,    0,    1,    0,    0,    4,    0
+        0,    0,    7,    6,    6,    6,    6,    3,    0,    4,
+        1,    2,    0,    1,    0,    0,    5,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -375,7 +375,9 @@ char *yytext;
 #define INITIAL 0
 #line 2 "lexer.l"
   #include <stdio.h>
-#line 379 "lex.yy.c"
+  #include <stdlib.h>
+  #include "parser.tab.h"
+#line 381 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -526,10 +528,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 6 "lexer.l"
+#line 8 "lexer.l"
 
 
-#line 533 "lex.yy.c"
+#line 535 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -614,35 +616,35 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "lexer.l"
-{ fprintf(yyout, "INICIO_ETIQUETA"); }
+#line 10 "lexer.l"
+{ return INICIO_ETIQUETA; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 9 "lexer.l"
-{ fprintf(yyout, "CADENA_DE_TEXTO"); }
+#line 11 "lexer.l"
+{ return CADENA_DE_TEXTO; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "lexer.l"
-{ fprintf(yyout, "ATRIBUTO"); }
+#line 12 "lexer.l"
+{ return CIERRE_ETIQUETA; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 11 "lexer.l"
-{ fprintf(yyout, "ATRIBUTO_VALOR"); }
+#line 13 "lexer.l"
+{ return ATRIBUTO; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "lexer.l"
-{ fprintf(yyout, "CIERRE_ETIQUETA"); }
+#line 14 "lexer.l"
+{ return ATRIBUTO_VALOR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 14 "lexer.l"
+#line 16 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 646 "lex.yy.c"
+#line 648 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1528,11 +1530,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 14 "lexer.l"
-
-
-int main(){
-  yyin = fopen("eshtml.txt", "r");
-  yyout = fopen("html.txt", "w");
-  yylex();
-}
+#line 16 "lexer.l"
