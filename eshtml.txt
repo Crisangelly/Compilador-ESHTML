@@ -1,10 +1,26 @@
-<dividir
-  <campo :requerido :tipo="texto" :nombre="prueba" :clase="prueba" >
-  <parrafo :clase="prueba" :id="prueba"  "holiwis" >
-  <parrafo :clase="prueba"  "holiwis" >
-  <parrafo :id="hola" "holiwis" >
+<tabla
+  <tabla_cabeza
+    <tabla_fila
+      <tabla_cabecera "uno" >
+      <tabla_cabecera "dos" >
+      <tabla_cabecera "tres" >
+    >
+  >
+  <tabla_cuerpo
+    <tabla_fila
+      <tabla_celda "hola" >
+      <tabla_celda "mundo" >
+      <tabla_celda "lindo" >
+    >
+  >
 >
 
-<lista_ordenada :reverso
-  <lista_elemento :clase="prueba"  "hola" >
+<formulario
+  <leyenda "dentro de un formulario" >
+  <boton "botoncito" >
+  <campo >
 >
+
+<imagen >
+
+<parrafo "hola mundo" >

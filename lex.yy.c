@@ -376,8 +376,10 @@ char *yytext;
 #line 2 "lexer.l"
   #include <stdio.h>
   #include <stdlib.h>
+  #include <string.h>
+  
   #include "parser.tab.h"
-#line 381 "lex.yy.c"
+#line 383 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -528,10 +530,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 8 "lexer.l"
+#line 10 "lexer.l"
 
 
-#line 535 "lex.yy.c"
+#line 537 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -616,35 +618,50 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "lexer.l"
-{ return INICIO_ETIQUETA; }
+#line 12 "lexer.l"
+{
+  yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
+  return INICIO_ETIQUETA;
+}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "lexer.l"
-{ return CADENA_DE_TEXTO; }
+#line 17 "lexer.l"
+{
+  yylval.cadena = strdup(yytext);
+  return CADENA_DE_TEXTO;
+}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "lexer.l"
-{ return CIERRE_ETIQUETA; }
+#line 22 "lexer.l"
+{
+  yylval.cadena = strdup(yytext);
+  return CIERRE_ETIQUETA;
+}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "lexer.l"
-{ return ATRIBUTO; }
+#line 27 "lexer.l"
+{
+  yylval.cadena = strdup(yytext);
+  return ATRIBUTO;
+}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "lexer.l"
-{ return ATRIBUTO_VALOR; }
+#line 32 "lexer.l"
+{
+  yylval.cadena = strdup(yytext);
+  return ATRIBUTO_VALOR;
+}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 16 "lexer.l"
+#line 37 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 648 "lex.yy.c"
+#line 665 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1530,4 +1547,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 16 "lexer.l"
+#line 37 "lexer.l"

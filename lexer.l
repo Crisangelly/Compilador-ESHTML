@@ -1,16 +1,37 @@
 %{
   #include <stdio.h>
   #include <stdlib.h>
+  #include <string.h>
+  
   #include "parser.tab.h"
 %}
 %option noyywrap
 
 %%
 
-[<][a-z_]+[1-6]? { return INICIO_ETIQUETA; }
-["][a-zA-Z ]+["] { return CADENA_DE_TEXTO; }
-[>] { return CIERRE_ETIQUETA; }
-[:][a-z_]+ { return ATRIBUTO; }
-[:][a-z_]+[=]["][a-zA-Z ]+["] { return ATRIBUTO_VALOR; }
+[<][a-z_]+[1-6]? {
+  yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
+  return INICIO_ETIQUETA;
+}
+
+["][a-zA-Z ]+["]  {
+  yylval.cadena = strdup(yytext);
+  return CADENA_DE_TEXTO;
+}
+
+[>] {
+  yylval.cadena = strdup(yytext);
+  return CIERRE_ETIQUETA;
+}
+
+[:][a-z_]+  {
+  yylval.cadena = strdup(yytext);
+  return ATRIBUTO;
+}
+
+[:][a-z_]+[=]["][a-zA-Z ]+["]  {
+  yylval.cadena = strdup(yytext);
+  return ATRIBUTO_VALOR;
+}
 
 %%

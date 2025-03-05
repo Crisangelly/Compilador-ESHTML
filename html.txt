@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th> "uno" </th>
+      <th> "dos" </th>
+      <th> "tres" </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> "hola" </td>
+      <td> "mundo" </td>
+      <td> "lindo" </td>
+    </tr>
+  </tbody>
+</table>
+
+<form>
+  <label> "dentro de un formulario" </label>
+  <button> "botoncito" </button>
+  <input >
+</form>
+
+<img >
+
+<p> "hola mundo" </p>

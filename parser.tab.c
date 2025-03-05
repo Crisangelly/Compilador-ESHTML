@@ -72,7 +72,8 @@
 
   #include <stdio.h>
   #include <stdlib.h>
-  #include <math.h>
+  #include <string.h> 
+
   extern int yylex(void);
   extern char *yytext;
   extern FILE *yyin;
@@ -80,8 +81,9 @@
   void yyerror(char *s);
 
 
+
 /* Line 189 of yacc.c  */
-#line 85 "parser.tab.c"
+#line 87 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -119,7 +121,19 @@
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+{
+
+/* Line 214 of yacc.c  */
+#line 14 "parser.y"
+
+  char *cadena;
+
+
+
+/* Line 214 of yacc.c  */
+#line 136 "parser.tab.c"
+} YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -130,7 +144,7 @@ typedef int YYSTYPE;
 
 
 /* Line 264 of yacc.c  */
-#line 134 "parser.tab.c"
+#line 148 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -343,18 +357,18 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   10
+#define YYLAST   12
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  10
+#define YYNRULES  11
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  13
+#define YYNSTATES  14
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -400,23 +414,23 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     6,     8,    13,    16,    18,    19,    22,
-      25
+       0,     0,     3,     6,     8,    13,    15,    18,    20,    21,
+      24,    27
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-       9,     0,    -1,    10,     9,    -1,    10,    -1,     3,    11,
-      12,     5,    -1,    11,     7,    -1,     6,    -1,    -1,    12,
-      10,    -1,    12,     4,    -1,    -1
+       9,     0,    -1,    10,     9,    -1,    10,    -1,    11,    12,
+      13,     5,    -1,     3,    -1,    12,     7,    -1,     6,    -1,
+      -1,    13,    10,    -1,    13,     4,    -1,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,    22,    22,    22,    24,    26,    26,    26,    28,    28,
-      28
+       0,    31,    31,    34,    38,   159,   278,   281,   284,   288,
+     291,   295
 };
 #endif
 
@@ -427,7 +441,7 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "INICIO_ETIQUETA", "CADENA_DE_TEXTO",
   "CIERRE_ETIQUETA", "ATRIBUTO", "ATRIBUTO_VALOR", "$accept", "documento",
-  "elemento", "atributo", "contenido", 0
+  "elemento", "inicio", "atributo", "contenido", 0
 };
 #endif
 
@@ -443,15 +457,15 @@ static const yytype_uint16 yytoknum[] =
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     8,     9,     9,    10,    11,    11,    11,    12,    12,
-      12
+       0,     8,     9,     9,    10,    11,    12,    12,    12,    13,
+      13,    13
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     1,     4,     2,     1,     0,     2,     2,
-       0
+       0,     2,     2,     1,     4,     1,     2,     1,     0,     2,
+       2,     0
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -459,14 +473,14 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     7,     0,     3,     6,    10,     1,     2,     5,     0,
-       9,     4,     8
+       0,     5,     0,     3,     8,     1,     2,     7,    11,     6,
+       0,    10,     4,     9
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     5,     9
+      -1,     2,     3,     4,     8,    10
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -474,14 +488,14 @@ static const yytype_int8 yydefgoto[] =
 #define YYPACT_NINF -4
 static const yytype_int8 yypact[] =
 {
-       0,    -2,     5,     0,    -4,    -1,    -4,    -4,    -4,    -3,
-      -4,    -4,    -4
+       0,    -4,     4,     0,    -1,    -4,    -4,    -4,     1,    -4,
+      -3,    -4,    -4,    -4
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,     4,     1,    -4,    -4
+      -4,     3,     2,    -4,    -4,    -4
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -491,22 +505,22 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       1,    10,    11,     1,     4,     6,     8,     7,     0,     0,
-      12
+       1,    11,    12,     1,     5,     7,     6,     0,     9,     0,
+       0,     0,    13
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     4,     5,     3,     6,     0,     7,     3,    -1,    -1,
-       9
+       3,     4,     5,     3,     0,     6,     3,    -1,     7,    -1,
+      -1,    -1,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     9,    10,     6,    11,     0,     9,     7,    12,
-       4,     5,    10
+       0,     3,     9,    10,    11,     0,     9,     6,    12,     7,
+      13,     4,     5,    10
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1317,10 +1331,333 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
+        case 2:
 
 /* Line 1455 of yacc.c  */
-#line 1324 "parser.tab.c"
+#line 31 "parser.y"
+    {
+            (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
+          ;}
+    break;
+
+  case 3:
+
+/* Line 1455 of yacc.c  */
+#line 34 "parser.y"
+    {
+            (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
+          ;}
+    break;
+
+  case 4:
+
+/* Line 1455 of yacc.c  */
+#line 38 "parser.y"
+    {
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<parrafo") == 0){
+    fprintf(yyout, "</p>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo1") == 0){
+    fprintf(yyout, "</h1>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo2") == 0){
+    fprintf(yyout, "</h2>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo3") == 0){
+    fprintf(yyout, "</h3>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo4") == 0){
+    fprintf(yyout, "</h4>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo5") == 0){
+    fprintf(yyout, "</h5>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo6") == 0){
+    fprintf(yyout, "</h6>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<negrita") == 0){
+    fprintf(yyout, "</strong>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<italica") == 0){
+    fprintf(yyout, "</i>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<resaltar") == 0){
+    fprintf(yyout, "</mark>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<pequenio") == 0){
+    fprintf(yyout, "</small>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<cursiva") == 0){
+    fprintf(yyout, "</em>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<tachar") == 0){
+    fprintf(yyout, "</s>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<lista_no_ordenada") == 0){
+    fprintf(yyout, "</ul>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<lista_ordenada") == 0){
+    fprintf(yyout, "</ol>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<lista_elemento") == 0){
+    fprintf(yyout, "</li>");
+  }
+
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<division") == 0){
+    fprintf(yyout, "</div>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<seccion") == 0){
+    fprintf(yyout, "</section>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<pie") == 0){
+    fprintf(yyout, "</footer>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<cabecera") == 0){
+    fprintf(yyout, "</header>");
+  }
+   if(strcmp((yyvsp[(1) - (4)].cadena), "<navegacion") == 0){
+    fprintf(yyout, "</nav>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<aparte") == 0){
+    fprintf(yyout, "</aside>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<seleccion") == 0){
+    fprintf(yyout, "</span>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<linea_horizontal") == 0){
+    fprintf(yyout, "/>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla") == 0){
+    fprintf(yyout, "</table>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_cabeza") == 0){
+    fprintf(yyout, "</thead>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_cuerpo") == 0){
+    fprintf(yyout, "</tbody>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_fila") == 0){
+    fprintf(yyout, "</tr>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_celda") == 0){
+    fprintf(yyout, "</td>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_cabecera") == 0){
+    fprintf(yyout, "</th>");
+  }
+
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<formulario") == 0){
+    fprintf(yyout, "</form>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<boton") == 0){
+    fprintf(yyout, "</button>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<leyenda") == 0){
+    fprintf(yyout, "</label>");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<campo") == 0){
+    fprintf(yyout, ">");
+  }
+  if(strcmp((yyvsp[(1) - (4)].cadena), "<imagen") == 0){
+    fprintf(yyout, ">");
+  }
+
+
+;}
+    break;
+
+  case 5:
+
+/* Line 1455 of yacc.c  */
+#line 159 "parser.y"
+    {
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<division") == 0){
+    fprintf(yyout, "<div>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<parrafo") == 0){
+    fprintf(yyout, "<p>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo1") == 0){
+    fprintf(yyout, "<h1>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo2") == 0){
+    fprintf(yyout, "<h2>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo3") == 0){
+    fprintf(yyout, "<h3>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo4") == 0){
+    fprintf(yyout, "<h4>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo5") == 0){
+    fprintf(yyout, "<h5>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo6") == 0){
+    fprintf(yyout, "<h6>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<negrita") == 0){
+    fprintf(yyout, "<strong>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<italica") == 0){
+    fprintf(yyout, "<i>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<resaltar") == 0){
+    fprintf(yyout, "<mark>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<pequenio") == 0){
+    fprintf(yyout, "<small>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<cursiva") == 0){
+    fprintf(yyout, "<em>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<tachar") == 0){
+    fprintf(yyout, "<s>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_no_ordenada") == 0){
+    fprintf(yyout, "<ul>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_ordenada") == 0){
+    fprintf(yyout, "<ol>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_elemento") == 0){
+    fprintf(yyout, "<li>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<seccion") == 0){
+    fprintf(yyout, "<section>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<pie") == 0){
+    fprintf(yyout, "<footer>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<cabecera") == 0){
+    fprintf(yyout, "<header>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<navegacion") == 0){
+    fprintf(yyout, "<nav>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<aparte") == 0){
+    fprintf(yyout, "<aside>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<seleccion") == 0){
+    fprintf(yyout, "<span>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<linea_horizontal") == 0){
+    fprintf(yyout, "<hr");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla") == 0){
+    fprintf(yyout, "<table>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cabeza") == 0){
+    fprintf(yyout, "<thead>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cuerpo") == 0){
+    fprintf(yyout, "<tbody>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_fila") == 0){
+    fprintf(yyout, "<tr>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_celda") == 0){
+    fprintf(yyout, "<td>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cabecera") == 0){
+    fprintf(yyout, "<th>");
+  }
+
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<formulario") == 0){
+    fprintf(yyout, "<form>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<boton") == 0){
+    fprintf(yyout, "<button>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<leyenda") == 0){
+    fprintf(yyout, "<label>");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<campo") == 0){
+    fprintf(yyout, "<input");
+  }
+  if(strcmp((yyvsp[(1) - (1)].cadena), "<imagen") == 0){
+    fprintf(yyout, "<img");
+  }
+
+;}
+    break;
+
+  case 6:
+
+/* Line 1455 of yacc.c  */
+#line 278 "parser.y"
+    { 
+          (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
+        ;}
+    break;
+
+  case 7:
+
+/* Line 1455 of yacc.c  */
+#line 281 "parser.y"
+    { 
+          (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
+        ;}
+    break;
+
+  case 8:
+
+/* Line 1455 of yacc.c  */
+#line 284 "parser.y"
+    { 
+          (yyval.cadena) = NULL;
+        ;}
+    break;
+
+  case 9:
+
+/* Line 1455 of yacc.c  */
+#line 288 "parser.y"
+    { 
+            (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
+          ;}
+    break;
+
+  case 10:
+
+/* Line 1455 of yacc.c  */
+#line 291 "parser.y"
+    { 
+            (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
+            fprintf(yyout, "%s", (yyvsp[(2) - (2)].cadena));
+          ;}
+    break;
+
+  case 11:
+
+/* Line 1455 of yacc.c  */
+#line 295 "parser.y"
+    {  
+            (yyval.cadena) = NULL;
+          ;}
+    break;
+
+
+
+/* Line 1455 of yacc.c  */
+#line 1661 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1532,11 +1869,12 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 31 "parser.y"
+#line 300 "parser.y"
 
 
 int main(void) {
   yyin = fopen("eshtml.txt", "r");
+  yyout = fopen("html.txt", "w");
   int s = yyparse();  
   if(s == 0){
     printf("Todo en orden");
