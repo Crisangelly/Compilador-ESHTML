@@ -74,12 +74,28 @@ int main() {
 
     std:: cout << "cantidad de tokens: " << num_tokens << "\n"; 
     
-    for (int i = 0; i < num_tokens; i++ ){ //Imprimir Tokens léxicos de momento
+   /* for (int i = 0; i < num_tokens; i++ ){ //Imprimir Tokens léxicos de momento
         std:: cout << "token lexema: " << tokens_lexicos[i].lexema << "\n"; 
         std:: cout << "token longitud_lexema: " << tokens_lexicos[i].longitud_lexema << "\n"; 
         std:: cout << "token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";  
         std:: cout << "token tipo: " << tokens_lexicos[i].tipo << "\n"; 
         std:: cout << "-------------------------------------------------------------------\n"; 
+    }*/
+
+    for (int i = 0; i < num_tokens; i++) { //Imprimir Tokens léxicos de momento
+
+        if (tokens_lexicos[i].tipo == error) { // Si el token es de tipo 'error', mostramos el mensaje de error
+            std::cout << " token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";
+        } 
+        else {
+            
+            std::cout << "token lexema: " << tokens_lexicos[i].lexema << "\n";
+            std::cout << "token longitud_lexema: " << tokens_lexicos[i].longitud_lexema << "\n";
+            std::cout << "token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";
+            std::cout << "token tipo: " << tokens_lexicos[i].tipo << "\n";
+        }
+
+        std::cout << "-------------------------------------------------------------------\n"; 
     }
 
     return 0;
