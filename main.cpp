@@ -89,6 +89,7 @@ int main() {
         if (tokens_lexicos[i].tipo == error) { // Si el token es de tipo 'error', mostramos el mensaje de error
             std::cout << " token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";
             std::cout << " token tipo: " << tokens_lexicos[i].tipo << "\n";
+            std::cout << " token lexema: " << tokens_lexicos[i].lexema << "\n";
         } 
         else {
             
