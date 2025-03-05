@@ -6,6 +6,9 @@
 #include "analisis_lexico.cpp"
 token automata(std:: string palabra_entrante); 
 
+#include "analisis_sintactico.cpp"
+void parser();
+
 int main() {
 
     int contador = 0;
@@ -90,26 +93,27 @@ int main() {
             std::cout << " token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";
             std::cout << " token tipo: " << tokens_lexicos[i].tipo << "\n";
             std::cout << " token lexema: " << tokens_lexicos[i].lexema << "\n";
+            std::cout << "-------------------------------------------------------------------\n"; 
         } 
-        else {
+     /*    else {
             
             std::cout << "token lexema: " << tokens_lexicos[i].lexema << "\n";
             std::cout << "token longitud_lexema: " << tokens_lexicos[i].longitud_lexema << "\n";
             std::cout << "token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";
             std::cout << "token tipo: " << tokens_lexicos[i].tipo << "\n";
-        }
+        } */
 
         if (tokens_lexicos[i].tipo == 5) {
             bandera_sintactica = false;
         }
 
-        std::cout << "-------------------------------------------------------------------\n"; 
     }
 
     if (!bandera_sintactica) {
         std::cout << "Se encontraron errores de sintaxis en el codigo.\n";
     } else {
         std::cout << "No se encontraron errores de sintaxis en el codigo.\n";
+        parser();
     }
 
     return 0;
