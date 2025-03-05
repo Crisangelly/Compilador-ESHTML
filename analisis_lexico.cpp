@@ -129,20 +129,6 @@ token automata(std:: string palabra_entrante){
 
     switch (token_momento.tipo){
       case inicio_etiqueta:
-        /*if (token_momento.lexema.find('>') == std::string::npos){// validación para el ">" cierre de etiqueta
-          token_momento.mensaje_lexema = "error, falta '>' para cerrar la etiqueta";
-          token_momento.tipo = error;
-        }
-        else if(buscar_etiqueta(token_momento.lexema) == -1){
-          token_momento.mensaje_lexema = "error, etiqueta incorrecta";
-          token_momento.tipo = error;
-        }*/
-        if(buscar_etiqueta(token_momento.lexema) == -1){
-          token_momento.mensaje_lexema = "error, etiqueta incorrecta";
-          token_momento.tipo = error;
-        }
-        break;
-      case cierre_etiqueta:// para comprobar que la etiqueta existe
         if(buscar_etiqueta(token_momento.lexema) == -1){
           token_momento.mensaje_lexema = "error, etiqueta incorrecta";
           token_momento.tipo = error;

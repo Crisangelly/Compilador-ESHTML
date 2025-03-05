@@ -82,10 +82,13 @@ int main() {
         std:: cout << "-------------------------------------------------------------------\n"; 
     }*/
 
+    bool bandera_sintactica= true; 
+
     for (int i = 0; i < num_tokens; i++) { //Imprimir Tokens léxicos de momento
 
         if (tokens_lexicos[i].tipo == error) { // Si el token es de tipo 'error', mostramos el mensaje de error
             std::cout << " token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";
+            std::cout << " token tipo: " << tokens_lexicos[i].tipo << "\n";
         } 
         else {
             
@@ -95,7 +98,17 @@ int main() {
             std::cout << "token tipo: " << tokens_lexicos[i].tipo << "\n";
         }
 
+        if (tokens_lexicos[i].tipo == 5) {
+            bandera_sintactica = false;
+        }
+
         std::cout << "-------------------------------------------------------------------\n"; 
+    }
+
+    if (!bandera_sintactica) {
+        std::cout << "Se encontraron errores de sintaxis en el codigo.\n";
+    } else {
+        std::cout << "No se encontraron errores de sintaxis en el codigo.\n";
     }
 
     return 0;
