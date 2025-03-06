@@ -359,16 +359,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   12
+#define YYLAST   8
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  6
+#define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  11
+#define YYNRULES  12
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  14
+#define YYNSTATES  15
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -414,23 +414,23 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     6,     8,    13,    15,    18,    20,    21,
-      24,    27
+       0,     0,     3,     6,     8,    14,    16,    19,    21,    22,
+      23,    26,    29
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
        9,     0,    -1,    10,     9,    -1,    10,    -1,    11,    12,
-      13,     5,    -1,     3,    -1,    12,     7,    -1,     6,    -1,
-      -1,    13,    10,    -1,    13,     4,    -1,    -1
+      13,    14,     5,    -1,     3,    -1,    12,     7,    -1,     6,
+      -1,    -1,    -1,    14,    10,    -1,    14,     4,    -1,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    31,    31,    34,    38,   159,   278,   281,   284,   288,
-     291,   295
+       0,    31,    31,    34,    38,   142,   252,   294,   304,   308,
+     310,   313,   317
 };
 #endif
 
@@ -441,7 +441,7 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "INICIO_ETIQUETA", "CADENA_DE_TEXTO",
   "CIERRE_ETIQUETA", "ATRIBUTO", "ATRIBUTO_VALOR", "$accept", "documento",
-  "elemento", "inicio", "atributo", "contenido", 0
+  "elemento", "inicio", "atributo", "cerrar_inicio", "contenido", 0
 };
 #endif
 
@@ -458,14 +458,14 @@ static const yytype_uint16 yytoknum[] =
 static const yytype_uint8 yyr1[] =
 {
        0,     8,     9,     9,    10,    11,    12,    12,    12,    13,
-      13,    13
+      14,    14,    14
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     1,     4,     1,     2,     1,     0,     2,
-       2,     0
+       0,     2,     2,     1,     5,     1,     2,     1,     0,     0,
+       2,     2,     0
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -473,29 +473,29 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     5,     0,     3,     8,     1,     2,     7,    11,     6,
-       0,    10,     4,     9
+       0,     5,     0,     3,     8,     1,     2,     7,     9,     6,
+      12,     0,    11,     4,    10
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,     3,     4,     8,    10
+      -1,     2,     3,     4,     8,    10,    11
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -4
+#define YYPACT_NINF -5
 static const yytype_int8 yypact[] =
 {
-       0,    -4,     4,     0,    -1,    -4,    -4,    -4,     1,    -4,
-      -3,    -4,    -4,    -4
+       0,    -5,     4,     0,    -1,    -5,    -5,    -5,     1,    -5,
+      -5,    -3,    -5,    -5,    -5
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,     3,     2,    -4,    -4,    -4
+      -5,     3,    -4,    -5,    -5,    -5,    -5
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -505,14 +505,12 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       1,    11,    12,     1,     5,     7,     6,     0,     9,     0,
-       0,     0,    13
+       1,    12,    13,     1,     5,     7,     6,    14,     9
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       3,     4,     5,     3,     0,     6,     3,    -1,     7,    -1,
-      -1,    -1,    10
+       3,     4,     5,     3,     0,     6,     3,    11,     7
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -520,7 +518,7 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,     3,     9,    10,    11,     0,     9,     6,    12,     7,
-      13,     4,     5,    10
+      13,    14,     4,     5,    10
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1355,122 +1353,105 @@ yyreduce:
 #line 38 "parser.y"
     {
 
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<parrafo") == 0){
-    fprintf(yyout, "</p>");
-  }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo1") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo1") == 0){
     fprintf(yyout, "</h1>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo2") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo2") == 0){
     fprintf(yyout, "</h2>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo3") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo3") == 0){
     fprintf(yyout, "</h3>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo4") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo4") == 0){
     fprintf(yyout, "</h4>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo5") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo5") == 0){
     fprintf(yyout, "</h5>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<titulo6") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo6") == 0){
     fprintf(yyout, "</h6>");
   }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<negrita") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<negrita") == 0){
     fprintf(yyout, "</strong>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<italica") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<italica") == 0){
     fprintf(yyout, "</i>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<resaltar") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<resaltar") == 0){
     fprintf(yyout, "</mark>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<pequenio") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<pequenio") == 0){
     fprintf(yyout, "</small>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<cursiva") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<cursiva") == 0){
     fprintf(yyout, "</em>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<tachar") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<tachar") == 0){
     fprintf(yyout, "</s>");
   }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<lista_no_ordenada") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<lista_no_ordenada") == 0){
     fprintf(yyout, "</ul>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<lista_ordenada") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<lista_ordenada") == 0){
     fprintf(yyout, "</ol>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<lista_elemento") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<lista_elemento") == 0){
     fprintf(yyout, "</li>");
   }
-
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<division") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<division") == 0){
     fprintf(yyout, "</div>");
   }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<seccion") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<seccion") == 0){
     fprintf(yyout, "</section>");
   }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<pie") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<pie") == 0){
     fprintf(yyout, "</footer>");
   }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<cabecera") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<cabecera") == 0){
     fprintf(yyout, "</header>");
   }
-   if(strcmp((yyvsp[(1) - (4)].cadena), "<navegacion") == 0){
+   if(strcmp((yyvsp[(1) - (5)].cadena), "<navegacion") == 0){
     fprintf(yyout, "</nav>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<aparte") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<aparte") == 0){
     fprintf(yyout, "</aside>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<seleccion") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<seleccion") == 0){
     fprintf(yyout, "</span>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<linea_horizontal") == 0){
-    fprintf(yyout, "/>");
-  }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla") == 0){
     fprintf(yyout, "</table>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_cabeza") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_cabeza") == 0){
     fprintf(yyout, "</thead>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_cuerpo") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_cuerpo") == 0){
     fprintf(yyout, "</tbody>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_fila") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_fila") == 0){
     fprintf(yyout, "</tr>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_celda") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_celda") == 0){
     fprintf(yyout, "</td>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<tabla_cabecera") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_cabecera") == 0){
     fprintf(yyout, "</th>");
   }
-
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<formulario") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<formulario") == 0){
     fprintf(yyout, "</form>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<boton") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<boton") == 0){
     fprintf(yyout, "</button>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<leyenda") == 0){
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<leyenda") == 0){
     fprintf(yyout, "</label>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<campo") == 0){
-    fprintf(yyout, ">");
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<parrafo") == 0){
+    fprintf(yyout, "</p>");
   }
-  if(strcmp((yyvsp[(1) - (4)].cadena), "<imagen") == 0){
-    fprintf(yyout, ">");
+  if(strcmp((yyvsp[(1) - (5)].cadena), "<division") == 0){
+    fprintf(yyout, "</div>");
   }
-
 
 ;}
     break;
@@ -1478,116 +1459,107 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 159 "parser.y"
+#line 142 "parser.y"
     {
 
   if(strcmp((yyvsp[(1) - (1)].cadena), "<division") == 0){
-    fprintf(yyout, "<div>");
+    fprintf(yyout, "<div");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<parrafo") == 0){
-    fprintf(yyout, "<p>");
+    fprintf(yyout, "%s", "<p");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo1") == 0){
-    fprintf(yyout, "<h1>");
+    fprintf(yyout, "<h1");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo2") == 0){
-    fprintf(yyout, "<h2>");
+    fprintf(yyout, "<h2");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo3") == 0){
-    fprintf(yyout, "<h3>");
+    fprintf(yyout, "<h3");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo4") == 0){
-    fprintf(yyout, "<h4>");
+    fprintf(yyout, "<h4");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo5") == 0){
-    fprintf(yyout, "<h5>");
+    fprintf(yyout, "<h5");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo6") == 0){
-    fprintf(yyout, "<h6>");
+    fprintf(yyout, "<h6");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<negrita") == 0){
-    fprintf(yyout, "<strong>");
+    fprintf(yyout, "<strong");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<italica") == 0){
-    fprintf(yyout, "<i>");
+    fprintf(yyout, "<i");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<resaltar") == 0){
-    fprintf(yyout, "<mark>");
+    fprintf(yyout, "<mark");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<pequenio") == 0){
-    fprintf(yyout, "<small>");
+    fprintf(yyout, "<small");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<cursiva") == 0){
-    fprintf(yyout, "<em>");
+    fprintf(yyout, "<em");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tachar") == 0){
-    fprintf(yyout, "<s>");
+    fprintf(yyout, "<s");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_no_ordenada") == 0){
-    fprintf(yyout, "<ul>");
+    fprintf(yyout, "<ul");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_ordenada") == 0){
-    fprintf(yyout, "<ol>");
+    fprintf(yyout, "<ol");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_elemento") == 0){
-    fprintf(yyout, "<li>");
+    fprintf(yyout, "<li");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<seccion") == 0){
-    fprintf(yyout, "<section>");
+    fprintf(yyout, "<section");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<pie") == 0){
-    fprintf(yyout, "<footer>");
+    fprintf(yyout, "<footer");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<cabecera") == 0){
-    fprintf(yyout, "<header>");
+    fprintf(yyout, "<header");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<navegacion") == 0){
-    fprintf(yyout, "<nav>");
+    fprintf(yyout, "<nav");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<aparte") == 0){
-    fprintf(yyout, "<aside>");
+    fprintf(yyout, "<aside");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<seleccion") == 0){
-    fprintf(yyout, "<span>");
+    fprintf(yyout, "<span");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<linea_horizontal") == 0){
     fprintf(yyout, "<hr");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla") == 0){
-    fprintf(yyout, "<table>");
+    fprintf(yyout, "<table");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cabeza") == 0){
-    fprintf(yyout, "<thead>");
+    fprintf(yyout, "<thead");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cuerpo") == 0){
-    fprintf(yyout, "<tbody>");
+    fprintf(yyout, "<tbody");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_fila") == 0){
-    fprintf(yyout, "<tr>");
+    fprintf(yyout, "<tr");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_celda") == 0){
-    fprintf(yyout, "<td>");
+    fprintf(yyout, "<td");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cabecera") == 0){
-    fprintf(yyout, "<th>");
+    fprintf(yyout, "<th");
   }
-
   if(strcmp((yyvsp[(1) - (1)].cadena), "<formulario") == 0){
-    fprintf(yyout, "<form>");
+    fprintf(yyout, "<form");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<boton") == 0){
-    fprintf(yyout, "<button>");
+    fprintf(yyout, "<button");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<leyenda") == 0){
-    fprintf(yyout, "<label>");
+    fprintf(yyout, "<label");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<campo") == 0){
     fprintf(yyout, "<input");
@@ -1595,69 +1567,122 @@ yyreduce:
   if(strcmp((yyvsp[(1) - (1)].cadena), "<imagen") == 0){
     fprintf(yyout, "<img");
   }
-
+  
 ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 278 "parser.y"
+#line 252 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
+
+          char *simbolo_igual = strchr((yyvsp[(2) - (2)].cadena), '=');
+          char atributo[100];
+          strncpy(atributo, (yyvsp[(2) - (2)].cadena), simbolo_igual - (yyvsp[(2) - (2)].cadena));
+          atributo[simbolo_igual - (yyvsp[(2) - (2)].cadena)] = '\0'; 
+          char *valor = simbolo_igual + 1;
+
+          if(strcmp(atributo, ":tipo") == 0){
+
+            char *type_prefix = "type=";
+
+            if(strcmp(valor, "\"texto\"") == 0){
+              fprintf(yyout, "%s\"text\"", type_prefix);
+            };
+            if(strcmp(valor, "\"numero\"") == 0){
+              fprintf(yyout, "%s\"number\"", type_prefix);
+            };
+            if(strcmp(valor, "\"radio\"") == 0){
+              fprintf(yyout, "%s\"radio\"", type_prefix);
+            };
+            if(strcmp(valor, "\"caja_check\"") == 0){
+              fprintf(yyout, "%s\"checkbox\"", type_prefix);
+            };
+            if(strcmp(valor, "\"enviar\"") == 0){
+              fprintf(yyout, "%s\"submit\"", type_prefix);
+            };
+            if(strcmp(valor, "\"correo\"") == 0){
+              fprintf(yyout, "%s\"email\"", type_prefix);
+            };
+            if(strcmp(valor, "\"telefono\"") == 0){
+              fprintf(yyout, "%s\"tel\"", type_prefix);
+            };
+            if(strcmp(valor, "\"contrasenia\"") == 0){
+              fprintf(yyout, "%s\"password\"", type_prefix);
+            };
+
+
+          };
+
         ;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 281 "parser.y"
+#line 294 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
+          if(strcmp((yyvsp[(1) - (1)].cadena), ":reverso") == 0){
+            fprintf(yyout, "reversed");
+          }
+          if(strcmp((yyvsp[(1) - (1)].cadena), ":requerido") == 0){
+            fprintf(yyout, "required");
+          }
+
         ;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 284 "parser.y"
+#line 304 "parser.y"
     { 
-          (yyval.cadena) = NULL;
+          (yyval.cadena) = " ";
         ;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 288 "parser.y"
-    { 
-            (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
-          ;}
+#line 308 "parser.y"
+    { fprintf(yyout, ">"); ;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 291 "parser.y"
+#line 310 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
-            fprintf(yyout, "%s", (yyvsp[(2) - (2)].cadena));
           ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 295 "parser.y"
+#line 313 "parser.y"
+    { 
+            (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
+            fprintf(yyout, "%s", (yyvsp[(2) - (2)].cadena));
+          ;}
+    break;
+
+  case 12:
+
+/* Line 1455 of yacc.c  */
+#line 317 "parser.y"
     {  
-            (yyval.cadena) = NULL;
+            (yyval.cadena) = " ";
           ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1661 "parser.tab.c"
+#line 1686 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1869,7 +1894,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 300 "parser.y"
+#line 322 "parser.y"
 
 
 int main(void) {

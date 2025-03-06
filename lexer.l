@@ -29,7 +29,7 @@
   return ATRIBUTO;
 }
 
-[:][a-z_]+[=]["][a-zA-Z ]+["]  {
+[:][a-z_]+[=]["][a-zA-Z_ ]+["]  {
   yylval.cadena = strdup(yytext);
   return ATRIBUTO_VALOR;
 }

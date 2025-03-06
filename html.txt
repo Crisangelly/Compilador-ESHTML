@@ -1,26 +1,52 @@
-<table>
-  <thead>
-    <tr>
-      <th> "uno" </th>
-      <th> "dos" </th>
-      <th> "tres" </th>
+<form
+  ><input required type="text" >
+  <input required type="password" >
+  <hr >
+  <input type="number" >
+  <input type="radio" >
+  <input type="checkbox" >
+  <input type="submit" >
+  <input type="email" >
+  <input type="tel" >
+</form>
+
+<input type="text" >
+
+<h1 >"lista ordenada" </h1>
+
+<ol 
+  ><li >"hola" </li>
+  <li >"hola" </li>
+  <li >"hola" </li>
+  <li >"hola" </li>
+</ol>
+
+<hr >
+
+<h2 >"lista ordenada descendente" </h2>
+
+<ol reversed
+  ><li >"hola" </li>
+  <li >"hola" </li>
+  <li >"hola" </li>
+  <li >"hola" </li>
+</ol>
+
+<hr >
+
+<table
+  ><thead
+    ><tr
+      ><th >"uno" </th>
+      <th >"dos" </th>
+      <th >"tres" </th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td> "hola" </td>
-      <td> "mundo" </td>
-      <td> "lindo" </td>
+  <tbody
+    ><tr
+      ><td >"hola" </td>
+      <td >"mundo" </td>
+      <td >"lindo" </td>
     </tr>
   </tbody>
 </table>
-
-<form>
-  <label> "dentro de un formulario" </label>
-  <button> "botoncito" </button>
-  <input >
-</form>
-
-<img >
-
-<p> "hola mundo" </p>

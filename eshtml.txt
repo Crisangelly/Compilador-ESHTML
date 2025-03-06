@@ -1,3 +1,39 @@
+<formulario
+  <campo :requerido :tipo="texto" >
+  <campo :requerido :tipo="contrasenia" >
+  <linea_horizontal >
+  <campo :tipo="numero" >
+  <campo :tipo="radio" >
+  <campo :tipo="caja_check" >
+  <campo :tipo="enviar" >
+  <campo :tipo="correo" >
+  <campo :tipo="telefono" >
+>
+
+<campo :tipo="texto" >
+
+<titulo1 "lista ordenada" >
+
+<lista_ordenada 
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+>
+
+<linea_horizontal >
+
+<titulo2 "lista ordenada descendente" >
+
+<lista_ordenada :reverso
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+>
+
+<linea_horizontal >
+
 <tabla
   <tabla_cabeza
     <tabla_fila
@@ -14,13 +50,3 @@
     >
   >
 >
-
-<formulario
-  <leyenda "dentro de un formulario" >
-  <boton "botoncito" >
-  <campo >
->
-
-<imagen >
-
-<parrafo "hola mundo" >
