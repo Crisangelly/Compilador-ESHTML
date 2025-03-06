@@ -119,9 +119,9 @@ int main() {
     }
 
     if (!bandera_sintactica) {
-        std::cout << "Se encontraron errores de sintaxis en el codigo.\n";
+        std::cout << "Se encontraron errores lexicos en el codigo.\n";
     } else {
-        std::cout << "No se encontraron errores de sintaxis en el codigo.\n";
+        std::cout << "No se encontraron errores lexicos en el codigo.\n";
         parser();
     }  
 
