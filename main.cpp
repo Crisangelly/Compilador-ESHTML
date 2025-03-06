@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 //Funciones del compilador
 #include "tokens.hpp"
@@ -9,24 +10,34 @@ token automata(std:: string palabra_entrante);
 #include "analisis_sintactico.cpp"
 void parser();
 
+using namespace std;
+
 int main() {
+
+    std:: string linea;
+    std:: string palabra;
+
+    ifstream archivo("eshtml.txt");
+
+    while(getline(archivo, linea)){
+        palabra=palabra+" "+linea;
+    }
+
+    archivo.close();
+
+    //std:: cout << "texto: " << palabra << "\n"; 
 
     int contador = 0;
 
-    std:: string palabra;
-
-    std:: string palabras[15]; // almacenar máximo 15 palabras 
+    std:: string palabras[200]; // almacenar máximo 30 palabras 
 
     int num_palabras = 0;
-
-    std:: cout << "Ingresa una palabra: ";
-
-    std:: getline(std::cin, palabra); 
 
     std:: string palabra_nueva; // para ingresar las palabras
 
     bool detectar_comillas = false; // detectar inicio y fin de comillas
-    
+
+        
     for (int i = 0; i < palabra.length(); i++) {
         //std::cout << palabra[i] << "\n";
         contador++;
@@ -47,7 +58,7 @@ int main() {
 
         } else if (!detectar_comillas){
 
-            if (!palabra_nueva.empty() && num_palabras < 15){   // si palabra_nueva no está vacia, se guarda en el array
+            if (!palabra_nueva.empty() && num_palabras < 200){   // si palabra_nueva no está vacia, se guarda en el array
                 //std::cout << "espacio \n";
                 palabras[num_palabras] = palabra_nueva;
                 num_palabras++;                 
@@ -57,15 +68,21 @@ int main() {
         }
     }
 
-    if (!palabra_nueva.empty() && num_palabras < 15) { // almacena la última palabra que no termina en espacio
+    if (!palabra_nueva.empty() && num_palabras < 200) { // almacena la última palabra que no termina en espacio
         palabras[num_palabras] = palabra_nueva;
         num_palabras++;
     }
 
 
-    std::cout << contador << "\n";;
+    std::cout << contador << "\n";
 
-    token tokens_lexicos[15];
+/*     for (int i = 0; i < num_palabras; i++ ){ //recorre el array
+        std:: cout << "palabra: " << palabras[i] << "\n"; // muestra las palabras que contiene el array
+        std::cout << "-------------------------------------------------------------------\n"; 
+    } */
+ 
+
+    token tokens_lexicos[200];
     int num_tokens = 0;
 
     for (int i = 0; i < num_palabras; i++ ){ //recorre el array
@@ -76,14 +93,7 @@ int main() {
     }
 
     std:: cout << "cantidad de tokens: " << num_tokens << "\n"; 
-    
-   /* for (int i = 0; i < num_tokens; i++ ){ //Imprimir Tokens léxicos de momento
-        std:: cout << "token lexema: " << tokens_lexicos[i].lexema << "\n"; 
-        std:: cout << "token longitud_lexema: " << tokens_lexicos[i].longitud_lexema << "\n"; 
-        std:: cout << "token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";  
-        std:: cout << "token tipo: " << tokens_lexicos[i].tipo << "\n"; 
-        std:: cout << "-------------------------------------------------------------------\n"; 
-    }*/
+
 
     bool bandera_sintactica= true; 
 
@@ -95,14 +105,13 @@ int main() {
             std::cout << " token lexema: " << tokens_lexicos[i].lexema << "\n";
             std::cout << "-------------------------------------------------------------------\n"; 
         } 
-     /*    else {
-            
+        else {  
             std::cout << "token lexema: " << tokens_lexicos[i].lexema << "\n";
             std::cout << "token longitud_lexema: " << tokens_lexicos[i].longitud_lexema << "\n";
             std::cout << "token mensaje_lexema: " << tokens_lexicos[i].mensaje_lexema << "\n";
             std::cout << "token tipo: " << tokens_lexicos[i].tipo << "\n";
-        } */
-
+            std::cout << "-------------------------------------------------------------------\n"; 
+        } 
         if (tokens_lexicos[i].tipo == 5) {
             bandera_sintactica = false;
         }
@@ -114,7 +123,7 @@ int main() {
     } else {
         std::cout << "No se encontraron errores de sintaxis en el codigo.\n";
         parser();
-    }
+    }  
 
     return 0;
 }

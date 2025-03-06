@@ -1,0 +1,8 @@
+<parrafo "hola mundo" >
+<lista_ordenada :reverso
+  <lista_elemento "hola1" >
+  <lista_elemento "hola2" >
+  <lista_elemento "hola3" >
+  <lista_elemento "hola4" > 
+>
+<campo :requerido :tipo="texto" >

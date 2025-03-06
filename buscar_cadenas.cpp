@@ -26,7 +26,7 @@ int buscar_etiqueta(std::string posible_etiqueta){
 int buscar_atributo_solo(std::string posible_atributo_solo){ //solo son para los atributos de nombre nada más, como revert en las listas, o required en los inputs
   std::string atributo_solo_a_buscar = posible_atributo_solo.substr(1);
 
-  std::string atributos_solos[] = {"revertir", "requerir"};
+  std::string atributos_solos[] = {"reverso", "requerido"};
   int canditad_atributos_solos = sizeof(atributos_solos) / sizeof(std::string);
 
   int i = 0;
