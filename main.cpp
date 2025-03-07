@@ -110,11 +110,11 @@ int main() {
     }
 
     if (!bandera_sintactica) {
-        std::cout << "Se encontraron errores de sintaxis en el codigo.\n";
+        std::cout << "Se encontraron errores lexicos en el codigo.\n \n \n";
     } else {
-        std::cout << "No se encontraron errores de sintaxis en el codigo.\n";
-        parser();
-    }
+        std::cout << "No se encontraron errores lexicos en el codigo.\n \n \n";
+        parser(tokens_lexicos, num_tokens);
+    }  
 
     return 0;
 }
