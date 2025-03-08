@@ -40,103 +40,103 @@ documento: elemento documento {
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
 
   if(strcmp($1, "<titulo1") == 0){
-    fprintf(yyout, "</h1>");
+    fprintf(yyout, " </h1>");
   }
   if(strcmp($1, "<titulo2") == 0){
-    fprintf(yyout, "</h2>");
+    fprintf(yyout, " </h2>");
   }
   if(strcmp($1, "<titulo3") == 0){
-    fprintf(yyout, "</h3>");
+    fprintf(yyout, " </h3>");
   }
   if(strcmp($1, "<titulo4") == 0){
-    fprintf(yyout, "</h4>");
+    fprintf(yyout, " </h4>");
   }
   if(strcmp($1, "<titulo5") == 0){
-    fprintf(yyout, "</h5>");
+    fprintf(yyout, " </h5>");
   }
   if(strcmp($1, "<titulo6") == 0){
-    fprintf(yyout, "</h6>");
+    fprintf(yyout, " </h6>");
   }
   if(strcmp($1, "<negrita") == 0){
-    fprintf(yyout, "</strong>");
+    fprintf(yyout, " </strong>");
   }
   if(strcmp($1, "<italica") == 0){
-    fprintf(yyout, "</i>");
+    fprintf(yyout, " </i>");
   }
   if(strcmp($1, "<resaltar") == 0){
-    fprintf(yyout, "</mark>");
+    fprintf(yyout, " </mark>");
   }
   if(strcmp($1, "<pequenio") == 0){
-    fprintf(yyout, "</small>");
+    fprintf(yyout, " </small>");
   }
   if(strcmp($1, "<cursiva") == 0){
-    fprintf(yyout, "</em>");
+    fprintf(yyout, " </em>");
   }
   if(strcmp($1, "<tachar") == 0){
-    fprintf(yyout, "</s>");
+    fprintf(yyout, " </s>");
   }
   if(strcmp($1, "<lista_no_ordenada") == 0){
-    fprintf(yyout, "</ul>");
+    fprintf(yyout, " </ul>");
   }
   if(strcmp($1, "<lista_ordenada") == 0){
-    fprintf(yyout, "</ol>");
+    fprintf(yyout, " </ol>");
   }
   if(strcmp($1, "<lista_elemento") == 0){
-    fprintf(yyout, "</li>");
+    fprintf(yyout, " </li>");
   }
   if(strcmp($1, "<division") == 0){
-    fprintf(yyout, "</div>");
+    fprintf(yyout, " </div>");
   }
   if(strcmp($1, "<seccion") == 0){
-    fprintf(yyout, "</section>");
+    fprintf(yyout, " </section>");
   }
   if(strcmp($1, "<pie") == 0){
-    fprintf(yyout, "</footer>");
+    fprintf(yyout, " </footer>");
   }
   if(strcmp($1, "<cabecera") == 0){
-    fprintf(yyout, "</header>");
+    fprintf(yyout, " </header>");
   }
    if(strcmp($1, "<navegacion") == 0){
-    fprintf(yyout, "</nav>");
+    fprintf(yyout, " </nav>");
   }
   if(strcmp($1, "<aparte") == 0){
-    fprintf(yyout, "</aside>");
+    fprintf(yyout, " </aside>");
   }
   if(strcmp($1, "<seleccion") == 0){
-    fprintf(yyout, "</span>");
+    fprintf(yyout, " </span>");
   }
   if(strcmp($1, "<tabla") == 0){
-    fprintf(yyout, "</table>");
+    fprintf(yyout, " </table>");
   }
   if(strcmp($1, "<tabla_cabeza") == 0){
-    fprintf(yyout, "</thead>");
+    fprintf(yyout, " </thead>");
   }
   if(strcmp($1, "<tabla_cuerpo") == 0){
-    fprintf(yyout, "</tbody>");
+    fprintf(yyout, " </tbody>");
   }
   if(strcmp($1, "<tabla_fila") == 0){
-    fprintf(yyout, "</tr>");
+    fprintf(yyout, " </tr>");
   }
   if(strcmp($1, "<tabla_celda") == 0){
-    fprintf(yyout, "</td>");
+    fprintf(yyout, " </td>");
   }
   if(strcmp($1, "<tabla_cabecera") == 0){
-    fprintf(yyout, "</th>");
+    fprintf(yyout, " </th>");
   }
   if(strcmp($1, "<formulario") == 0){
-    fprintf(yyout, "</form>");
+    fprintf(yyout, " </form>");
   }
   if(strcmp($1, "<boton") == 0){
-    fprintf(yyout, "</button>");
+    fprintf(yyout, " </button>");
   }
   if(strcmp($1, "<leyenda") == 0){
-    fprintf(yyout, "</label>");
+    fprintf(yyout, " </label>");
   }
   if(strcmp($1, "<parrafo") == 0){
-    fprintf(yyout, "</p>");
+    fprintf(yyout, " </p>");
   }
   if(strcmp($1, "<division") == 0){
-    fprintf(yyout, "</div>");
+    fprintf(yyout, "  </div>");
   }
 
 };
@@ -144,109 +144,109 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
 inicio: INICIO_ETIQUETA {
 
   if(strcmp($1, "<division") == 0){
-    fprintf(yyout, "<div");
+    fprintf(yyout, "<div ");
   }
   if(strcmp($1, "<parrafo") == 0){
-    fprintf(yyout, "%s", "<p");
+    fprintf(yyout, "%s", "<p ");
   }
   if(strcmp($1, "<titulo1") == 0){
-    fprintf(yyout, "<h1");
+    fprintf(yyout, "<h1 ");
   }
   if(strcmp($1, "<titulo2") == 0){
-    fprintf(yyout, "<h2");
+    fprintf(yyout, "<h2 ");
   }
   if(strcmp($1, "<titulo3") == 0){
-    fprintf(yyout, "<h3");
+    fprintf(yyout, "<h3 ");
   }
   if(strcmp($1, "<titulo4") == 0){
-    fprintf(yyout, "<h4");
+    fprintf(yyout, "<h4 ");
   }
   if(strcmp($1, "<titulo5") == 0){
-    fprintf(yyout, "<h5");
+    fprintf(yyout, "<h5 ");
   }
   if(strcmp($1, "<titulo6") == 0){
-    fprintf(yyout, "<h6");
+    fprintf(yyout, "<h6 ");
   }
   if(strcmp($1, "<negrita") == 0){
-    fprintf(yyout, "<strong");
+    fprintf(yyout, "<strong ");
   }
   if(strcmp($1, "<italica") == 0){
-    fprintf(yyout, "<i");
+    fprintf(yyout, "<i ");
   }
   if(strcmp($1, "<resaltar") == 0){
-    fprintf(yyout, "<mark");
+    fprintf(yyout, "<mark ");
   }
   if(strcmp($1, "<pequenio") == 0){
-    fprintf(yyout, "<small");
+    fprintf(yyout, "<small ");
   }
   if(strcmp($1, "<cursiva") == 0){
-    fprintf(yyout, "<em");
+    fprintf(yyout, "<em ");
   }
   if(strcmp($1, "<tachar") == 0){
-    fprintf(yyout, "<s");
+    fprintf(yyout, "<s ");
   }
   if(strcmp($1, "<lista_no_ordenada") == 0){
-    fprintf(yyout, "<ul");
+    fprintf(yyout, "<ul ");
   }
   if(strcmp($1, "<lista_ordenada") == 0){
-    fprintf(yyout, "<ol");
+    fprintf(yyout, "<ol ");
   }
   if(strcmp($1, "<lista_elemento") == 0){
-    fprintf(yyout, "<li");
+    fprintf(yyout, "<li ");
   }
   if(strcmp($1, "<seccion") == 0){
-    fprintf(yyout, "<section");
+    fprintf(yyout, "<section ");
   }
   if(strcmp($1, "<pie") == 0){
-    fprintf(yyout, "<footer");
+    fprintf(yyout, "<footer ");
   }
   if(strcmp($1, "<cabecera") == 0){
-    fprintf(yyout, "<header");
+    fprintf(yyout, "<header ");
   }
   if(strcmp($1, "<navegacion") == 0){
-    fprintf(yyout, "<nav");
+    fprintf(yyout, "<nav ");
   }
   if(strcmp($1, "<aparte") == 0){
-    fprintf(yyout, "<aside");
+    fprintf(yyout, "<aside ");
   }
   if(strcmp($1, "<seleccion") == 0){
-    fprintf(yyout, "<span");
+    fprintf(yyout, "<span ");
   }
   if(strcmp($1, "<linea_horizontal") == 0){
-    fprintf(yyout, "<hr");
+    fprintf(yyout, "<hr ");
   }
   if(strcmp($1, "<tabla") == 0){
-    fprintf(yyout, "<table");
+    fprintf(yyout, "<table ");
   }
   if(strcmp($1, "<tabla_cabeza") == 0){
-    fprintf(yyout, "<thead");
+    fprintf(yyout, "<thead ");
   }
   if(strcmp($1, "<tabla_cuerpo") == 0){
-    fprintf(yyout, "<tbody");
+    fprintf(yyout, "<tbody ");
   }
   if(strcmp($1, "<tabla_fila") == 0){
-    fprintf(yyout, "<tr");
+    fprintf(yyout, "<tr ");
   }
   if(strcmp($1, "<tabla_celda") == 0){
-    fprintf(yyout, "<td");
+    fprintf(yyout, "<td ");
   }
   if(strcmp($1, "<tabla_cabecera") == 0){
-    fprintf(yyout, "<th");
+    fprintf(yyout, "<th ");
   }
   if(strcmp($1, "<formulario") == 0){
-    fprintf(yyout, "<form");
+    fprintf(yyout, "<form ");
   }
   if(strcmp($1, "<boton") == 0){
-    fprintf(yyout, "<button");
+    fprintf(yyout, "<button ");
   }
   if(strcmp($1, "<leyenda") == 0){
-    fprintf(yyout, "<label");
+    fprintf(yyout, "<label ");
   }
   if(strcmp($1, "<campo") == 0){
-    fprintf(yyout, "<input");
+    fprintf(yyout, "<input ");
   }
   if(strcmp($1, "<imagen") == 0){
-    fprintf(yyout, "<img");
+    fprintf(yyout, "<img ");
   }
   
 };
@@ -261,30 +261,30 @@ atributo: atributo ATRIBUTO_VALOR  {
           char *valor = simbolo_igual + 1;
 
           if(strcmp(atributo, ":tipo") == 0){
-            char *type_prefix = "type=";
+            char *type_prefix = " type=";
             if(strcmp(valor, "\"texto\"") == 0){
-              fprintf(yyout, "%s\"text\"", type_prefix);
+              fprintf(yyout, "%s\"text\" ", type_prefix);
             };
             if(strcmp(valor, "\"numero\"") == 0){
-              fprintf(yyout, "%s\"number\"", type_prefix);
+              fprintf(yyout, "%s\"number\" ", type_prefix);
             };
             if(strcmp(valor, "\"radio\"") == 0){
-              fprintf(yyout, "%s\"radio\"", type_prefix);
+              fprintf(yyout, "%s\"radio\" ", type_prefix);
             };
             if(strcmp(valor, "\"caja_check\"") == 0){
-              fprintf(yyout, "%s\"checkbox\"", type_prefix);
+              fprintf(yyout, "%s\"checkbox\" ", type_prefix);
             };
             if(strcmp(valor, "\"enviar\"") == 0){
-              fprintf(yyout, "%s\"submit\"", type_prefix);
+              fprintf(yyout, "%s\"submit\" ", type_prefix);
             };
             if(strcmp(valor, "\"correo\"") == 0){
-              fprintf(yyout, "%s\"email\"", type_prefix);
+              fprintf(yyout, "%s\"email\" ", type_prefix);
             };
             if(strcmp(valor, "\"telefono\"") == 0){
-              fprintf(yyout, "%s\"tel\"", type_prefix);
+              fprintf(yyout, "%s\"tel\" ", type_prefix);
             };
             if(strcmp(valor, "\"contrasenia\"") == 0){
-              fprintf(yyout, "%s\"password\"", type_prefix);
+              fprintf(yyout, "%s\"password\" ", type_prefix);
             };
           };
 
@@ -292,10 +292,10 @@ atributo: atributo ATRIBUTO_VALOR  {
         | ATRIBUTO { 
           $$ = $1;
           if(strcmp($1, ":reverso") == 0){
-            fprintf(yyout, "reversed");
+            fprintf(yyout, " reversed ");
           }
           if(strcmp($1, ":requerido") == 0){
-            fprintf(yyout, "required");
+            fprintf(yyout, " required ");
           }
 
         };

@@ -1356,103 +1356,103 @@ yyreduce:
     {
 
   if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo1") == 0){
-    fprintf(yyout, "</h1>");
+    fprintf(yyout, " </h1>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo2") == 0){
-    fprintf(yyout, "</h2>");
+    fprintf(yyout, " </h2>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo3") == 0){
-    fprintf(yyout, "</h3>");
+    fprintf(yyout, " </h3>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo4") == 0){
-    fprintf(yyout, "</h4>");
+    fprintf(yyout, " </h4>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo5") == 0){
-    fprintf(yyout, "</h5>");
+    fprintf(yyout, " </h5>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo6") == 0){
-    fprintf(yyout, "</h6>");
+    fprintf(yyout, " </h6>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<negrita") == 0){
-    fprintf(yyout, "</strong>");
+    fprintf(yyout, " </strong>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<italica") == 0){
-    fprintf(yyout, "</i>");
+    fprintf(yyout, " </i>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<resaltar") == 0){
-    fprintf(yyout, "</mark>");
+    fprintf(yyout, " </mark>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<pequenio") == 0){
-    fprintf(yyout, "</small>");
+    fprintf(yyout, " </small>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<cursiva") == 0){
-    fprintf(yyout, "</em>");
+    fprintf(yyout, " </em>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<tachar") == 0){
-    fprintf(yyout, "</s>");
+    fprintf(yyout, " </s>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<lista_no_ordenada") == 0){
-    fprintf(yyout, "</ul>");
+    fprintf(yyout, " </ul>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<lista_ordenada") == 0){
-    fprintf(yyout, "</ol>");
+    fprintf(yyout, " </ol>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<lista_elemento") == 0){
-    fprintf(yyout, "</li>");
+    fprintf(yyout, " </li>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<division") == 0){
-    fprintf(yyout, "</div>");
+    fprintf(yyout, " </div>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<seccion") == 0){
-    fprintf(yyout, "</section>");
+    fprintf(yyout, " </section>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<pie") == 0){
-    fprintf(yyout, "</footer>");
+    fprintf(yyout, " </footer>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<cabecera") == 0){
-    fprintf(yyout, "</header>");
+    fprintf(yyout, " </header>");
   }
    if(strcmp((yyvsp[(1) - (5)].cadena), "<navegacion") == 0){
-    fprintf(yyout, "</nav>");
+    fprintf(yyout, " </nav>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<aparte") == 0){
-    fprintf(yyout, "</aside>");
+    fprintf(yyout, " </aside>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<seleccion") == 0){
-    fprintf(yyout, "</span>");
+    fprintf(yyout, " </span>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla") == 0){
-    fprintf(yyout, "</table>");
+    fprintf(yyout, " </table>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_cabeza") == 0){
-    fprintf(yyout, "</thead>");
+    fprintf(yyout, " </thead>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_cuerpo") == 0){
-    fprintf(yyout, "</tbody>");
+    fprintf(yyout, " </tbody>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_fila") == 0){
-    fprintf(yyout, "</tr>");
+    fprintf(yyout, " </tr>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_celda") == 0){
-    fprintf(yyout, "</td>");
+    fprintf(yyout, " </td>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<tabla_cabecera") == 0){
-    fprintf(yyout, "</th>");
+    fprintf(yyout, " </th>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<formulario") == 0){
-    fprintf(yyout, "</form>");
+    fprintf(yyout, " </form>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<boton") == 0){
-    fprintf(yyout, "</button>");
+    fprintf(yyout, " </button>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<leyenda") == 0){
-    fprintf(yyout, "</label>");
+    fprintf(yyout, " </label>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<parrafo") == 0){
-    fprintf(yyout, "</p>");
+    fprintf(yyout, " </p>");
   }
   if(strcmp((yyvsp[(1) - (5)].cadena), "<division") == 0){
-    fprintf(yyout, "</div>");
+    fprintf(yyout, "  </div>");
   }
 
 ;}
@@ -1465,109 +1465,109 @@ yyreduce:
     {
 
   if(strcmp((yyvsp[(1) - (1)].cadena), "<division") == 0){
-    fprintf(yyout, "<div");
+    fprintf(yyout, "<div ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<parrafo") == 0){
-    fprintf(yyout, "%s", "<p");
+    fprintf(yyout, "%s", "<p ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo1") == 0){
-    fprintf(yyout, "<h1");
+    fprintf(yyout, "<h1 ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo2") == 0){
-    fprintf(yyout, "<h2");
+    fprintf(yyout, "<h2 ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo3") == 0){
-    fprintf(yyout, "<h3");
+    fprintf(yyout, "<h3 ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo4") == 0){
-    fprintf(yyout, "<h4");
+    fprintf(yyout, "<h4 ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo5") == 0){
-    fprintf(yyout, "<h5");
+    fprintf(yyout, "<h5 ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<titulo6") == 0){
-    fprintf(yyout, "<h6");
+    fprintf(yyout, "<h6 ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<negrita") == 0){
-    fprintf(yyout, "<strong");
+    fprintf(yyout, "<strong ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<italica") == 0){
-    fprintf(yyout, "<i");
+    fprintf(yyout, "<i ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<resaltar") == 0){
-    fprintf(yyout, "<mark");
+    fprintf(yyout, "<mark ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<pequenio") == 0){
-    fprintf(yyout, "<small");
+    fprintf(yyout, "<small ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<cursiva") == 0){
-    fprintf(yyout, "<em");
+    fprintf(yyout, "<em ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tachar") == 0){
-    fprintf(yyout, "<s");
+    fprintf(yyout, "<s ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_no_ordenada") == 0){
-    fprintf(yyout, "<ul");
+    fprintf(yyout, "<ul ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_ordenada") == 0){
-    fprintf(yyout, "<ol");
+    fprintf(yyout, "<ol ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<lista_elemento") == 0){
-    fprintf(yyout, "<li");
+    fprintf(yyout, "<li ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<seccion") == 0){
-    fprintf(yyout, "<section");
+    fprintf(yyout, "<section ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<pie") == 0){
-    fprintf(yyout, "<footer");
+    fprintf(yyout, "<footer ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<cabecera") == 0){
-    fprintf(yyout, "<header");
+    fprintf(yyout, "<header ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<navegacion") == 0){
-    fprintf(yyout, "<nav");
+    fprintf(yyout, "<nav ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<aparte") == 0){
-    fprintf(yyout, "<aside");
+    fprintf(yyout, "<aside ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<seleccion") == 0){
-    fprintf(yyout, "<span");
+    fprintf(yyout, "<span ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<linea_horizontal") == 0){
-    fprintf(yyout, "<hr");
+    fprintf(yyout, "<hr ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla") == 0){
-    fprintf(yyout, "<table");
+    fprintf(yyout, "<table ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cabeza") == 0){
-    fprintf(yyout, "<thead");
+    fprintf(yyout, "<thead ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cuerpo") == 0){
-    fprintf(yyout, "<tbody");
+    fprintf(yyout, "<tbody ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_fila") == 0){
-    fprintf(yyout, "<tr");
+    fprintf(yyout, "<tr ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_celda") == 0){
-    fprintf(yyout, "<td");
+    fprintf(yyout, "<td ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<tabla_cabecera") == 0){
-    fprintf(yyout, "<th");
+    fprintf(yyout, "<th ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<formulario") == 0){
-    fprintf(yyout, "<form");
+    fprintf(yyout, "<form ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<boton") == 0){
-    fprintf(yyout, "<button");
+    fprintf(yyout, "<button ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<leyenda") == 0){
-    fprintf(yyout, "<label");
+    fprintf(yyout, "<label ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<campo") == 0){
-    fprintf(yyout, "<input");
+    fprintf(yyout, "<input ");
   }
   if(strcmp((yyvsp[(1) - (1)].cadena), "<imagen") == 0){
-    fprintf(yyout, "<img");
+    fprintf(yyout, "<img ");
   }
   
 ;}
@@ -1587,30 +1587,30 @@ yyreduce:
           char *valor = simbolo_igual + 1;
 
           if(strcmp(atributo, ":tipo") == 0){
-            char *type_prefix = "type=";
+            char *type_prefix = " type=";
             if(strcmp(valor, "\"texto\"") == 0){
-              fprintf(yyout, "%s\"text\"", type_prefix);
+              fprintf(yyout, "%s\"text\" ", type_prefix);
             };
             if(strcmp(valor, "\"numero\"") == 0){
-              fprintf(yyout, "%s\"number\"", type_prefix);
+              fprintf(yyout, "%s\"number\" ", type_prefix);
             };
             if(strcmp(valor, "\"radio\"") == 0){
-              fprintf(yyout, "%s\"radio\"", type_prefix);
+              fprintf(yyout, "%s\"radio\" ", type_prefix);
             };
             if(strcmp(valor, "\"caja_check\"") == 0){
-              fprintf(yyout, "%s\"checkbox\"", type_prefix);
+              fprintf(yyout, "%s\"checkbox\" ", type_prefix);
             };
             if(strcmp(valor, "\"enviar\"") == 0){
-              fprintf(yyout, "%s\"submit\"", type_prefix);
+              fprintf(yyout, "%s\"submit\" ", type_prefix);
             };
             if(strcmp(valor, "\"correo\"") == 0){
-              fprintf(yyout, "%s\"email\"", type_prefix);
+              fprintf(yyout, "%s\"email\" ", type_prefix);
             };
             if(strcmp(valor, "\"telefono\"") == 0){
-              fprintf(yyout, "%s\"tel\"", type_prefix);
+              fprintf(yyout, "%s\"tel\" ", type_prefix);
             };
             if(strcmp(valor, "\"contrasenia\"") == 0){
-              fprintf(yyout, "%s\"password\"", type_prefix);
+              fprintf(yyout, "%s\"password\" ", type_prefix);
             };
           };
 
@@ -1624,10 +1624,10 @@ yyreduce:
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           if(strcmp((yyvsp[(1) - (1)].cadena), ":reverso") == 0){
-            fprintf(yyout, "reversed");
+            fprintf(yyout, " reversed ");
           }
           if(strcmp((yyvsp[(1) - (1)].cadena), ":requerido") == 0){
-            fprintf(yyout, "required");
+            fprintf(yyout, " required ");
           }
 
         ;}
