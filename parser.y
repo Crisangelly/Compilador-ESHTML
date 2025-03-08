@@ -7,6 +7,8 @@
   extern char *yytext;
   extern FILE *yyin;
   extern FILE *yyout;
+  extern int yylineno;
+
   void yyerror(char *s);
 
 %}
@@ -327,5 +329,5 @@ int main(void) {
 }
 
 void yyerror(char *s){
-  printf("Error sintactico %s\n",s);
+  fprintf(stderr, "Error de sintaxis en la linea %d: %s\n", yylineno, s);
 }

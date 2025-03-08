@@ -78,12 +78,14 @@
   extern char *yytext;
   extern FILE *yyin;
   extern FILE *yyout;
+  extern int yylineno;
+
   void yyerror(char *s);
 
 
 
 /* Line 189 of yacc.c  */
-#line 87 "parser.tab.c"
+#line 89 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -125,14 +127,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 14 "parser.y"
+#line 16 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 136 "parser.tab.c"
+#line 138 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -144,7 +146,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 148 "parser.tab.c"
+#line 150 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -429,8 +431,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    31,    31,    34,    38,   142,   252,   294,   304,   308,
-     310,   313,   317
+       0,    33,    33,    36,    40,   144,   254,   292,   302,   306,
+     308,   311,   315
 };
 #endif
 
@@ -1332,7 +1334,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 31 "parser.y"
+#line 33 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1341,7 +1343,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 34 "parser.y"
+#line 36 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1350,7 +1352,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 38 "parser.y"
+#line 40 "parser.y"
     {
 
   if(strcmp((yyvsp[(1) - (5)].cadena), "<titulo1") == 0){
@@ -1459,7 +1461,7 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 142 "parser.y"
+#line 144 "parser.y"
     {
 
   if(strcmp((yyvsp[(1) - (1)].cadena), "<division") == 0){
@@ -1574,7 +1576,7 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 252 "parser.y"
+#line 254 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1585,9 +1587,7 @@ yyreduce:
           char *valor = simbolo_igual + 1;
 
           if(strcmp(atributo, ":tipo") == 0){
-
             char *type_prefix = "type=";
-
             if(strcmp(valor, "\"texto\"") == 0){
               fprintf(yyout, "%s\"text\"", type_prefix);
             };
@@ -1612,8 +1612,6 @@ yyreduce:
             if(strcmp(valor, "\"contrasenia\"") == 0){
               fprintf(yyout, "%s\"password\"", type_prefix);
             };
-
-
           };
 
         ;}
@@ -1622,7 +1620,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 294 "parser.y"
+#line 292 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           if(strcmp((yyvsp[(1) - (1)].cadena), ":reverso") == 0){
@@ -1638,7 +1636,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 304 "parser.y"
+#line 302 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1647,14 +1645,14 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 308 "parser.y"
+#line 306 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 310 "parser.y"
+#line 308 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1663,7 +1661,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 313 "parser.y"
+#line 311 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
             fprintf(yyout, "%s", (yyvsp[(2) - (2)].cadena));
@@ -1673,7 +1671,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 317 "parser.y"
+#line 315 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1682,7 +1680,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1686 "parser.tab.c"
+#line 1684 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1894,7 +1892,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 322 "parser.y"
+#line 320 "parser.y"
 
 
 int main(void) {
@@ -1907,5 +1905,5 @@ int main(void) {
 }
 
 void yyerror(char *s){
-  printf("Error sintactico %s\n",s);
+  fprintf(stderr, "Error de sintaxis en la linea %d: %s\n", yylineno, s);
 }

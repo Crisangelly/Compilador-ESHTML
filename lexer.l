@@ -6,6 +6,7 @@
   #include "parser.tab.h"
 %}
 %option noyywrap
+%option yylineno
 
 %%
 
