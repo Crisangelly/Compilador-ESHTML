@@ -140,6 +140,7 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
   }
 
 };
+ | error { yyerror(" la estructura de la etiqueta esta mal"); } ;
 
 inicio: INICIO_ETIQUETA {
 
@@ -329,5 +330,5 @@ int main(void) {
 }
 
 void yyerror(char *s){
-  fprintf(stderr, "Error de sintaxis en la linea %d: %s\n", yylineno, s);
+  fprintf(stderr, "Error de sintaxis en la linea %d, token: %s, error: %s\n", yylineno, yytext, s);
 }
