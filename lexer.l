@@ -4,8 +4,10 @@
   #include <string.h>
   
   #include "parser.tab.h"
+  int line_num = 1;
 %}
 %option noyywrap
+%option yylineno
 
 %%
 
@@ -33,5 +35,11 @@
   yylval.cadena = strdup(yytext);
   return ATRIBUTO_VALOR;
 }
+
+[ \t] { /* Ignorar espacios en blanco */ }
+
+\n  { line_num++; /* Incrementar el número de línea */ }
+
+. { printf("Error lexico en linea %d: caracter no reconocido '%c'\n", line_num, yytext[0]); }
 
 %%
