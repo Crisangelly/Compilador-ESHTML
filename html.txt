@@ -14,9 +14,10 @@
 
 <h1 >"lista ordenada" </h1>
 
-<img ="https://example.com/imagen.png"  id="logo"  name="imagen">
+<img  src="https://example.com/imagen.png"  id="logo"  name="imagen">
 
 <p  class="aviso" >"hola mundo"</p>
+<p >"¡Hola, comelón mundo! 123 #$%" </p>
 
 <h1  >"lista ordenada" </h1>
 <h1 >"lista ordenada" </h1>
