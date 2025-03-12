@@ -14,7 +14,7 @@
   return INICIO_ETIQUETA;
 }
 
-["][a-zA-Z ]+["]  {
+["][^"]*["]  {
   yylval.cadena = strdup(yytext);
   return CADENA_DE_TEXTO;
 }
@@ -29,7 +29,7 @@
   return ATRIBUTO;
 }
 
-[:][a-z_]+[=]["][a-zA-Z_ ]+["]  {
+[:][a-z_]+[=]["][^"]*["]   {
   yylval.cadena = strdup(yytext);
   return ATRIBUTO_VALOR;
 }

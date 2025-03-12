@@ -17,6 +17,7 @@
 <imagen :enlace_imagen="https://example.com/imagen.png" :id="logo" :nombre="imagen">
 
 <parrafo :clase="aviso" "hola mundo">
+<parrafo "¡Hola, comelón mundo! 123 #$%" >
 
 <titulo1  "lista ordenada" >
 <titulo1 "lista ordenada" >

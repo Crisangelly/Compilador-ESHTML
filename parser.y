@@ -259,7 +259,7 @@ atributo: atributo ATRIBUTO_VALOR  {
           char *valor = simbolo_igual + 1;
 
           if(strcmp(atributo, ":enlace_imagen") == 0){
-            fprintf(yyout, " src=\"%s\"", valor);
+            fprintf(yyout, " src=%s", valor);
           }
           if(strcmp(atributo, ":id") == 0){
             fprintf(yyout, " id=%s", valor);
