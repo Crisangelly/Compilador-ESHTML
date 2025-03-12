@@ -14,7 +14,7 @@
 
 <titulo1 "lista ordenada" >
 
-<imagen :enlace_imagen="https://example.com/imagen.png" :id="logo" :nombre="imagen">
+<imagen :enlace_imagen="https://example.com/imagen.png" :id="logo" :nombre="imagen" >
 
 <parrafo :clase="aviso" "hola mundo">
 

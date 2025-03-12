@@ -289,8 +289,8 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 #define YY_END_OF_BUFFER 7
 static yyconst short int yy_accept[19] =
     {   0,
-        0,    0,    7,    6,    6,    6,    6,    3,    0,    4,
-        1,    2,    0,    1,    0,    0,    5,    0
+        0,    0,    7,    6,    6,    6,    6,    5,    0,    3,
+        1,    2,    0,    1,    0,    0,    4,    0
     } ;
 
 static yyconst int yy_ec[256] =
@@ -332,9 +332,9 @@ static yyconst int yy_meta[11] =
 
 static yyconst short int yy_base[24] =
     {   0,
-        0,    6,   29,   30,    0,    0,    0,   30,   17,    6,
-        6,   30,    4,   30,    0,    1,   30,   30,   14,   17,
-       19,   21,   24
+        0,    6,   31,   32,    0,    0,    0,   32,   27,   13,
+        9,   32,    7,   32,    4,    1,   32,   32,   14,   17,
+       19,   21,   25
     } ;
 
 static yyconst short int yy_def[24] =
@@ -344,20 +344,22 @@ static yyconst short int yy_def[24] =
        18,   18,   18
     } ;
 
-static yyconst short int yy_nxt[41] =
+static yyconst short int yy_nxt[43] =
     {   0,
-       18,   18,    5,   17,    6,    7,   15,    8,    5,   14,
-        6,    7,   13,    8,    4,    4,    4,    4,    9,   12,
-        9,   10,   10,   11,   11,   16,   16,   16,   18,    3,
-       18,   18,   18,   18,   18,   18,   18,   18,   18,   18
+       18,   18,    5,   17,    6,    7,   17,    8,    5,   15,
+        6,    7,   14,    8,    4,    4,    4,    4,    9,   13,
+        9,   10,   10,   11,   11,   16,   16,   16,   16,   12,
+       18,    3,   18,   18,   18,   18,   18,   18,   18,   18,
+       18,   18
     } ;
 
-static yyconst short int yy_chk[41] =
+static yyconst short int yy_chk[43] =
     {   0,
-        0,    0,    1,   16,    1,    1,   13,    1,    2,   11,
-        2,    2,   10,    2,   19,   19,   19,   19,   20,    9,
-       20,   21,   21,   22,   22,   23,   23,   23,    3,   18,
-       18,   18,   18,   18,   18,   18,   18,   18,   18,   18
+        0,    0,    1,   16,    1,    1,   15,    1,    2,   13,
+        2,    2,   11,    2,   19,   19,   19,   19,   20,   10,
+       20,   21,   21,   22,   22,   23,   23,   23,   23,    9,
+        3,   18,   18,   18,   18,   18,   18,   18,   18,   18,
+       18,   18
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -375,11 +377,7 @@ char *yytext;
 #define INITIAL 0
 #line 2 "lexer.l"
   #include <stdio.h>
-  #include <stdlib.h>
-  #include <string.h>
-  
-  #include "parser.tab.h"
-#line 383 "lex.yy.c"
+#line 381 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -530,10 +528,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 10 "lexer.l"
+#line 6 "lexer.l"
 
 
-#line 537 "lex.yy.c"
+#line 535 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -590,7 +588,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 30 );
+		while ( yy_base[yy_current_state] != 32 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -618,50 +616,35 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "lexer.l"
-{
-  yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
-  return INICIO_ETIQUETA;
-}
+#line 8 "lexer.l"
+{ fprintf(yyout, "INICIO_ETIQUETA"); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "lexer.l"
-{
-  yylval.cadena = strdup(yytext);
-  return CADENA_DE_TEXTO;
-}
+#line 9 "lexer.l"
+{ fprintf(yyout, "CADENA_DE_TEXTO"); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 22 "lexer.l"
-{
-  yylval.cadena = strdup(yytext);
-  return CIERRE_ETIQUETA;
-}
+#line 10 "lexer.l"
+{ fprintf(yyout, "ATRIBUTO"); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 27 "lexer.l"
-{
-  yylval.cadena = strdup(yytext);
-  return ATRIBUTO;
-}
+#line 11 "lexer.l"
+{ fprintf(yyout, "ATRIBUTO_VALOR"); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 32 "lexer.l"
-{
-  yylval.cadena = strdup(yytext);
-  return ATRIBUTO_VALOR;
-}
+#line 12 "lexer.l"
+{ fprintf(yyout, "CIERRE_ETIQUETA"); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 37 "lexer.l"
+#line 14 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 665 "lex.yy.c"
+#line 648 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1547,4 +1530,11 @@ int main()
 	return 0;
 	}
 #endif
-#line 37 "lexer.l"
+#line 14 "lexer.l"
+
+
+int main(){
+  yyin = fopen("eshtml.txt", "r");
+  yyout = fopen("html.txt", "w");
+  yylex();
+}
