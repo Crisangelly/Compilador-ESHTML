@@ -258,6 +258,19 @@ atributo: atributo ATRIBUTO_VALOR  {
           atributo[simbolo_igual - $2] = '\0'; 
           char *valor = simbolo_igual + 1;
 
+          if(strcmp(atributo, ":enlace_imagen") == 0){
+            fprintf(yyout, " src=\"%s\"", valor);
+          }
+          if(strcmp(atributo, ":id") == 0){
+            fprintf(yyout, " id=\"%s\"", valor);
+          };
+          if(strcmp(atributo, ":clase") == 0){
+            fprintf(yyout, " class=\"%s\"", valor);
+          };
+          if(strcmp(atributo, ":nombre") == 0){
+            fprintf(yyout, " name=\"%s\"", valor);
+          };
+
           if(strcmp(atributo, ":tipo") == 0){
             char *type_prefix = "type=";
             if(strcmp(valor, "\"texto\"") == 0){
