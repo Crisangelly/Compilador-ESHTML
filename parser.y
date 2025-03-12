@@ -262,13 +262,13 @@ atributo: atributo ATRIBUTO_VALOR  {
             fprintf(yyout, " src=\"%s\"", valor);
           }
           if(strcmp(atributo, ":id") == 0){
-            fprintf(yyout, " id=\"%s\"", valor);
+            fprintf(yyout, " id=%s", valor);
           };
           if(strcmp(atributo, ":clase") == 0){
-            fprintf(yyout, " class=\"%s\"", valor);
+            fprintf(yyout, " class=%s", valor);
           };
           if(strcmp(atributo, ":nombre") == 0){
-            fprintf(yyout, " name=\"%s\"", valor);
+            fprintf(yyout, " name=%s", valor);
           };
 
           if(strcmp(atributo, ":tipo") == 0){

@@ -429,8 +429,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    31,    31,    34,    38,   142,   252,   294,   304,   308,
-     310,   313,   317
+       0,    31,    31,    34,    38,   142,   252,   303,   313,   317,
+     319,   322,   326
 };
 #endif
 
@@ -1584,10 +1584,21 @@ yyreduce:
           atributo[simbolo_igual - (yyvsp[(2) - (2)].cadena)] = '\0'; 
           char *valor = simbolo_igual + 1;
 
+          if(strcmp(atributo, ":enlace_imagen") == 0){
+            fprintf(yyout, " src=\"%s\"", valor);
+          }
+          if(strcmp(atributo, ":id") == 0){
+            fprintf(yyout, " id=%s", valor);
+          };
+          if(strcmp(atributo, ":clase") == 0){
+            fprintf(yyout, " class=%s", valor);
+          };
+          if(strcmp(atributo, ":nombre") == 0){
+            fprintf(yyout, " name=%s", valor);
+          };
+
           if(strcmp(atributo, ":tipo") == 0){
-
             char *type_prefix = "type=";
-
             if(strcmp(valor, "\"texto\"") == 0){
               fprintf(yyout, "%s\"text\"", type_prefix);
             };
@@ -1612,8 +1623,6 @@ yyreduce:
             if(strcmp(valor, "\"contrasenia\"") == 0){
               fprintf(yyout, "%s\"password\"", type_prefix);
             };
-
-
           };
 
         ;}
@@ -1622,7 +1631,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 294 "parser.y"
+#line 303 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           if(strcmp((yyvsp[(1) - (1)].cadena), ":reverso") == 0){
@@ -1638,7 +1647,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 304 "parser.y"
+#line 313 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1647,14 +1656,14 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 308 "parser.y"
+#line 317 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 310 "parser.y"
+#line 319 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1663,7 +1672,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 313 "parser.y"
+#line 322 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
             fprintf(yyout, "%s", (yyvsp[(2) - (2)].cadena));
@@ -1673,7 +1682,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 317 "parser.y"
+#line 326 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1682,7 +1691,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1686 "parser.tab.c"
+#line 1695 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1894,7 +1903,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 322 "parser.y"
+#line 331 "parser.y"
 
 
 int main(void) {
