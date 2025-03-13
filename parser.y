@@ -12,6 +12,8 @@
 
   struct etiqueta_valida tabla_etiquetas[] = {
     {"<parrafo", "<p", "</p>"},
+    {"<lista_ordenada", "<ol", "</ol>"},
+    {"<lista_elemento", "<li", "</li>"},
     // Agrega más etiquetas aquí
     {NULL, NULL, NULL} // Marcador de fin de tabla
   };
@@ -104,7 +106,15 @@ contenido: contenido elemento  {
           };
           | contenido CADENA_DE_TEXTO { 
             $$ = $2;
-            fprintf(yyout, "%s", $2);
+
+            char* first_quote = strchr($2, '"');
+            char* second_quote = strrchr($2, '"');
+
+            if (first_quote && second_quote && first_quote != second_quote) {
+                *second_quote = '\0'; // Termina la cadena en la segunda comilla
+                fprintf(yyout, first_quote + 1);
+            }
+            
           };
           | /* vacío */ {  
             $$ = " ";

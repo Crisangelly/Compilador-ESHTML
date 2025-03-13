@@ -1,1 +1,7 @@
 <parrafo "¡Hola, mundo! 123 #$%" >
+<lista_ordenada 
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+  <lista_elemento "hola" >
+>
