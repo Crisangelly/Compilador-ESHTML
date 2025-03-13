@@ -74,7 +74,7 @@
   #include <stdlib.h>
   #include <string.h> 
 
-  // Tabla de etiquetas válidas
+  //------------------------- Tabla de etiquetas válidas
   struct etiqueta_valida {
     char *etiqueta_espanol;
     char *inicio_etiqueta_html;
@@ -82,10 +82,42 @@
   };
 
   struct etiqueta_valida tabla_etiquetas[] = {
-    {"<parrafo", "<p", "</p>"},
-    {"<lista_ordenada", "<ol", "</ol>"},
+    {"<aparte", "<aside", "</aside>"},
+    {"<boton", "<button", "</button>"},
+    {"<cabecera", "<header", "</header>"},
+    {"<campo", "<input", " "},
+    {"<cursiva", "<em", "</em>"},
+    {"<division", "<div", "</div>"},
+    {"<enlace", "<a", "</a>"},
+    {"<formulario", "<form", "</form>"},
+    {"<imagen", "<img", " "},
+    {"<italica", "<i", "</i>"},
+    {"<leyenda", "<label", "</label>"},
+    {"<linea_horizontal", "<hr", " "},
     {"<lista_elemento", "<li", "</li>"},
-    // Agrega más etiquetas aquí
+    {"<lista_no_ordenada", "<ul", "</ul>"},
+    {"<lista_ordenada", "<ol", "</ol>"},
+    {"<navegacion", "<nav", "</nav>"},
+    {"<negrita", "<strong", "</strong>"},
+    {"<parrafo", "<p", "</p>"},
+    {"<pequenio", "<small", "</small>"},
+    {"<pie_de_pagina", "<footer", "</footer>"},
+    {"<resaltar", "<mark", "</mark>"},
+    {"<seccion", "<section", "</section>"},
+    {"<seleccion", "<span", "</span>"},
+    {"<tabla", "<table", "</table>"},
+    {"<tabla_cabecera", "<th", "</th>"},
+    {"<tabla_cabeza", "<thead", "</thead>"},
+    {"<tabla_celda", "<td", "</td>"},
+    {"<tabla_cuerpo", "<tbody", "</tbody>"},
+    {"<tabla_fila", "<tr", "</tr>"},
+    {"<tachar", "<s", "</s"},
+    {"<titulo1", "<h1", "</h1>"},
+    {"<titulo2", "<h2", "</h2>"},
+    {"<titulo3", "<h3", "</h3>"},
+    {"<titulo4", "<h4", "</h4>"},
+    {"<titulo5", "<h5", "</h5>"},
+    {"<titulo6", "<h6", "</h6>"},
     {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
@@ -101,6 +133,84 @@
   }
 
 
+  //------------------------- Tabla de atributos solos válidos
+  struct atributo_valido {
+    char *atributo_espanol;
+    char *atributo_html;
+  };
+
+  struct atributo_valido tabla_atributos[] = {
+    {":requerido", " required "},
+    {":reverso", " reversed "},
+    {NULL, NULL} // Marcador de fin de tabla
+  };
+
+  int traducir_atributo(char *atributo_espanol) {
+    int i = 0; 
+    for (i; tabla_atributos[i].atributo_espanol != NULL; i++) {
+      if (strcmp(atributo_espanol, tabla_atributos[i].atributo_espanol) == 0) {
+        return i;
+      }
+    }
+      return -1; // Atributo no encontrada
+  }
+
+  //------------------------- Tabla de atributos con valor válidos
+  struct valor_atributo {
+    char *valor_espanol;
+    char *valor_html;
+  };
+
+  struct valor_atributo valores_type[] = {
+    {"\"texto\"", "\"text\""},
+    {"\"numero\"", "\"number\""},
+    {"\"radio\"", "\"radio\""},
+    {"\"caja_check\"", "\"checkbox\""},
+    {"\"enviar\"", "\"submit\""},
+    {"\"correo\"", "\"email\""},
+    {"\"telefono\"", "\"tel\""},
+    {"\"contrasenia\"", "\"password\""},
+    {NULL, NULL}
+  };
+
+  struct atributo_valor_valido {
+    char *atributo_valor_espanol;
+    char *atributo_valor_html;
+    struct valor_atributo *valores_permitidos;
+  };
+
+  struct atributo_valor_valido tabla_atributos_valor[] = {
+    {":tipo", "type", valores_type},
+    {":clase", "class", NULL},
+    {":identificador", "id", NULL},
+    {":nombre", "name", NULL},
+    {":enlace_imagen", "src", NULL},
+    {":enlace_externo", "href", NULL},
+    {":descripcion", "alt", NULL},
+    {NULL, NULL} // Marcador de fin de tabla
+  };
+
+  int traducir_atributo_valor(char *atributo_valor_espanol) {
+    int i = 0; 
+    for (i; tabla_atributos_valor[i].atributo_valor_espanol != NULL; i++) {
+      if (strcmp(atributo_valor_espanol, tabla_atributos_valor[i].atributo_valor_espanol) == 0) {
+        return i;
+      }
+    }
+      return -1; // Atributo no encontrada
+  }
+
+  int traducir_valor(char *valor_espanol, struct valor_atributo *valores) {
+    int i = 0; 
+    for (i; valores[i].valor_espanol != NULL; i++) {
+    if (strcmp(valor_espanol, valores[i].valor_espanol) == 0) {
+        return i;
+      }
+    }
+      return -1; // Atributo no encontrada
+  }
+
+
   extern int yylex(void);
   extern char *yytext;
   extern FILE *yyin;
@@ -112,7 +222,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 116 "parser.tab.c"
+#line 226 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -154,14 +264,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 43 "parser.y"
+#line 153 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 165 "parser.tab.c"
+#line 275 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -173,7 +283,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 177 "parser.tab.c"
+#line 287 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -457,10 +567,10 @@ static const yytype_int8 yyrhs[] =
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,    60,    60,    63,    67,    70,    72,    84,    94,    98,
-     102,   104,   107,   119
+       0,   170,   170,   173,   177,   182,   184,   196,   232,   246,
+     250,   252,   255,   267
 };
 #endif
 
@@ -1364,7 +1474,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 60 "parser.y"
+#line 170 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1373,7 +1483,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 63 "parser.y"
+#line 173 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1382,23 +1492,25 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 67 "parser.y"
+#line 177 "parser.y"
     {
-  fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
+  if((yyvsp[(1) - (5)].cadena) != " "){
+    fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
+  }
 ;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 70 "parser.y"
+#line 182 "parser.y"
     { yyerror(" la estructura de la etiqueta esta mal"); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 72 "parser.y"
+#line 184 "parser.y"
     {
     int traduccion = traducir_etiqueta((yyvsp[(1) - (1)].cadena));
 
@@ -1415,7 +1527,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 84 "parser.y"
+#line 196 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1425,15 +1537,51 @@ yyreduce:
           atributo[simbolo_igual - (yyvsp[(2) - (2)].cadena)] = '\0'; 
           char *valor = simbolo_igual + 1;
 
+          int traduccion = traducir_atributo_valor(atributo);
+
+          if (traduccion != -1) {
+
+            if(tabla_atributos_valor[traduccion].valores_permitidos != NULL){
+
+              int traduccion_valor =  traducir_valor(valor, tabla_atributos_valor[traduccion].valores_permitidos);
+              if (traduccion_valor != -1) {
+          
+                fprintf(yyout, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
+
+              } else {
+                fprintf(stderr, "Error semantico en la linea %d: valor del atributo '%s' no valido\n", yylineno, valor, (yyvsp[(1) - (2)].cadena));
+                YYABORT; // Abortar el analisis si el atributo no es valido
+              }
+
+            }else{
+              fprintf(yyout, " %s=%s ",tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+            }
+
+
+          } else {
+            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, atributo, (yyvsp[(1) - (2)].cadena));
+            YYABORT; // Abortar el analisis si el atributo no es valido
+          }
+          
         ;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 94 "parser.y"
+#line 232 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
+
+          int traduccion = traducir_atributo((yyvsp[(1) - (1)].cadena));
+
+          if (traduccion != -1) {
+            (yyval.cadena) = tabla_atributos[traduccion].atributo_html;
+            fprintf(yyout, "%s", tabla_atributos[traduccion].atributo_html);
+          } else {
+            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, (yyvsp[(1) - (1)].cadena));
+            YYABORT; // Abortar el analisis si el atributo no es valido
+          }
 
         ;}
     break;
@@ -1441,7 +1589,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 98 "parser.y"
+#line 246 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1450,14 +1598,14 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 102 "parser.y"
+#line 250 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 104 "parser.y"
+#line 252 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1466,7 +1614,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 107 "parser.y"
+#line 255 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1477,14 +1625,14 @@ yyreduce:
                 *second_quote = '\0'; // Termina la cadena en la segunda comilla
                 fprintf(yyout, first_quote + 1);
             }
-            
+
           ;}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 119 "parser.y"
+#line 267 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1493,7 +1641,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1497 "parser.tab.c"
+#line 1645 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1705,7 +1853,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 124 "parser.y"
+#line 272 "parser.y"
 
 
 int main(void) {

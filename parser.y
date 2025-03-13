@@ -3,7 +3,7 @@
   #include <stdlib.h>
   #include <string.h> 
 
-  // Tabla de etiquetas válidas
+  //------------------------- Tabla de etiquetas válidas
   struct etiqueta_valida {
     char *etiqueta_espanol;
     char *inicio_etiqueta_html;
@@ -11,10 +11,42 @@
   };
 
   struct etiqueta_valida tabla_etiquetas[] = {
-    {"<parrafo", "<p", "</p>"},
-    {"<lista_ordenada", "<ol", "</ol>"},
+    {"<aparte", "<aside", "</aside>"},
+    {"<boton", "<button", "</button>"},
+    {"<cabecera", "<header", "</header>"},
+    {"<campo", "<input", " "},
+    {"<cursiva", "<em", "</em>"},
+    {"<division", "<div", "</div>"},
+    {"<enlace", "<a", "</a>"},
+    {"<formulario", "<form", "</form>"},
+    {"<imagen", "<img", " "},
+    {"<italica", "<i", "</i>"},
+    {"<leyenda", "<label", "</label>"},
+    {"<linea_horizontal", "<hr", " "},
     {"<lista_elemento", "<li", "</li>"},
-    // Agrega más etiquetas aquí
+    {"<lista_no_ordenada", "<ul", "</ul>"},
+    {"<lista_ordenada", "<ol", "</ol>"},
+    {"<navegacion", "<nav", "</nav>"},
+    {"<negrita", "<strong", "</strong>"},
+    {"<parrafo", "<p", "</p>"},
+    {"<pequenio", "<small", "</small>"},
+    {"<pie_de_pagina", "<footer", "</footer>"},
+    {"<resaltar", "<mark", "</mark>"},
+    {"<seccion", "<section", "</section>"},
+    {"<seleccion", "<span", "</span>"},
+    {"<tabla", "<table", "</table>"},
+    {"<tabla_cabecera", "<th", "</th>"},
+    {"<tabla_cabeza", "<thead", "</thead>"},
+    {"<tabla_celda", "<td", "</td>"},
+    {"<tabla_cuerpo", "<tbody", "</tbody>"},
+    {"<tabla_fila", "<tr", "</tr>"},
+    {"<tachar", "<s", "</s"},
+    {"<titulo1", "<h1", "</h1>"},
+    {"<titulo2", "<h2", "</h2>"},
+    {"<titulo3", "<h3", "</h3>"},
+    {"<titulo4", "<h4", "</h4>"},
+    {"<titulo5", "<h5", "</h5>"},
+    {"<titulo6", "<h6", "</h6>"},
     {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
@@ -27,6 +59,84 @@
       }
     }
       return -1; // Etiqueta no encontrada
+  }
+
+
+  //------------------------- Tabla de atributos solos válidos
+  struct atributo_valido {
+    char *atributo_espanol;
+    char *atributo_html;
+  };
+
+  struct atributo_valido tabla_atributos[] = {
+    {":requerido", " required "},
+    {":reverso", " reversed "},
+    {NULL, NULL} // Marcador de fin de tabla
+  };
+
+  int traducir_atributo(char *atributo_espanol) {
+    int i = 0; 
+    for (i; tabla_atributos[i].atributo_espanol != NULL; i++) {
+      if (strcmp(atributo_espanol, tabla_atributos[i].atributo_espanol) == 0) {
+        return i;
+      }
+    }
+      return -1; // Atributo no encontrada
+  }
+
+  //------------------------- Tabla de atributos con valor válidos
+  struct valor_atributo {
+    char *valor_espanol;
+    char *valor_html;
+  };
+
+  struct valor_atributo valores_type[] = {
+    {"\"texto\"", "\"text\""},
+    {"\"numero\"", "\"number\""},
+    {"\"radio\"", "\"radio\""},
+    {"\"caja_check\"", "\"checkbox\""},
+    {"\"enviar\"", "\"submit\""},
+    {"\"correo\"", "\"email\""},
+    {"\"telefono\"", "\"tel\""},
+    {"\"contrasenia\"", "\"password\""},
+    {NULL, NULL}
+  };
+
+  struct atributo_valor_valido {
+    char *atributo_valor_espanol;
+    char *atributo_valor_html;
+    struct valor_atributo *valores_permitidos;
+  };
+
+  struct atributo_valor_valido tabla_atributos_valor[] = {
+    {":tipo", "type", valores_type},
+    {":clase", "class", NULL},
+    {":identificador", "id", NULL},
+    {":nombre", "name", NULL},
+    {":enlace_imagen", "src", NULL},
+    {":enlace_externo", "href", NULL},
+    {":descripcion", "alt", NULL},
+    {NULL, NULL} // Marcador de fin de tabla
+  };
+
+  int traducir_atributo_valor(char *atributo_valor_espanol) {
+    int i = 0; 
+    for (i; tabla_atributos_valor[i].atributo_valor_espanol != NULL; i++) {
+      if (strcmp(atributo_valor_espanol, tabla_atributos_valor[i].atributo_valor_espanol) == 0) {
+        return i;
+      }
+    }
+      return -1; // Atributo no encontrada
+  }
+
+  int traducir_valor(char *valor_espanol, struct valor_atributo *valores) {
+    int i = 0; 
+    for (i; valores[i].valor_espanol != NULL; i++) {
+    if (strcmp(valor_espanol, valores[i].valor_espanol) == 0) {
+        return i;
+      }
+    }
+      return -1; // Atributo no encontrada
   }
 
 
@@ -65,7 +175,9 @@ documento: elemento documento {
           };
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
-  fprintf(yyout, "%s", $1);
+  if($1 != " "){
+    fprintf(yyout, "%s", $1);
+  }
 };
  | error { yyerror(" la estructura de la etiqueta esta mal"); } ;
 
@@ -90,9 +202,45 @@ atributo: atributo ATRIBUTO_VALOR  {
           atributo[simbolo_igual - $2] = '\0'; 
           char *valor = simbolo_igual + 1;
 
+          int traduccion = traducir_atributo_valor(atributo);
+
+          if (traduccion != -1) {
+
+            if(tabla_atributos_valor[traduccion].valores_permitidos != NULL){
+
+              int traduccion_valor =  traducir_valor(valor, tabla_atributos_valor[traduccion].valores_permitidos);
+              if (traduccion_valor != -1) {
+          
+                fprintf(yyout, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
+
+              } else {
+                fprintf(stderr, "Error semantico en la linea %d: valor del atributo '%s' no valido\n", yylineno, valor, $1);
+                YYABORT; // Abortar el analisis si el atributo no es valido
+              }
+
+            }else{
+              fprintf(yyout, " %s=%s ",tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+            }
+
+
+          } else {
+            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, atributo, $1);
+            YYABORT; // Abortar el analisis si el atributo no es valido
+          }
+          
         };
         | ATRIBUTO { 
           $$ = $1;
+
+          int traduccion = traducir_atributo($1);
+
+          if (traduccion != -1) {
+            $$ = tabla_atributos[traduccion].atributo_html;
+            fprintf(yyout, "%s", tabla_atributos[traduccion].atributo_html);
+          } else {
+            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, $1);
+            YYABORT; // Abortar el analisis si el atributo no es valido
+          }
 
         };
         | /* vacío */ { 
@@ -114,7 +262,7 @@ contenido: contenido elemento  {
                 *second_quote = '\0'; // Termina la cadena en la segunda comilla
                 fprintf(yyout, first_quote + 1);
             }
-            
+
           };
           | /* vacío */ {  
             $$ = " ";

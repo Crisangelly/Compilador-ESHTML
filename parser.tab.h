@@ -54,7 +54,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 43 "parser.y"
+#line 153 "parser.y"
 
   char *cadena;
 
