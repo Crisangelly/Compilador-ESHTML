@@ -13,17 +13,18 @@
   struct etiqueta_valida tabla_etiquetas[] = {
     {"<parrafo", "<p", "</p>"},
     // Agrega más etiquetas aquí
-    {NULL, NULL} // Marcador de fin de tabla
+    {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
 
-  char *traducir_etiqueta(char *etiqueta_espanol) {
-    for (int i = 0; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
+  int traducir_etiqueta(char *etiqueta_espanol) {
+    int i = 0; 
+    for (i; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
       if (strcmp(etiqueta_espanol, tabla_etiquetas[i].etiqueta_espanol) == 0) {
-        return tabla_etiquetas[i].inicio_etiqueta_html;
+        return i;
       }
     }
-      return NULL; // Etiqueta no encontrada
+      return -1; // Etiqueta no encontrada
   }
 
 
@@ -62,18 +63,19 @@ documento: elemento documento {
           };
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
-  
-  printf("al parecer consiguio eso'%s' \n", $1)
+  fprintf(yyout, "%s", $1);
 };
  | error { yyerror(" la estructura de la etiqueta esta mal"); } ;
 
 inicio: INICIO_ETIQUETA {
-    char *traduccion = traducir_etiqueta($1);
-    if (traduccion != NULL) {
-        $$ = traduccion;
+    int traduccion = traducir_etiqueta($1);
+
+    if (traduccion != -1) {
+      $$ = tabla_etiquetas[traduccion].cierre_etiqueta_html;
+      fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
     } else {
-        fprintf(stderr, "Error semantico en la linea %d: etiqueta '%s' no valida\n", yylineno, $1);
-        YYABORT; // Abortar el analisis si la etiqueta no es valida
+      fprintf(stderr, "Error semantico en la linea %d: etiqueta '%s' no valida\n", yylineno, $1);
+      YYABORT; // Abortar el analisis si la etiqueta no es valida
     }
 };
 
@@ -102,6 +104,7 @@ contenido: contenido elemento  {
           };
           | contenido CADENA_DE_TEXTO { 
             $$ = $2;
+            fprintf(yyout, "%s", $2);
           };
           | /* vacío */ {  
             $$ = " ";

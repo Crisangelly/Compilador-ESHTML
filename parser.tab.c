@@ -84,17 +84,18 @@
   struct etiqueta_valida tabla_etiquetas[] = {
     {"<parrafo", "<p", "</p>"},
     // Agrega más etiquetas aquí
-    {NULL, NULL} // Marcador de fin de tabla
+    {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
 
-  char *traducir_etiqueta(char *etiqueta_espanol) {
-    for (int i = 0; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
+  int traducir_etiqueta(char *etiqueta_espanol) {
+    int i = 0; 
+    for (i; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
       if (strcmp(etiqueta_espanol, tabla_etiquetas[i].etiqueta_espanol) == 0) {
-        return tabla_etiquetas[i].inicio_etiqueta_html;
+        return i;
       }
     }
-      return NULL; // Etiqueta no encontrada
+      return -1; // Etiqueta no encontrada
   }
 
 
@@ -109,7 +110,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 113 "parser.tab.c"
+#line 114 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -151,14 +152,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 40 "parser.y"
+#line 41 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 162 "parser.tab.c"
+#line 163 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -170,7 +171,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 174 "parser.tab.c"
+#line 175 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -456,8 +457,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    57,    57,    60,    64,    68,    70,    80,    90,    94,
-      98,   100,   103,   106
+       0,    58,    58,    61,    65,    68,    70,    84,    94,    98,
+     102,   104,   107,   111
 };
 #endif
 
@@ -1361,7 +1362,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 57 "parser.y"
+#line 58 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1370,7 +1371,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 60 "parser.y"
+#line 61 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1379,10 +1380,9 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 64 "parser.y"
+#line 65 "parser.y"
     {
-  
-  printf("al parecer consiguio eso'%s' \n", (yyvsp[(1) - (5)].cadena))
+  fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
 ;}
     break;
 
@@ -1398,12 +1398,16 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 70 "parser.y"
     {
-    char *traduccion = traducir_etiqueta((yyvsp[(1) - (1)].cadena));
-    if (traduccion != NULL) {
-        (yyval.cadena) = traduccion;
+    int traduccion = traducir_etiqueta((yyvsp[(1) - (1)].cadena));
+
+    if (traduccion != -1) {
+      //printf("al parecer consiguio eso'%s' \n", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+      //printf("al parecer consiguio eso'%s' \n", tabla_etiquetas[traduccion].cierre_etiqueta_html); 
+      (yyval.cadena) = tabla_etiquetas[traduccion].cierre_etiqueta_html;
+      fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
     } else {
-        fprintf(stderr, "Error semantico en la linea %d: etiqueta '%s' no valida\n", yylineno, (yyvsp[(1) - (1)].cadena));
-        YYABORT; // Abortar el analisis si la etiqueta no es valida
+      fprintf(stderr, "Error semantico en la linea %d: etiqueta '%s' no valida\n", yylineno, (yyvsp[(1) - (1)].cadena));
+      YYABORT; // Abortar el analisis si la etiqueta no es valida
     }
 ;}
     break;
@@ -1411,7 +1415,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 80 "parser.y"
+#line 84 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1427,7 +1431,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 90 "parser.y"
+#line 94 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1437,7 +1441,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 94 "parser.y"
+#line 98 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1446,14 +1450,14 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 98 "parser.y"
+#line 102 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 100 "parser.y"
+#line 104 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1462,16 +1466,17 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 103 "parser.y"
+#line 107 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
+            fprintf(yyout, "%s", (yyvsp[(2) - (2)].cadena));
           ;}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 106 "parser.y"
+#line 111 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1480,7 +1485,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1484 "parser.tab.c"
+#line 1489 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1692,7 +1697,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 111 "parser.y"
+#line 116 "parser.y"
 
 
 int main(void) {
