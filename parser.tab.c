@@ -121,18 +121,6 @@
     {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
-
-  int traducir_etiqueta(char *etiqueta_espanol) {
-    int i = 0; 
-    for (i; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
-      if (strcmp(etiqueta_espanol, tabla_etiquetas[i].etiqueta_espanol) == 0) {
-        return i;
-      }
-    }
-      return -1; // Etiqueta no encontrada
-  }
-
-
   //------------------------- Tabla de atributos solos válidos
   struct atributo_valido {
     char *atributo_espanol;
@@ -144,16 +132,6 @@
     {":reverso", " reversed "},
     {NULL, NULL} // Marcador de fin de tabla
   };
-
-  int traducir_atributo(char *atributo_espanol) {
-    int i = 0; 
-    for (i; tabla_atributos[i].atributo_espanol != NULL; i++) {
-      if (strcmp(atributo_espanol, tabla_atributos[i].atributo_espanol) == 0) {
-        return i;
-      }
-    }
-      return -1; // Atributo no encontrada
-  }
 
   //------------------------- Tabla de atributos con valor válidos
   struct valor_atributo {
@@ -187,17 +165,28 @@
     {":enlace_imagen", "src", NULL},
     {":enlace_externo", "href", NULL},
     {":descripcion", "alt", NULL},
-    {NULL, NULL} // Marcador de fin de tabla
+    {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
-  int traducir_atributo_valor(char *atributo_valor_espanol) {
-    int i = 0; 
-    for (i; tabla_atributos_valor[i].atributo_valor_espanol != NULL; i++) {
-      if (strcmp(atributo_valor_espanol, tabla_atributos_valor[i].atributo_valor_espanol) == 0) {
-        return i;
-      }
+  // Funciones de traducción
+
+  int traducir(char *cadena_espanol, void *tabla, size_t tamano_elemento, char *atributo_espanol) {
+    int i = 0;
+    char *cadena_tabla;
+
+    while (1) {
+        cadena_tabla = (char *)((char *)tabla + i * tamano_elemento); // Calcula la dirección del elemento actual
+
+        if (*(char **)cadena_tabla == NULL) { // Verifica el marcador de fin de tabla
+            return -1; // Elemento no encontrado
+        }
+
+        if (strcmp(*(char **)cadena_tabla, cadena_espanol) == 0) {
+            return i; // Elemento encontrado, devuelve el índice
+        }
+
+        i++;
     }
-      return -1; // Atributo no encontrada
   }
 
   int traducir_valor(char *valor_espanol, struct valor_atributo *valores) {
@@ -222,7 +211,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 226 "parser.tab.c"
+#line 215 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -264,14 +253,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 153 "parser.y"
+#line 142 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 275 "parser.tab.c"
+#line 264 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -283,7 +272,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 287 "parser.tab.c"
+#line 276 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -569,8 +558,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   170,   170,   173,   177,   182,   184,   196,   232,   246,
-     250,   252,   255,   267
+       0,   159,   159,   162,   166,   171,   173,   185,   221,   235,
+     239,   241,   244,   256
 };
 #endif
 
@@ -1474,7 +1463,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 170 "parser.y"
+#line 159 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1483,7 +1472,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 173 "parser.y"
+#line 162 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1492,7 +1481,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 177 "parser.y"
+#line 166 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
@@ -1503,16 +1492,16 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 182 "parser.y"
+#line 171 "parser.y"
     { yyerror(" la estructura de la etiqueta esta mal"); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 184 "parser.y"
+#line 173 "parser.y"
     {
-    int traduccion = traducir_etiqueta((yyvsp[(1) - (1)].cadena));
+    int traduccion = traducir((yyvsp[(1) - (1)].cadena), tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
 
     if (traduccion != -1) {
       (yyval.cadena) = tabla_etiquetas[traduccion].cierre_etiqueta_html;
@@ -1527,7 +1516,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 196 "parser.y"
+#line 185 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1537,7 +1526,7 @@ yyreduce:
           atributo[simbolo_igual - (yyvsp[(2) - (2)].cadena)] = '\0'; 
           char *valor = simbolo_igual + 1;
 
-          int traduccion = traducir_atributo_valor(atributo);
+          int traduccion = traducir(atributo, tabla_atributos_valor, sizeof(struct atributo_valor_valido), "atributo_espanol");
 
           if (traduccion != -1) {
 
@@ -1569,11 +1558,11 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 232 "parser.y"
+#line 221 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
-          int traduccion = traducir_atributo((yyvsp[(1) - (1)].cadena));
+          int traduccion = traducir((yyvsp[(1) - (1)].cadena), tabla_atributos, sizeof(struct atributo_valido), "atributo_espanol");
 
           if (traduccion != -1) {
             (yyval.cadena) = tabla_atributos[traduccion].atributo_html;
@@ -1589,7 +1578,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 246 "parser.y"
+#line 235 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1598,14 +1587,14 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 250 "parser.y"
+#line 239 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 252 "parser.y"
+#line 241 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1614,7 +1603,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 255 "parser.y"
+#line 244 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1632,7 +1621,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 267 "parser.y"
+#line 256 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1641,7 +1630,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1645 "parser.tab.c"
+#line 1634 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1853,7 +1842,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 272 "parser.y"
+#line 261 "parser.y"
 
 
 int main(void) {

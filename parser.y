@@ -50,18 +50,6 @@
     {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
-
-  int traducir_etiqueta(char *etiqueta_espanol) {
-    int i = 0; 
-    for (i; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
-      if (strcmp(etiqueta_espanol, tabla_etiquetas[i].etiqueta_espanol) == 0) {
-        return i;
-      }
-    }
-      return -1; // Etiqueta no encontrada
-  }
-
-
   //------------------------- Tabla de atributos solos válidos
   struct atributo_valido {
     char *atributo_espanol;
@@ -73,16 +61,6 @@
     {":reverso", " reversed "},
     {NULL, NULL} // Marcador de fin de tabla
   };
-
-  int traducir_atributo(char *atributo_espanol) {
-    int i = 0; 
-    for (i; tabla_atributos[i].atributo_espanol != NULL; i++) {
-      if (strcmp(atributo_espanol, tabla_atributos[i].atributo_espanol) == 0) {
-        return i;
-      }
-    }
-      return -1; // Atributo no encontrada
-  }
 
   //------------------------- Tabla de atributos con valor válidos
   struct valor_atributo {
@@ -116,20 +94,31 @@
     {":enlace_imagen", "src", NULL},
     {":enlace_externo", "href", NULL},
     {":descripcion", "alt", NULL},
-    {NULL, NULL} // Marcador de fin de tabla
+    {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
-  int traducir_atributo_valor(char *atributo_valor_espanol) {
-    int i = 0; 
-    for (i; tabla_atributos_valor[i].atributo_valor_espanol != NULL; i++) {
-      if (strcmp(atributo_valor_espanol, tabla_atributos_valor[i].atributo_valor_espanol) == 0) {
-        return i;
-      }
+  // Funciones de traducción
+
+  int traducir(char *cadena_espanol, void *tabla, size_t tamano_elemento, char *atributo_espanol) {
+    int i = 0;
+    char *cadena_tabla;
+
+    while (1) {
+        cadena_tabla = (char *)((char *)tabla + i * tamano_elemento); // Calcula la dirección del elemento actual
+
+        if (*(char **)cadena_tabla == NULL) { // Verifica el marcador de fin de tabla
+            return -1; // Elemento no encontrado
+        }
+
+        if (strcmp(*(char **)cadena_tabla, cadena_espanol) == 0) {
+            return i; // Elemento encontrado, devuelve el índice
+        }
+
+        i++;
     }
-      return -1; // Atributo no encontrada
   }
 
-  int traducir_valor(char *valor_espanol, struct valor_atributo *valores) {
+  int traducir_valor(char *valor_espanol, struct valor_atributo *valores) { //para traducir los valores de atributos como type
     int i = 0; 
     for (i; valores[i].valor_espanol != NULL; i++) {
     if (strcmp(valor_espanol, valores[i].valor_espanol) == 0) {
@@ -182,7 +171,7 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
  | error { yyerror(" la estructura de la etiqueta esta mal"); } ;
 
 inicio: INICIO_ETIQUETA {
-    int traduccion = traducir_etiqueta($1);
+    int traduccion = traducir($1, tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
 
     if (traduccion != -1) {
       $$ = tabla_etiquetas[traduccion].cierre_etiqueta_html;
@@ -202,7 +191,7 @@ atributo: atributo ATRIBUTO_VALOR  {
           atributo[simbolo_igual - $2] = '\0'; 
           char *valor = simbolo_igual + 1;
 
-          int traduccion = traducir_atributo_valor(atributo);
+          int traduccion = traducir(atributo, tabla_atributos_valor, sizeof(struct atributo_valor_valido), "atributo_espanol");
 
           if (traduccion != -1) {
 
@@ -232,7 +221,7 @@ atributo: atributo ATRIBUTO_VALOR  {
         | ATRIBUTO { 
           $$ = $1;
 
-          int traduccion = traducir_atributo($1);
+          int traduccion = traducir($1, tabla_atributos, sizeof(struct atributo_valido), "atributo_espanol");
 
           if (traduccion != -1) {
             $$ = tabla_atributos[traduccion].atributo_html;

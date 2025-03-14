@@ -5,7 +5,7 @@
 <titulo5 "titulo 5" >
 <titulo6 "titulo 6" >
 
-<enlace :enlace_externo="https://example.com" "aca_esta_un_link">
+<enlace :enlace_externo="https://es.wikipedia.org/wiki/Cachorro_(desambiguaci%C3%B3n)" "aca_esta_un_link">
 
 <formulario
   <campo :requerido :tipo="texto" >
