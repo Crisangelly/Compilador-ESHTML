@@ -189,7 +189,7 @@
     }
   }
 
-  int traducir_valor(char *valor_espanol, struct valor_atributo *valores) {
+  int traducir_valor(char *valor_espanol, struct valor_atributo *valores) { //para traducir los valores de atributos como type
     int i = 0; 
     for (i; valores[i].valor_espanol != NULL; i++) {
     if (strcmp(valor_espanol, valores[i].valor_espanol) == 0) {
