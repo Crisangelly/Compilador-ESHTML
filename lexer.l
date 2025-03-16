@@ -6,7 +6,6 @@
   #include "parser.tab.h"
   #include "errores.h" // Incluir el archivo de los errores
 
-  int line_num = 1;
 %}
 %option noyywrap
 %option yylineno
@@ -40,7 +39,7 @@
 
 [ \t] { /* Ignorar espacios en blanco */ }
 
-\n  { line_num++; /* Incrementar el número de línea */ }
+\n { /* Reconocer saltos de línea */ }
 
 . { 
   char mensaje[256];

@@ -396,8 +396,7 @@ char *yytext;
   #include "parser.tab.h"
   #include "errores.h" // Incluir el archivo de los errores
 
-  int line_num = 1;
-#line 401 "lex.yy.c"
+#line 400 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -548,10 +547,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 14 "lexer.l"
+#line 13 "lexer.l"
 
 
-#line 555 "lex.yy.c"
+#line 554 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -644,7 +643,7 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 16 "lexer.l"
+#line 15 "lexer.l"
 {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
   return INICIO_ETIQUETA;
@@ -652,7 +651,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 21 "lexer.l"
+#line 20 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return CADENA_DE_TEXTO;
@@ -660,7 +659,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 26 "lexer.l"
+#line 25 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return CIERRE_ETIQUETA;
@@ -668,7 +667,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 30 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return ATRIBUTO;
@@ -676,7 +675,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 36 "lexer.l"
+#line 35 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return ATRIBUTO_VALOR;
@@ -684,17 +683,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 41 "lexer.l"
+#line 40 "lexer.l"
 { /* Ignorar espacios en blanco */ }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 43 "lexer.l"
-{ line_num++; /* Incrementar el número de línea */ }
+#line 42 "lexer.l"
+{ /* Reconocer saltos de línea */ }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 44 "lexer.l"
 { 
   char mensaje[256];
   sprintf(mensaje, "caracter no reconocido '%c'", yytext[0]);
@@ -703,10 +702,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 51 "lexer.l"
+#line 50 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 710 "lex.yy.c"
+#line 709 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1590,4 +1589,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 51 "lexer.l"
+#line 50 "lexer.l"
