@@ -2,7 +2,7 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h> 
-  
+
   #include "errores.h" // Incluir el archivo de los errores
 
   // Función para acumular errores
@@ -188,7 +188,7 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
     fprintf(yyout, "%s", $1);
   }
 };
- | error { yyerror(" la estructura de la etiqueta esta mal"); } ;
+ | error { yyerror("la estructura de la etiqueta esta mal"); } ;
 
 inicio: INICIO_ETIQUETA {
     int traduccion = traducir($1, tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
@@ -224,18 +224,19 @@ atributo: atributo ATRIBUTO_VALOR  {
                 fprintf(yyout, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
 
               } else {
-                fprintf(stderr, "Error semantico en la linea %d: valor del atributo '%s' no valido\n", yylineno, valor, $1);
-                YYABORT; // Abortar el analisis si el atributo no es valido
+                char mensaje[256];
+                sprintf(mensaje, "valor del atributo '%s' no valido", valor);
+                agregar_error(yylineno, mensaje, 2);
               }
 
             }else{
               fprintf(yyout, " %s=%s ",tabla_atributos_valor[traduccion].atributo_valor_html, valor);
             }
 
-
           } else {
-            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, atributo, $1);
-            YYABORT; // Abortar el analisis si el atributo no es valido
+            char mensaje[256];
+            sprintf(mensaje, "atributo '%s' no valido", atributo);
+            agregar_error(yylineno, mensaje, 2);
           }
           
         };
@@ -248,8 +249,9 @@ atributo: atributo ATRIBUTO_VALOR  {
             $$ = tabla_atributos[traduccion].atributo_html;
             fprintf(yyout, "%s", tabla_atributos[traduccion].atributo_html);
           } else {
-            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, $1);
-            YYABORT; // Abortar el analisis si el atributo no es valido
+            char mensaje[256];
+            sprintf(mensaje, "atributo '%s' no valido", $1);
+            agregar_error(yylineno, mensaje, 2);
           }
 
         };

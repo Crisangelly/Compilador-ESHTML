@@ -73,7 +73,7 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h> 
-  
+
   #include "errores.h" // Incluir el archivo de los errores
 
   // Función para acumular errores
@@ -578,8 +578,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   179,   179,   182,   186,   191,   193,   206,   242,   256,
-     260,   262,   265,   277
+       0,   179,   179,   182,   186,   191,   193,   206,   243,   258,
+     262,   264,   267,   279
 };
 #endif
 
@@ -1513,7 +1513,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 191 "parser.y"
-    { yyerror(" la estructura de la etiqueta esta mal"); ;}
+    { yyerror("la estructura de la etiqueta esta mal"); ;}
     break;
 
   case 6:
@@ -1559,18 +1559,19 @@ yyreduce:
                 fprintf(yyout, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
 
               } else {
-                fprintf(stderr, "Error semantico en la linea %d: valor del atributo '%s' no valido\n", yylineno, valor, (yyvsp[(1) - (2)].cadena));
-                YYABORT; // Abortar el analisis si el atributo no es valido
+                char mensaje[256];
+                sprintf(mensaje, "valor del atributo '%s' no valido", valor);
+                agregar_error(yylineno, mensaje, 2);
               }
 
             }else{
               fprintf(yyout, " %s=%s ",tabla_atributos_valor[traduccion].atributo_valor_html, valor);
             }
 
-
           } else {
-            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, atributo, (yyvsp[(1) - (2)].cadena));
-            YYABORT; // Abortar el analisis si el atributo no es valido
+            char mensaje[256];
+            sprintf(mensaje, "atributo '%s' no valido", atributo);
+            agregar_error(yylineno, mensaje, 2);
           }
           
         ;}
@@ -1579,7 +1580,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 242 "parser.y"
+#line 243 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1589,8 +1590,9 @@ yyreduce:
             (yyval.cadena) = tabla_atributos[traduccion].atributo_html;
             fprintf(yyout, "%s", tabla_atributos[traduccion].atributo_html);
           } else {
-            fprintf(stderr, "Error semantico en la linea %d: atributo '%s' no valido\n", yylineno, (yyvsp[(1) - (1)].cadena));
-            YYABORT; // Abortar el analisis si el atributo no es valido
+            char mensaje[256];
+            sprintf(mensaje, "atributo '%s' no valido", (yyvsp[(1) - (1)].cadena));
+            agregar_error(yylineno, mensaje, 2);
           }
 
         ;}
@@ -1599,7 +1601,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 256 "parser.y"
+#line 258 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1608,14 +1610,14 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 260 "parser.y"
+#line 262 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 262 "parser.y"
+#line 264 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1624,7 +1626,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 265 "parser.y"
+#line 267 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1642,7 +1644,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 277 "parser.y"
+#line 279 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1651,7 +1653,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1655 "parser.tab.c"
+#line 1657 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1863,7 +1865,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 282 "parser.y"
+#line 284 "parser.y"
 
 
 int main(void) {
