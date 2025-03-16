@@ -394,8 +394,10 @@ char *yytext;
   #include <string.h>
   
   #include "parser.tab.h"
+  #include "errores.h" // Incluir el archivo de los errores
+
   int line_num = 1;
-#line 399 "lex.yy.c"
+#line 401 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -546,10 +548,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 12 "lexer.l"
+#line 14 "lexer.l"
 
 
-#line 553 "lex.yy.c"
+#line 555 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -642,7 +644,7 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 14 "lexer.l"
+#line 16 "lexer.l"
 {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
   return INICIO_ETIQUETA;
@@ -650,7 +652,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "lexer.l"
+#line 21 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return CADENA_DE_TEXTO;
@@ -658,7 +660,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 24 "lexer.l"
+#line 26 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return CIERRE_ETIQUETA;
@@ -666,7 +668,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 31 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return ATRIBUTO;
@@ -674,7 +676,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 34 "lexer.l"
+#line 36 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
   return ATRIBUTO_VALOR;
@@ -682,25 +684,29 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 39 "lexer.l"
+#line 41 "lexer.l"
 { /* Ignorar espacios en blanco */ }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 41 "lexer.l"
+#line 43 "lexer.l"
 { line_num++; /* Incrementar el número de línea */ }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 43 "lexer.l"
-{ printf("Error lexico en linea %d: caracter no reconocido '%c'\n", line_num, yytext[0]); }
+#line 45 "lexer.l"
+{ 
+  char mensaje[256];
+  sprintf(mensaje, "caracter no reconocido '%c'", yytext[0]);
+  agregar_error(yylineno, mensaje, 0); // 0 para error léxico
+}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 51 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 704 "lex.yy.c"
+#line 710 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1584,4 +1590,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 45 "lexer.l"
+#line 51 "lexer.l"

@@ -2,6 +2,26 @@
   #include <stdio.h>
   #include <stdlib.h>
   #include <string.h> 
+  
+  #include "errores.h" // Incluir el archivo de los errores
+
+  // Función para acumular errores
+
+  struct error_estructura errores[100];
+  int num_errores = 0;
+
+  void agregar_error(int linea, char *mensaje, int tipo) {
+    if (num_errores < 100) {
+      errores[num_errores].linea = linea;
+      strcpy(errores[num_errores].mensaje, mensaje);
+      errores[num_errores].tipo = tipo;
+      num_errores++;
+    } else {
+      fprintf(stderr, "Demasiados errores.\n");
+      exit(1);
+      }
+  }
+
 
   //------------------------- Tabla de etiquetas válidas
   struct etiqueta_valida {
@@ -177,8 +197,9 @@ inicio: INICIO_ETIQUETA {
       $$ = tabla_etiquetas[traduccion].cierre_etiqueta_html;
       fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
     } else {
-      fprintf(stderr, "Error semantico en la linea %d: etiqueta '%s' no valida\n", yylineno, $1);
-      YYABORT; // Abortar el analisis si la etiqueta no es valida
+      char mensaje[256];
+      sprintf(mensaje, "etiqueta '%s' no valida", $1);
+      agregar_error(yylineno, mensaje, 2); // 2 para error semántico
     }
 };
 
@@ -264,11 +285,27 @@ int main(void) {
   yyin = fopen("eshtml.txt", "r");
   yyout = fopen("html.txt", "w");
   int s = yyparse();  
-  if(s == 0){
-    printf("Todo en orden");
+
+  // Imprimir errores después del análisis
+  if (num_errores > 0) {
+
+    fprintf(stderr, "Errores encontrados:\n");
+    for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
+      fprintf(stderr, "\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+      for (int i = 0; i < num_errores; i++) {
+        if (errores[i].tipo == tipo_error) {
+          fprintf(stderr, "Linea %d: %s\n", errores[i].linea, errores[i].mensaje);
+        }
+      }
+    }
+
+  } else if (s == 0) {
+    printf("Todo en orden.\n");
   }
 }
 
 void yyerror(char *s){
-  fprintf(stderr, "Error de sintaxis en la linea %d, token: %s, error: %s\n", yylineno, yytext, s);
+  char mensaje[256];
+  sprintf(mensaje, "token: %s, error: %s", yytext, s);
+  agregar_error(yylineno, mensaje, 1); // 1 para error sintáctico
 }

@@ -4,6 +4,8 @@
   #include <string.h>
   
   #include "parser.tab.h"
+  #include "errores.h" // Incluir el archivo de los errores
+
   int line_num = 1;
 %}
 %option noyywrap
@@ -40,6 +42,10 @@
 
 \n  { line_num++; /* Incrementar el número de línea */ }
 
-. { printf("Error lexico en linea %d: caracter no reconocido '%c'\n", line_num, yytext[0]); }
+. { 
+  char mensaje[256];
+  sprintf(mensaje, "caracter no reconocido '%c'", yytext[0]);
+  agregar_error(yylineno, mensaje, 0); // 0 para error léxico
+}
 
 %%
