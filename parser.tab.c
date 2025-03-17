@@ -81,12 +81,24 @@
   struct error_estructura errores[100];
   int num_errores = 0;
 
-  void agregar_error(int linea, char *mensaje, int tipo) {
+  void agregar_error(int linea, char *mensaje, int tipo, char *token) {
     if (num_errores < 100) {
+
+      //Verificar que no hayan mensajes duplicados en los errores sintácticos (debido a la recursividad)
+      if(tipo == 1){
+        for (int i = 0; i < num_errores; i++) {
+            if (errores[i].linea == linea && strcmp(errores[i].token, token) == 0) {
+                return; // Error duplicado, no agregar
+            }
+        }
+      }
+
       errores[num_errores].linea = linea;
       strcpy(errores[num_errores].mensaje, mensaje);
       errores[num_errores].tipo = tipo;
+      strcpy(errores[num_errores].token, token);
       num_errores++;
+
     } else {
       fprintf(stderr, "Demasiados errores.\n");
       exit(1);
@@ -219,19 +231,18 @@
       return -1; // Atributo no encontrada
   }
 
-
   extern int yylex(void);
   extern char *yytext;
   extern FILE *yyin;
   extern FILE *yyout;
   extern int yylineno;
 
-  void yyerror(char *s);
+  void yyerror();
 
 
 
 /* Line 189 of yacc.c  */
-#line 235 "parser.tab.c"
+#line 246 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -273,14 +284,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 162 "parser.y"
+#line 173 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 284 "parser.tab.c"
+#line 295 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -292,7 +303,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 296 "parser.tab.c"
+#line 307 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -578,8 +589,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   179,   179,   182,   186,   191,   193,   206,   243,   258,
-     262,   264,   267,   279
+       0,   190,   190,   193,   197,   202,   204,   217,   254,   269,
+     273,   275,   278,   290
 };
 #endif
 
@@ -1483,7 +1494,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 179 "parser.y"
+#line 190 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1492,7 +1503,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 182 "parser.y"
+#line 193 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1501,7 +1512,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 186 "parser.y"
+#line 197 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
@@ -1512,14 +1523,14 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 191 "parser.y"
-    { yyerror("la estructura de la etiqueta esta mal"); ;}
+#line 202 "parser.y"
+    { yyerror(); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 193 "parser.y"
+#line 204 "parser.y"
     {
     int traduccion = traducir((yyvsp[(1) - (1)].cadena), tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
 
@@ -1529,7 +1540,7 @@ yyreduce:
     } else {
       char mensaje[256];
       sprintf(mensaje, "etiqueta '%s' no valida", (yyvsp[(1) - (1)].cadena));
-      agregar_error(yylineno, mensaje, 2); // 2 para error semántico
+      agregar_error(yylineno, mensaje, 2, yytext); // 2 para error semántico
     }
 ;}
     break;
@@ -1537,7 +1548,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 206 "parser.y"
+#line 217 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1561,7 +1572,7 @@ yyreduce:
               } else {
                 char mensaje[256];
                 sprintf(mensaje, "valor del atributo '%s' no valido", valor);
-                agregar_error(yylineno, mensaje, 2);
+                agregar_error(yylineno, mensaje, 2, yytext);
               }
 
             }else{
@@ -1571,7 +1582,7 @@ yyreduce:
           } else {
             char mensaje[256];
             sprintf(mensaje, "atributo '%s' no valido", atributo);
-            agregar_error(yylineno, mensaje, 2);
+            agregar_error(yylineno, mensaje, 2, yytext);
           }
           
         ;}
@@ -1580,7 +1591,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 243 "parser.y"
+#line 254 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1592,7 +1603,7 @@ yyreduce:
           } else {
             char mensaje[256];
             sprintf(mensaje, "atributo '%s' no valido", (yyvsp[(1) - (1)].cadena));
-            agregar_error(yylineno, mensaje, 2);
+            agregar_error(yylineno, mensaje, 2, yytext);
           }
 
         ;}
@@ -1601,7 +1612,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 258 "parser.y"
+#line 269 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1610,14 +1621,14 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 262 "parser.y"
+#line 273 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 264 "parser.y"
+#line 275 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1626,7 +1637,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 267 "parser.y"
+#line 278 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1644,7 +1655,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 279 "parser.y"
+#line 290 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1653,7 +1664,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1657 "parser.tab.c"
+#line 1668 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1865,7 +1876,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 284 "parser.y"
+#line 295 "parser.y"
 
 
 int main(void) {
@@ -1891,8 +1902,21 @@ int main(void) {
   }
 }
 
-void yyerror(char *s){
+void yyerror(){
+  char *s;
+  if (yytext[0] == '<') {
+    s = "Error en la etiqueta de inicio";
+  } else if (yytext[0] == ':') {
+    s = "Error en la seccion de atributos";
+  } else {
+    s = "Error en la seccion de contenido o cierre de etiqueta";
+  }
+
   char mensaje[256];
-  sprintf(mensaje, "token: %s, error: %s", yytext, s);
-  agregar_error(yylineno, mensaje, 1); // 1 para error sintáctico
+  if (yytext && yytext[0] != '\0') {
+    sprintf(mensaje, "token: %s, error: %s", yytext, s);
+  } else {
+    sprintf(mensaje, "error: %s", s); // No incluir el token si está vacío
+  }
+  agregar_error(yylineno, mensaje, 1, yytext); // 1 para error sintáctico
 }

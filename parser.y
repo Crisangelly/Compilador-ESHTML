@@ -10,12 +10,24 @@
   struct error_estructura errores[100];
   int num_errores = 0;
 
-  void agregar_error(int linea, char *mensaje, int tipo) {
+  void agregar_error(int linea, char *mensaje, int tipo, char *token) {
     if (num_errores < 100) {
+
+      //Verificar que no hayan mensajes duplicados en los errores sintácticos (debido a la recursividad)
+      if(tipo == 1){
+        for (int i = 0; i < num_errores; i++) {
+            if (errores[i].linea == linea && strcmp(errores[i].token, token) == 0) {
+                return; // Error duplicado, no agregar
+            }
+        }
+      }
+
       errores[num_errores].linea = linea;
       strcpy(errores[num_errores].mensaje, mensaje);
       errores[num_errores].tipo = tipo;
+      strcpy(errores[num_errores].token, token);
       num_errores++;
+
     } else {
       fprintf(stderr, "Demasiados errores.\n");
       exit(1);
@@ -148,14 +160,13 @@
       return -1; // Atributo no encontrada
   }
 
-
   extern int yylex(void);
   extern char *yytext;
   extern FILE *yyin;
   extern FILE *yyout;
   extern int yylineno;
 
-  void yyerror(char *s);
+  void yyerror();
 
 %}
 
@@ -188,7 +199,7 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
     fprintf(yyout, "%s", $1);
   }
 };
- | error { yyerror("la estructura de la etiqueta esta mal"); } ;
+ | error { yyerror(); } ;
 
 inicio: INICIO_ETIQUETA {
     int traduccion = traducir($1, tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
@@ -199,7 +210,7 @@ inicio: INICIO_ETIQUETA {
     } else {
       char mensaje[256];
       sprintf(mensaje, "etiqueta '%s' no valida", $1);
-      agregar_error(yylineno, mensaje, 2); // 2 para error semántico
+      agregar_error(yylineno, mensaje, 2, yytext); // 2 para error semántico
     }
 };
 
@@ -226,7 +237,7 @@ atributo: atributo ATRIBUTO_VALOR  {
               } else {
                 char mensaje[256];
                 sprintf(mensaje, "valor del atributo '%s' no valido", valor);
-                agregar_error(yylineno, mensaje, 2);
+                agregar_error(yylineno, mensaje, 2, yytext);
               }
 
             }else{
@@ -236,7 +247,7 @@ atributo: atributo ATRIBUTO_VALOR  {
           } else {
             char mensaje[256];
             sprintf(mensaje, "atributo '%s' no valido", atributo);
-            agregar_error(yylineno, mensaje, 2);
+            agregar_error(yylineno, mensaje, 2, yytext);
           }
           
         };
@@ -251,7 +262,7 @@ atributo: atributo ATRIBUTO_VALOR  {
           } else {
             char mensaje[256];
             sprintf(mensaje, "atributo '%s' no valido", $1);
-            agregar_error(yylineno, mensaje, 2);
+            agregar_error(yylineno, mensaje, 2, yytext);
           }
 
         };
@@ -306,8 +317,21 @@ int main(void) {
   }
 }
 
-void yyerror(char *s){
+void yyerror(){
+  char *s;
+  if (yytext[0] == '<') {
+    s = "Error en la etiqueta de inicio";
+  } else if (yytext[0] == ':') {
+    s = "Error en la seccion de atributos";
+  } else {
+    s = "Error en la seccion de contenido o cierre de etiqueta";
+  }
+
   char mensaje[256];
-  sprintf(mensaje, "token: %s, error: %s", yytext, s);
-  agregar_error(yylineno, mensaje, 1); // 1 para error sintáctico
+  if (yytext && yytext[0] != '\0') {
+    sprintf(mensaje, "token: %s, error: %s", yytext, s);
+  } else {
+    sprintf(mensaje, "error: %s", s); // No incluir el token si está vacío
+  }
+  agregar_error(yylineno, mensaje, 1, yytext); // 1 para error sintáctico
 }
