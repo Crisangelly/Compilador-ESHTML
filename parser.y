@@ -129,30 +129,6 @@
     {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
-  //Funciones para imprimir las tablas por consola
-
-  void imprimir_tablas() {
-    printf("Tabla de etiquetas:\n\n");
-    for (int i = 0; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
-      printf("%s -> %s %s\n", tabla_etiquetas[i].etiqueta_espanol, tabla_etiquetas[i].inicio_etiqueta_html, tabla_etiquetas[i].cierre_etiqueta_html);
-    }
-
-    printf("\nTabla de atributos solos:\n\n");
-    for (int i = 0; tabla_atributos[i].atributo_espanol != NULL; i++) {
-      printf("%s -> %s\n", tabla_atributos[i].atributo_espanol, tabla_atributos[i].atributo_html);
-    }
-
-    printf("\nTabla de atributos con valor:\n\n");
-    for (int i = 0; tabla_atributos_valor[i].atributo_valor_espanol != NULL; i++) {
-      printf("%s -> %s\n", tabla_atributos_valor[i].atributo_valor_espanol, tabla_atributos_valor[i].atributo_valor_html);
-      if (tabla_atributos_valor[i].valores_permitidos != NULL) {
-        for (int j = 0; tabla_atributos_valor[i].valores_permitidos[j].valor_espanol != NULL; j++) {
-          printf("  %s -> %s\n", tabla_atributos_valor[i].valores_permitidos[j].valor_espanol, tabla_atributos_valor[i].valores_permitidos[j].valor_html);
-        }
-      }
-    }
-  }
-
   // Funciones de traducción
 
   int traducir(char *cadena_espanol, void *tabla, size_t tamano_elemento, char *atributo_espanol) {
@@ -341,7 +317,6 @@ int main(void) {
 
   } else if (s == 0) {
     printf("\n\nTodo en orden.\n\n\n");
-    imprimir_tablas();
   }
 }
 
