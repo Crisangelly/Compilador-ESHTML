@@ -329,9 +329,12 @@ int main(void) {
     fprintf(stderr, "Errores encontrados:\n");
     for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
       fprintf(stderr, "\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-      for (int i = 0; i < num_errores; i++) {
+      fprintf(stderr, "\n | Linea |            Mensaje            | Token | \n");
+      fprintf(stderr, "\n ------------------------------------------------- \n");
+      for (int i = 0; i < num_errores; i++) { 
         if (errores[i].tipo == tipo_error) {
-          fprintf(stderr, "Linea %d: %s\n", errores[i].linea, errores[i].mensaje);
+          fprintf(stderr, "\n |   %d   | %s | %s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+          fprintf(stderr, "\n ------------------------------------------------- \n");
         }
       }
     }
