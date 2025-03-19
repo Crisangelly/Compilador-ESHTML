@@ -7,10 +7,16 @@
   #include "errores.h" // Incluir el archivo de los errores
 
   void imprimir_tabla(const char *lexema, const char *token) {
-    printf("|       Lexema         |         Token           |\n");
-    printf("|----------------------|-------------------------|\n");
-    printf("| %-21s | %-21s |\n", lexema, token);
-    printf("|----------------------|-------------------------|\n");
+    static int encabezado_unico = 1; //imprimir un encabezado una sola vez
+    if (encabezado_unico){
+       printf("\n\nTabla de Tokens:\n\n");
+      printf("|-------------------------------------------------------|-------------------------------|\n");
+      printf("|                       Lexema                          |             Token             |\n");
+      printf("|-------------------------------------------------------|-------------------------------|\n");
+      encabezado_unico = 0;
+    }
+      printf("| %-53s | %-29s |\n", lexema, token); //imprimir lexema y token
+      printf("|-------------------------------------------------------|-------------------------------|\n");
   }
 
 %}
