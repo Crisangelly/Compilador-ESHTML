@@ -5,6 +5,47 @@
 
   #include "errores.h" // Incluir el archivo de los errores
 
+  //Imprimir AST 
+  struct ASTNodo{
+    char *no_terminal; 
+    char *terminal; 
+  };
+
+  struct ASTNodo nodos[100];
+  int num_nodos = 0;
+
+  void agregar_nodo(char *no_terminal, char *terminal){
+    if (num_nodos < 100) {
+      nodos[num_nodos].no_terminal = no_terminal;
+      nodos[num_nodos].terminal= terminal;
+
+      printf("\n---------- Acumular nodos ----------\n");
+      printf(" no terminal: %s \n", nodos[num_nodos].no_terminal);
+      printf(" terminal: %s \n", nodos[num_nodos].terminal);
+
+      num_nodos++;
+
+    } else {
+      fprintf(stderr, "Demasiados nodos.\n");
+      exit(1);
+    }
+  }
+
+  void imprimir_AST(const char *no_terminal, const char *terminal) {
+    static int inicio_arbol = 1; //imprimir un encabezado una sola vez
+    if (inicio_arbol){
+      printf("\n\nAnalisis Sintactico\n");
+      inicio_arbol = 0;
+    }
+
+    if(terminal == ""){
+      printf(" %s \n", no_terminal); //imprimir el no terminal padre
+    }else{
+      printf(" |____ %s \n", terminal);
+    }
+
+  }
+
   // Función para acumular errores
 
   struct error_estructura errores[100];
@@ -192,6 +233,8 @@ documento: elemento documento {
           };
           | elemento {
             $$ = $1;
+            imprimir_AST("ELEMENTO","");
+            agregar_nodo("ELEMENTO","");
           };
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
@@ -207,6 +250,10 @@ inicio: INICIO_ETIQUETA {
     if (traduccion != -1) {
       $$ = tabla_etiquetas[traduccion].cierre_etiqueta_html;
       fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+
+
+      imprimir_AST("INICIO_ETIQUETA", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+
     } else {
       char mensaje[256];
       sprintf(mensaje, "etiqueta '%s' no valida", $1);
@@ -301,7 +348,6 @@ int main(void) {
 
   // Imprimir errores después del análisis
   if (num_errores > 0) {
-    fprintf(stderr, "\n\nAnalisis Sintactico\n");
     fprintf(stderr, "\n\nErrores encontrados:\n");
     for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
         fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));

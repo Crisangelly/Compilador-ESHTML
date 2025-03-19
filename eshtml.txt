@@ -1,6 +1,1 @@
-<titulo 9 "titulo 1" >
-<titulo 9 "titulo 1" >
-<titulo 9 "titulo 1" >
-"titulo 1" ><titulo 9 
-<titulo 9 "titulo 1" >
-<titulo 9 "titulo 1" >
+<parrafo "hola" >

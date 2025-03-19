@@ -76,6 +76,47 @@
 
   #include "errores.h" // Incluir el archivo de los errores
 
+  //Imprimir AST 
+  struct ASTNodo{
+    char *no_terminal; 
+    char *terminal; 
+  };
+
+  struct ASTNodo nodos[100];
+  int num_nodos = 0;
+
+  void agregar_nodo(char *no_terminal, char *terminal){
+    if (num_nodos < 100) {
+      nodos[num_nodos].no_terminal = no_terminal;
+      nodos[num_nodos].terminal= terminal;
+
+      printf("\n---------- Acumular nodos ----------\n");
+      printf(" no terminal: %s \n", nodos[num_nodos].no_terminal);
+      printf(" terminal: %s \n", nodos[num_nodos].terminal);
+
+      num_nodos++;
+
+    } else {
+      fprintf(stderr, "Demasiados nodos.\n");
+      exit(1);
+    }
+  }
+
+  void imprimir_AST(const char *no_terminal, const char *terminal) {
+    static int inicio_arbol = 1; //imprimir un encabezado una sola vez
+    if (inicio_arbol){
+      printf("\n\nAnalisis Sintactico\n");
+      inicio_arbol = 0;
+    }
+
+    if(terminal == ""){
+      printf(" %s \n", no_terminal); //imprimir el no terminal padre
+    }else{
+      printf(" |____ %s \n", terminal);
+    }
+
+  }
+
   // Función para acumular errores
 
   struct error_estructura errores[100];
@@ -200,30 +241,6 @@
     {NULL, NULL, NULL} // Marcador de fin de tabla
   };
 
-  //Funciones para imprimir las tablas por consola
-
-  void imprimir_tablas() {
-    printf("Tabla de etiquetas:\n\n");
-    for (int i = 0; tabla_etiquetas[i].etiqueta_espanol != NULL; i++) {
-      printf("%s -> %s %s\n", tabla_etiquetas[i].etiqueta_espanol, tabla_etiquetas[i].inicio_etiqueta_html, tabla_etiquetas[i].cierre_etiqueta_html);
-    }
-
-    printf("\nTabla de atributos solos:\n\n");
-    for (int i = 0; tabla_atributos[i].atributo_espanol != NULL; i++) {
-      printf("%s -> %s\n", tabla_atributos[i].atributo_espanol, tabla_atributos[i].atributo_html);
-    }
-
-    printf("\nTabla de atributos con valor:\n\n");
-    for (int i = 0; tabla_atributos_valor[i].atributo_valor_espanol != NULL; i++) {
-      printf("%s -> %s\n", tabla_atributos_valor[i].atributo_valor_espanol, tabla_atributos_valor[i].atributo_valor_html);
-      if (tabla_atributos_valor[i].valores_permitidos != NULL) {
-        for (int j = 0; tabla_atributos_valor[i].valores_permitidos[j].valor_espanol != NULL; j++) {
-          printf("  %s -> %s\n", tabla_atributos_valor[i].valores_permitidos[j].valor_espanol, tabla_atributos_valor[i].valores_permitidos[j].valor_html);
-        }
-      }
-    }
-  }
-
   // Funciones de traducción
 
   int traducir(char *cadena_espanol, void *tabla, size_t tamano_elemento, char *atributo_espanol) {
@@ -266,7 +283,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 270 "parser.tab.c"
+#line 287 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -308,14 +325,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 197 "parser.y"
+#line 214 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 319 "parser.tab.c"
+#line 336 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -327,7 +344,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 331 "parser.tab.c"
+#line 348 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -613,8 +630,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   214,   214,   217,   221,   226,   228,   241,   278,   293,
-     297,   299,   302,   314
+       0,   231,   231,   234,   240,   245,   247,   264,   301,   316,
+     320,   322,   325,   337
 };
 #endif
 
@@ -1518,7 +1535,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 214 "parser.y"
+#line 231 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1527,16 +1544,18 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 217 "parser.y"
+#line 234 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
+            imprimir_AST("ELEMENTO","");
+            agregar_nodo("ELEMENTO","");
           ;}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 221 "parser.y"
+#line 240 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
@@ -1547,20 +1566,24 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 226 "parser.y"
+#line 245 "parser.y"
     { yyerror(); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 228 "parser.y"
+#line 247 "parser.y"
     {
     int traduccion = traducir((yyvsp[(1) - (1)].cadena), tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
 
     if (traduccion != -1) {
       (yyval.cadena) = tabla_etiquetas[traduccion].cierre_etiqueta_html;
       fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+
+
+      imprimir_AST("INICIO_ETIQUETA", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+
     } else {
       char mensaje[256];
       sprintf(mensaje, "etiqueta '%s' no valida", (yyvsp[(1) - (1)].cadena));
@@ -1572,7 +1595,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 241 "parser.y"
+#line 264 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1615,7 +1638,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 278 "parser.y"
+#line 301 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1636,7 +1659,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 293 "parser.y"
+#line 316 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1645,14 +1668,14 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 297 "parser.y"
+#line 320 "parser.y"
     { fprintf(yyout, ">"); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 299 "parser.y"
+#line 322 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1661,7 +1684,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 302 "parser.y"
+#line 325 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1679,7 +1702,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 314 "parser.y"
+#line 337 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1688,7 +1711,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1692 "parser.tab.c"
+#line 1715 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1900,7 +1923,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 319 "parser.y"
+#line 342 "parser.y"
 
 
 int main(void) {
@@ -1910,23 +1933,22 @@ int main(void) {
 
   // Imprimir errores después del análisis
   if (num_errores > 0) {
-
-    fprintf(stderr, "Errores encontrados:\n");
+    fprintf(stderr, "\n\nErrores encontrados:\n");
     for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-      fprintf(stderr, "\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-      fprintf(stderr, "\n | Linea |            Mensaje            | Token | \n");
-      fprintf(stderr, "\n ------------------------------------------------- \n");
+        fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
       for (int i = 0; i < num_errores; i++) { 
         if (errores[i].tipo == tipo_error) {
-          fprintf(stderr, "\n |   %d   | %s | %s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-          fprintf(stderr, "\n ------------------------------------------------- \n");
+        fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
         }
       }
     }
 
   } else if (s == 0) {
     printf("\n\nTodo en orden.\n\n\n");
-    imprimir_tablas();
   }
 }
 

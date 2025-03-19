@@ -396,7 +396,21 @@ char *yytext;
   #include "parser.tab.h"
   #include "errores.h" // Incluir el archivo de los errores
 
-#line 400 "lex.yy.c"
+  void imprimir_tabla(const char *lexema, const char *token) {
+    static int encabezado_unico = 1; //imprimir un encabezado una sola vez
+    if (encabezado_unico){
+      printf("\n\nAnalisis Lexico\n\n");
+      printf("\n\nTabla de Tokens:\n\n");
+      printf("|-------------------------------------------------------|-------------------------------|\n");
+      printf("|                       Lexema                          |             Token             |\n");
+      printf("|-------------------------------------------------------|-------------------------------|\n");
+      encabezado_unico = 0;
+    }
+      printf("| %-53s | %-29s |\n", lexema, token); //imprimir lexema y token
+      printf("|-------------------------------------------------------|-------------------------------|\n");
+  }
+
+#line 414 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -547,10 +561,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 13 "lexer.l"
+#line 27 "lexer.l"
 
 
-#line 554 "lex.yy.c"
+#line 568 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -643,57 +657,62 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 15 "lexer.l"
+#line 29 "lexer.l"
 {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
+  imprimir_tabla(yytext, "INICIO_ETIQUETA");
   return INICIO_ETIQUETA;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 20 "lexer.l"
+#line 35 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
+  imprimir_tabla(yytext, "CADENA_DE_TEXTO");
   return CADENA_DE_TEXTO;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "lexer.l"
+#line 41 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
+  imprimir_tabla(yytext, "CIERRE_ETIQUETA");
   return CIERRE_ETIQUETA;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 30 "lexer.l"
+#line 47 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
+  imprimir_tabla(yytext, "ATRIBUTO");
   return ATRIBUTO;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 35 "lexer.l"
+#line 53 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
+  imprimir_tabla(yytext, "ATRIBUTO_VALOR");
   return ATRIBUTO_VALOR;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 40 "lexer.l"
+#line 59 "lexer.l"
 { /* Ignorar espacios en blanco */ }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 42 "lexer.l"
+#line 61 "lexer.l"
 { /* Reconocer saltos de línea */ }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 44 "lexer.l"
+#line 63 "lexer.l"
 { 
   char mensaje[256];
   sprintf(mensaje, "caracter no reconocido '%c'", yytext[0]);
@@ -702,10 +721,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 50 "lexer.l"
+#line 69 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 709 "lex.yy.c"
+#line 728 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1589,4 +1608,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 50 "lexer.l"
+#line 69 "lexer.l"
