@@ -301,16 +301,17 @@ int main(void) {
 
   // Imprimir errores después del análisis
   if (num_errores > 0) {
-
-    fprintf(stderr, "Errores encontrados:\n");
+    fprintf(stderr, "\n\nAnalisis Sintactico\n");
+    fprintf(stderr, "\n\nErrores encontrados:\n");
     for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-      fprintf(stderr, "\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-      fprintf(stderr, "\n | Linea |            Mensaje            | Token | \n");
-      fprintf(stderr, "\n ------------------------------------------------- \n");
+        fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
       for (int i = 0; i < num_errores; i++) { 
         if (errores[i].tipo == tipo_error) {
-          fprintf(stderr, "\n |   %d   | %s | %s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-          fprintf(stderr, "\n ------------------------------------------------- \n");
+        fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
         }
       }
     }
