@@ -1,2 +1,4 @@
-<campo :requerido :tipo="texto" >
-<parrafo "hola mundo" >
+<formulario
+  <campo :requerido :tipo="texto" >
+  <campo :requerido :tipo="contrasenia" >
+>

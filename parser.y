@@ -30,6 +30,8 @@
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
     if (inicio_arbol){
       printf("\n\nAnalisis Sintactico\n");
+      printf("DOCUMENTO\n");
+      printf(" |\n");
       inicio_arbol = 0;
     }
 
@@ -42,7 +44,7 @@
         if(nodos[i].terminal == ""){
           printf(" %s \n", nodos[i].no_terminal); //imprimir el no terminal padre
         }else{
-          printf(" |____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          printf("           |____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
         }
 
       }
@@ -237,7 +239,6 @@ documento: elemento documento {
           };
           | elemento {
             $$ = $1;
-            //agregar_nodo("ELEMENTO","");
           };
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
@@ -250,6 +251,8 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
  | error { yyerror(); } ;
 
 inicio: INICIO_ETIQUETA {
+    agregar_nodo("|____ ELEMENTO","");
+
     int traduccion = traducir($1, tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
 
     if (traduccion != -1) {
@@ -287,7 +290,7 @@ atributo: atributo ATRIBUTO_VALOR  {
 
                 char cadena_concatenada[256];
                 sprintf(cadena_concatenada, "%s=%s", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
-                agregar_nodo("ATRIBUTO_VALOR", cadena_concatenada);
+                agregar_nodo("ATRIBUTO", cadena_concatenada);
 
               } else {
                 char mensaje[256];
@@ -334,7 +337,8 @@ cerrar_inicio: {
 
 contenido: contenido elemento  { 
             $$ = $2;
-            agregar_nodo("ELEMENTO", "");
+            agregar_nodo("|____ ELEMENTO","");
+            //agregar_nodo("   |____ CONTENIDO", "");
           };
           | contenido CADENA_DE_TEXTO { 
             $$ = $2;
@@ -347,7 +351,7 @@ contenido: contenido elemento  {
                 fprintf(yyout, first_quote + 1);
             }
 
-            agregar_nodo("CADENA_DE_TEXTO", $2);
+            agregar_nodo("CONTENIDO", $2);
 
           };
           | /* vacío */ {  

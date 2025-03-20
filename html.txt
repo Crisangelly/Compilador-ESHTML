@@ -1,1 +1,1 @@
-<input required  type="text" ><p>hola mundo</p>
+<form><input required  type="text" ><input required  type="password" ></form>
