@@ -1,1 +1,2 @@
-<parrafo "hola" >
+<campo :requerido :tipo="texto" >
+<parrafo "hola mundo" >

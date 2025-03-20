@@ -18,30 +18,34 @@
     if (num_nodos < 100) {
       nodos[num_nodos].no_terminal = no_terminal;
       nodos[num_nodos].terminal= terminal;
-
-      printf("\n---------- Acumular nodos ----------\n");
-      printf(" no terminal: %s \n", nodos[num_nodos].no_terminal);
-      printf(" terminal: %s \n", nodos[num_nodos].terminal);
-
       num_nodos++;
-
     } else {
       fprintf(stderr, "Demasiados nodos.\n");
       exit(1);
     }
   }
 
-  void imprimir_AST(const char *no_terminal, const char *terminal) {
+  void imprimir_AST() {
+
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
     if (inicio_arbol){
       printf("\n\nAnalisis Sintactico\n");
       inicio_arbol = 0;
     }
 
-    if(terminal == ""){
-      printf(" %s \n", no_terminal); //imprimir el no terminal padre
-    }else{
-      printf(" |____ %s \n", terminal);
+    if (num_nodos > 0) {
+      for (int i = 0; i < num_nodos; i++) { 
+        /*printf("----------------------- \n");
+        printf(" no terminal: %s terminal: %s \n", nodos[i].no_terminal, nodos[i].terminal);
+        printf("----------------------- \n");*/
+
+        if(nodos[i].terminal == ""){
+          printf(" %s \n", nodos[i].no_terminal); //imprimir el no terminal padre
+        }else{
+          printf(" |____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+        }
+
+      }
     }
 
   }
@@ -233,14 +237,15 @@ documento: elemento documento {
           };
           | elemento {
             $$ = $1;
-            imprimir_AST("ELEMENTO","");
-            agregar_nodo("ELEMENTO","");
+            //agregar_nodo("ELEMENTO","");
           };
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
   if($1 != " "){
     fprintf(yyout, "%s", $1);
+    agregar_nodo("CIERRE_ETIQUETA", $1);
   }
+
 };
  | error { yyerror(); } ;
 
@@ -251,8 +256,7 @@ inicio: INICIO_ETIQUETA {
       $$ = tabla_etiquetas[traduccion].cierre_etiqueta_html;
       fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
 
-
-      imprimir_AST("INICIO_ETIQUETA", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+      agregar_nodo("INICIO_ETIQUETA", tabla_etiquetas[traduccion].inicio_etiqueta_html);
 
     } else {
       char mensaje[256];
@@ -281,6 +285,10 @@ atributo: atributo ATRIBUTO_VALOR  {
           
                 fprintf(yyout, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
 
+                char cadena_concatenada[256];
+                sprintf(cadena_concatenada, "%s=%s", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
+                agregar_nodo("ATRIBUTO_VALOR", cadena_concatenada);
+
               } else {
                 char mensaje[256];
                 sprintf(mensaje, "valor del atributo '%s' no valido", valor);
@@ -306,6 +314,8 @@ atributo: atributo ATRIBUTO_VALOR  {
           if (traduccion != -1) {
             $$ = tabla_atributos[traduccion].atributo_html;
             fprintf(yyout, "%s", tabla_atributos[traduccion].atributo_html);
+            
+            agregar_nodo("ATRIBUTO", tabla_atributos[traduccion].atributo_html);
           } else {
             char mensaje[256];
             sprintf(mensaje, "atributo '%s' no valido", $1);
@@ -317,10 +327,14 @@ atributo: atributo ATRIBUTO_VALOR  {
           $$ = " ";
         };
 
-cerrar_inicio: { fprintf(yyout, ">"); };
+cerrar_inicio: { 
+  fprintf(yyout, ">"); 
+  agregar_nodo("CERRAR_INICIO", ">");
+};
 
 contenido: contenido elemento  { 
             $$ = $2;
+            agregar_nodo("ELEMENTO", "");
           };
           | contenido CADENA_DE_TEXTO { 
             $$ = $2;
@@ -332,6 +346,8 @@ contenido: contenido elemento  {
                 *second_quote = '\0'; // Termina la cadena en la segunda comilla
                 fprintf(yyout, first_quote + 1);
             }
+
+            agregar_nodo("CADENA_DE_TEXTO", $2);
 
           };
           | /* vacío */ {  
@@ -345,6 +361,8 @@ int main(void) {
   yyin = fopen("eshtml.txt", "r");
   yyout = fopen("html.txt", "w");
   int s = yyparse();  
+
+  imprimir_AST();
 
   // Imprimir errores después del análisis
   if (num_errores > 0) {
