@@ -1694,8 +1694,8 @@ yyreduce:
 #line 338 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
-            agregar_nodo("|____ ELEMENTO","");
-            //agregar_nodo("   |____ CONTENIDO", "");
+            //agregar_nodo("|____ ELEMENTO","");
+            agregar_nodo("          |____ CONTENIDO", "");
           ;}
     break;
 

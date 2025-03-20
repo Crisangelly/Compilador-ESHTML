@@ -337,8 +337,7 @@ cerrar_inicio: {
 
 contenido: contenido elemento  { 
             $$ = $2;
-            agregar_nodo("|____ ELEMENTO","");
-            //agregar_nodo("   |____ CONTENIDO", "");
+            agregar_nodo("          |____ CONTENIDO", "");
           };
           | contenido CADENA_DE_TEXTO { 
             $$ = $2;
