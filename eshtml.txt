@@ -1,3 +1,1 @@
-<lista_ordenada 
-  <lista_elemento "hola" >
->
+<imagen :enlace_imagen="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ef7b6f72346643.5be42ed117d13.jpg" >

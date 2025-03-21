@@ -316,6 +316,9 @@ atributo: atributo ATRIBUTO_VALOR  {
 
             }else{
               fprintf(yyout, " %s=%s ",tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+              char cadena_concatenada[256];
+              sprintf(cadena_concatenada, "%s=%s", tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+              agregar_nodo("ATRIBUTO", cadena_concatenada);
             }
 
           } else {
