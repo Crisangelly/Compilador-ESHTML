@@ -1,4 +1,3 @@
-<formulario
-  <campo :requerido :tipo="texto" >
-  <campo :requerido :tipo="contrasenia" >
+<lista_ordenada 
+  <lista_elemento "hola" >
 >

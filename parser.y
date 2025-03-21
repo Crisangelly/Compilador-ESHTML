@@ -26,30 +26,45 @@
   }
 
   void imprimir_AST() {
-
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
-    if (inicio_arbol){
+    if (inicio_arbol) {
       printf("\n\nAnalisis Sintactico\n");
       printf("DOCUMENTO\n");
-      printf(" |\n");
+      printf("  |\n");
       inicio_arbol = 0;
     }
 
     if (num_nodos > 0) {
-      for (int i = 0; i < num_nodos; i++) { 
-        /*printf("----------------------- \n");
-        printf(" no terminal: %s terminal: %s \n", nodos[i].no_terminal, nodos[i].terminal);
-        printf("----------------------- \n");*/
-
-        if(nodos[i].terminal == ""){
-          printf(" %s \n", nodos[i].no_terminal); //imprimir el no terminal padre
-        }else{
-          printf("           |____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+      int indentacion = 0; // Inicializamos la indentación a 0
+      for (int i = 0; i < num_nodos; i++) {
+        // Ajustar la indentación según el tipo de nodo
+        if (strcmp(nodos[i].no_terminal, "ELEMENTO") == 0 && nodos[i].terminal[0] == '\0') {
+          // Nodo ELEMENTO padre, aumentar la indentación
+          indentacion++;
+        } else if (strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0) {
+          // Nodo CIERRE_ETIQUETA, disminuir la indentación
+          indentacion--;
         }
 
+        // Imprimir la indentación
+        for (int j = 0; j < indentacion; j++) {
+          printf("  "); // 2 espacios por nivel de indentación
+        }
+
+        // Imprimir el nodo
+        if (nodos[i].terminal[0] == '\0') {
+          printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+        } else {
+          printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+        }
+
+        // Ajustar la indentación después de imprimir el nodo
+        if (strcmp(nodos[i].no_terminal, "INICIO_ETIQUETA") == 0 && strcmp(nodos[i + 1].no_terminal, "ELEMENTO") == 0 && nodos[i + 1].terminal[0] == '\0') {
+          // Nodo INICIO_ETIQUETA seguido de ELEMENTO padre, aumentar la indentación
+          indentacion++;
+        }
       }
     }
-
   }
 
   // Función para acumular errores
@@ -251,7 +266,7 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
  | error { yyerror(); } ;
 
 inicio: INICIO_ETIQUETA {
-    agregar_nodo("|____ ELEMENTO","");
+    agregar_nodo("ELEMENTO","");
 
     int traduccion = traducir($1, tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
 
@@ -337,7 +352,7 @@ cerrar_inicio: {
 
 contenido: contenido elemento  { 
             $$ = $2;
-            agregar_nodo("          |____ CONTENIDO", "");
+            //agregar_nodo("CONTENIDO", "");
           };
           | contenido CADENA_DE_TEXTO { 
             $$ = $2;
@@ -365,8 +380,6 @@ int main(void) {
   yyout = fopen("html.txt", "w");
   int s = yyparse();  
 
-  imprimir_AST();
-
   // Imprimir errores después del análisis
   if (num_errores > 0) {
     fprintf(stderr, "\n\nErrores encontrados:\n");
@@ -384,6 +397,9 @@ int main(void) {
     }
 
   } else if (s == 0) {
+    //Imprimir el árbol de análisis sintáctico
+    imprimir_AST();
+
     printf("\n\nTodo en orden.\n\n\n");
   }
 }

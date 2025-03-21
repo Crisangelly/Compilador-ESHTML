@@ -97,30 +97,45 @@
   }
 
   void imprimir_AST() {
-
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
-    if (inicio_arbol){
+    if (inicio_arbol) {
       printf("\n\nAnalisis Sintactico\n");
       printf("DOCUMENTO\n");
-      printf(" |\n");
+      printf("  |\n");
       inicio_arbol = 0;
     }
 
     if (num_nodos > 0) {
-      for (int i = 0; i < num_nodos; i++) { 
-        /*printf("----------------------- \n");
-        printf(" no terminal: %s terminal: %s \n", nodos[i].no_terminal, nodos[i].terminal);
-        printf("----------------------- \n");*/
-
-        if(nodos[i].terminal == ""){
-          printf(" %s \n", nodos[i].no_terminal); //imprimir el no terminal padre
-        }else{
-          printf("           |____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+      int indentacion = 0; // Inicializamos la indentación a 0
+      for (int i = 0; i < num_nodos; i++) {
+        // Ajustar la indentación según el tipo de nodo
+        if (strcmp(nodos[i].no_terminal, "ELEMENTO") == 0 && nodos[i].terminal[0] == '\0') {
+          // Nodo ELEMENTO padre, aumentar la indentación
+          indentacion++;
+        } else if (strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0) {
+          // Nodo CIERRE_ETIQUETA, disminuir la indentación
+          indentacion--;
         }
 
+        // Imprimir la indentación
+        for (int j = 0; j < indentacion; j++) {
+          printf("  "); // 2 espacios por nivel de indentación
+        }
+
+        // Imprimir el nodo
+        if (nodos[i].terminal[0] == '\0') {
+          printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+        } else {
+          printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+        }
+
+        // Ajustar la indentación después de imprimir el nodo
+        if (strcmp(nodos[i].no_terminal, "INICIO_ETIQUETA") == 0 && strcmp(nodos[i + 1].no_terminal, "ELEMENTO") == 0 && nodos[i + 1].terminal[0] == '\0') {
+          // Nodo INICIO_ETIQUETA seguido de ELEMENTO padre, aumentar la indentación
+          indentacion++;
+        }
       }
     }
-
   }
 
   // Función para acumular errores
@@ -289,7 +304,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 293 "parser.tab.c"
+#line 308 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -331,14 +346,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 220 "parser.y"
+#line 235 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 342 "parser.tab.c"
+#line 357 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -350,7 +365,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 354 "parser.tab.c"
+#line 369 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -636,8 +651,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   237,   237,   240,   244,   251,   253,   271,   312,   329,
-     333,   338,   343,   357
+       0,   252,   252,   255,   259,   266,   268,   286,   327,   344,
+     348,   353,   357,   371
 };
 #endif
 
@@ -1541,7 +1556,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 237 "parser.y"
+#line 252 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1550,7 +1565,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 240 "parser.y"
+#line 255 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1559,7 +1574,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 244 "parser.y"
+#line 259 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
@@ -1572,16 +1587,16 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 251 "parser.y"
+#line 266 "parser.y"
     { yyerror(); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 253 "parser.y"
+#line 268 "parser.y"
     {
-    agregar_nodo("|____ ELEMENTO","");
+    agregar_nodo("ELEMENTO","");
 
     int traduccion = traducir((yyvsp[(1) - (1)].cadena), tabla_etiquetas, sizeof(struct etiqueta_valida), "etiqueta_espanol");
 
@@ -1602,7 +1617,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 271 "parser.y"
+#line 286 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1649,7 +1664,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 312 "parser.y"
+#line 327 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1672,7 +1687,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 329 "parser.y"
+#line 344 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1681,7 +1696,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 333 "parser.y"
+#line 348 "parser.y"
     { 
   fprintf(yyout, ">"); 
   agregar_nodo("CERRAR_INICIO", ">");
@@ -1691,18 +1706,17 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 338 "parser.y"
+#line 353 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
-            //agregar_nodo("|____ ELEMENTO","");
-            agregar_nodo("          |____ CONTENIDO", "");
+            //agregar_nodo("CONTENIDO", "");
           ;}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 343 "parser.y"
+#line 357 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1722,7 +1736,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 357 "parser.y"
+#line 371 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1731,7 +1745,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1735 "parser.tab.c"
+#line 1749 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1943,15 +1957,13 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 362 "parser.y"
+#line 376 "parser.y"
 
 
 int main(void) {
   yyin = fopen("eshtml.txt", "r");
   yyout = fopen("html.txt", "w");
   int s = yyparse();  
-
-  imprimir_AST();
 
   // Imprimir errores después del análisis
   if (num_errores > 0) {
@@ -1970,6 +1982,9 @@ int main(void) {
     }
 
   } else if (s == 0) {
+    //Imprimir el árbol de análisis sintáctico
+    imprimir_AST();
+
     printf("\n\nTodo en orden.\n\n\n");
   }
 }
