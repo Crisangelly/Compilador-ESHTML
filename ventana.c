@@ -1,9 +1,27 @@
 #include <gtk/gtk.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 static void on_show_text_from_buffer(GtkWidget *p_button, gpointer user_data) {
-    char *p_text_in_entry = g_strdup(gtk_entry_buffer_get_text(user_data));
-    g_print("%s\n", p_text_in_entry); 
-    g_free(p_text_in_entry); 
+    char *p_text_in_entry = g_strdup(gtk_entry_buffer_get_text(GTK_ENTRY_BUFFER(user_data)));
+    char command[1024];
+    FILE *pipe;
+    char buffer[128];
+    GtkWidget *scrolled_window = gtk_grid_get_child_at(GTK_GRID(gtk_widget_get_parent(p_button)), 0, 2);
+    GtkWidget *text_view = gtk_scrolled_window_get_child(GTK_SCROLLED_WINDOW(scrolled_window));
+    GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+
+    snprintf(command, sizeof(command), "..\\a.exe"); // Sin redirección
+    pipe = popen(command, "w"); // Abrir la tubería en modo escritura
+    if (pipe) {
+        fprintf(pipe, "%s", p_text_in_entry); // Escribir la entrada en la tubería
+        fclose(pipe); // Cerrar la tubería después de escribir
+    } else {
+        gtk_text_buffer_set_text(text_buffer, "Error al ejecutar el compilador.", -1);
+    }
+
+    g_free(p_text_in_entry);
 }
 
 static void activate(GtkApplication *app, gpointer user_data) {
@@ -55,6 +73,9 @@ static void activate(GtkApplication *app, gpointer user_data) {
 }
 
 int main(int argc, char **argv) {
+    char input[1024];
+    fgets(input, sizeof(input), stdin);
+    
     GtkApplication *app;
     int status;
 

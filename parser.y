@@ -380,8 +380,12 @@ contenido: contenido elemento  {
 %%
 
 int main(void) {
-  yyin = fopen("eshtml.txt", "r");
-  yyout = fopen("html.txt", "w");
+  //yyin = fopen("eshtml.txt", "r");
+  //yyout = fopen("html.txt", "w");
+  //yyout = stdout;
+
+  yyin = stdin;
+
   int s = yyparse();  
 
   // Imprimir errores después del análisis
@@ -403,7 +407,7 @@ int main(void) {
 
   } else if (s == 0) {
     //Imprimir el árbol de análisis sintáctico
-    imprimir_AST();
+    //imprimir_AST();
 
     printf("\n\nTodo en orden.\n\n\n");
   }

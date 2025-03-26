@@ -396,7 +396,7 @@ char *yytext;
   #include "parser.tab.h"
   #include "errores.h" // Incluir el archivo de los errores
 
-  void imprimir_tabla(const char *lexema, const char *token) {
+  /*void imprimir_tabla(const char *lexema, const char *token) {
     static int encabezado_unico = 1; //imprimir un encabezado una sola vez
     if (encabezado_unico){
       printf("\033[35m");
@@ -409,7 +409,7 @@ char *yytext;
     }
       printf("| %-53s | %-29s |\n", lexema, token); //imprimir lexema y token
       printf("|-------------------------------------------------------|-------------------------------|\n");
-  }
+  }*/
 
 #line 415 "lex.yy.c"
 
@@ -661,7 +661,7 @@ YY_RULE_SETUP
 #line 30 "lexer.l"
 {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
-  imprimir_tabla(yytext, "INICIO_ETIQUETA");
+  //imprimir_tabla(yytext, "INICIO_ETIQUETA");
   return INICIO_ETIQUETA;
 }
 	YY_BREAK
@@ -670,7 +670,7 @@ YY_RULE_SETUP
 #line 36 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "CADENA_DE_TEXTO");
+  //imprimir_tabla(yytext, "CADENA_DE_TEXTO");
   return CADENA_DE_TEXTO;
 }
 	YY_BREAK
@@ -679,7 +679,7 @@ YY_RULE_SETUP
 #line 42 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "CIERRE_ETIQUETA");
+  //imprimir_tabla(yytext, "CIERRE_ETIQUETA");
   return CIERRE_ETIQUETA;
 }
 	YY_BREAK
@@ -688,7 +688,7 @@ YY_RULE_SETUP
 #line 48 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "ATRIBUTO");
+  //imprimir_tabla(yytext, "ATRIBUTO");
   return ATRIBUTO;
 }
 	YY_BREAK
@@ -697,7 +697,7 @@ YY_RULE_SETUP
 #line 54 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "ATRIBUTO_VALOR");
+  //imprimir_tabla(yytext, "ATRIBUTO_VALOR");
   return ATRIBUTO_VALOR;
 }
 	YY_BREAK
