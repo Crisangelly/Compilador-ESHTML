@@ -6,7 +6,7 @@
   #include "parser.tab.h"
   #include "errores.h" // Incluir el archivo de los errores
 
-  /*void imprimir_tabla(const char *lexema, const char *token) {
+  void imprimir_tabla(const char *lexema, const char *token) {
     static int encabezado_unico = 1; //imprimir un encabezado una sola vez
     if (encabezado_unico){
       printf("\033[35m");
@@ -19,7 +19,7 @@
     }
       printf("| %-53s | %-29s |\n", lexema, token); //imprimir lexema y token
       printf("|-------------------------------------------------------|-------------------------------|\n");
-  }*/
+  }
 
 %}
 %option noyywrap
@@ -29,37 +29,37 @@
 
 [<][a-z_]+[1-6]? {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
-  //imprimir_tabla(yytext, "INICIO_ETIQUETA");
+  imprimir_tabla(yytext, "INICIO_ETIQUETA");
   return INICIO_ETIQUETA;
 }
 
 ["][^"]*["]  {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "CADENA_DE_TEXTO");
+  imprimir_tabla(yytext, "CADENA_DE_TEXTO");
   return CADENA_DE_TEXTO;
 }
 
 [>] {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "CIERRE_ETIQUETA");
+  imprimir_tabla(yytext, "CIERRE_ETIQUETA");
   return CIERRE_ETIQUETA;
 }
 
 [:][a-z_]+  {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "ATRIBUTO");
+  imprimir_tabla(yytext, "ATRIBUTO");
   return ATRIBUTO;
 }
 
 [:][a-z_]+[=]["][^"]*["]   {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "ATRIBUTO_VALOR");
+  imprimir_tabla(yytext, "ATRIBUTO_VALOR");
   return ATRIBUTO_VALOR;
 }
 
 [ \t] { /* Ignorar espacios en blanco */ }
 
-\n { /* Reconocer saltos de línea */ }
+\n { /* Ignorar saltos de linea */ }
 
 . { 
   char mensaje[256];

@@ -225,9 +225,12 @@
 
   extern int yylex(void);
   extern char *yytext;
-  extern FILE *yyin;
-  extern FILE *yyout;
+  //extern FILE *yyin;
+  //extern FILE *yyout;
   extern int yylineno;
+
+  char salida[1024]; // Buffer para almacenar la salida
+  int indice_salida = 0; // Índice para rastrear la posición en el buffer
 
   void yyerror();
 
@@ -259,7 +262,9 @@ documento: elemento documento {
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
   if($1 != " "){
-    fprintf(yyout, "%s", $1);
+    sprintf(salida + indice_salida, "%s", $1);
+    indice_salida += strlen($1);
+
     agregar_nodo("CIERRE_ETIQUETA", $1);
   }
 
@@ -273,7 +278,9 @@ inicio: INICIO_ETIQUETA {
 
     if (traduccion != -1) {
       $$ = tabla_etiquetas[traduccion].cierre_etiqueta_html;
-      fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+
+      sprintf(salida + indice_salida, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+      indice_salida += strlen(tabla_etiquetas[traduccion].inicio_etiqueta_html);
 
       agregar_nodo("INICIO_ETIQUETA", tabla_etiquetas[traduccion].inicio_etiqueta_html);
 
@@ -301,9 +308,10 @@ atributo: atributo ATRIBUTO_VALOR  {
 
               int traduccion_valor =  traducir_valor(valor, tabla_atributos_valor[traduccion].valores_permitidos);
               if (traduccion_valor != -1) {
-          
-                fprintf(yyout, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
 
+                sprintf(salida + indice_salida, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
+                indice_salida += strlen(salida + indice_salida);
+                
                 char cadena_concatenada[256];
                 sprintf(cadena_concatenada, "%s=%s", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
                 agregar_nodo("ATRIBUTO", cadena_concatenada);
@@ -315,7 +323,10 @@ atributo: atributo ATRIBUTO_VALOR  {
               }
 
             }else{
-              fprintf(yyout, " %s=%s ",tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+
+              sprintf(salida + indice_salida, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+              indice_salida += strlen(salida + indice_salida);
+
               char cadena_concatenada[256];
               sprintf(cadena_concatenada, "%s=%s", tabla_atributos_valor[traduccion].atributo_valor_html, valor);
               agregar_nodo("ATRIBUTO", cadena_concatenada);
@@ -335,7 +346,9 @@ atributo: atributo ATRIBUTO_VALOR  {
 
           if (traduccion != -1) {
             $$ = tabla_atributos[traduccion].atributo_html;
-            fprintf(yyout, "%s", tabla_atributos[traduccion].atributo_html);
+
+            sprintf(salida + indice_salida, "%s", tabla_atributos[traduccion].atributo_html);
+            indice_salida += strlen(tabla_atributos[traduccion].atributo_html);
             
             agregar_nodo("ATRIBUTO", tabla_atributos[traduccion].atributo_html);
           } else {
@@ -350,7 +363,8 @@ atributo: atributo ATRIBUTO_VALOR  {
         };
 
 cerrar_inicio: { 
-  fprintf(yyout, ">"); 
+  sprintf(salida + indice_salida, ">");
+  indice_salida += strlen(">");
   agregar_nodo("CERRAR_INICIO", ">");
 };
 
@@ -366,7 +380,8 @@ contenido: contenido elemento  {
 
             if (first_quote && second_quote && first_quote != second_quote) {
                 *second_quote = '\0'; // Termina la cadena en la segunda comilla
-                fprintf(yyout, first_quote + 1);
+                sprintf(salida + indice_salida, first_quote + 1);
+                indice_salida += strlen(first_quote + 1);
             }
 
             agregar_nodo("CONTENIDO", $2);
@@ -384,7 +399,7 @@ int main(void) {
   //yyout = fopen("html.txt", "w");
   //yyout = stdout;
 
-  yyin = stdin;
+  //yyin = stdin;
 
   int s = yyparse();  
 
@@ -407,10 +422,14 @@ int main(void) {
 
   } else if (s == 0) {
     //Imprimir el árbol de análisis sintáctico
-    //imprimir_AST();
+    imprimir_AST();
 
-    printf("\n\nTodo en orden.\n\n\n");
+    fprintf(stderr, "\x1b[0m");
+    printf("\n\nSalida:\n\n\n");
+    printf("%s", salida);
+    //printf("\n\nTodo en orden.\n\n\n");
   }
+  return 0;
 }
 
 void yyerror(){

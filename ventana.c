@@ -58,12 +58,8 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     g_signal_connect(p_button, "clicked", G_CALLBACK(on_show_text_from_buffer), p_buffer_1);
 
-    label_salida = gtk_label_new("Salida:");
-    gtk_grid_attach(GTK_GRID(grid), label_salida, 0, 1, 3, 1); // La etiqueta "Salida" ocupa las 3 columnas
-    gtk_label_set_xalign(GTK_LABEL(label_salida), 0.0);
-
     scrolled_window = gtk_scrolled_window_new();
-    gtk_grid_attach(GTK_GRID(grid), scrolled_window, 0, 2, 3, 1); // El scrolled_window ocupa las 3 columnas
+    gtk_grid_attach(GTK_GRID(grid), scrolled_window, 0, 2, 2, 1); // El scrolled_window ocupa las 3 columnas
 
     text_view = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(text_view), FALSE);
