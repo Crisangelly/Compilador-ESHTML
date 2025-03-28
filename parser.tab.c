@@ -1579,9 +1579,9 @@ yyreduce:
 
           } else {
             //Imprimir el árbol de análisis sintáctico
-            //imprimir_AST();
+            imprimir_AST();
 
-            //fprintf(stderr, "\x1b[0m");
+            fprintf(stderr, "\x1b[0m");
             printf("Salida:\n");
             printf("%s", salida);
             //printf("\n\nTodo en orden.\n\n\n");

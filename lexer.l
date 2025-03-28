@@ -27,33 +27,35 @@
 
 %%
 
+EOF { return 0; } //Fin entrada
+
 [<][a-z_]+[1-6]? {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
-  //imprimir_tabla(yytext, "INICIO_ETIQUETA");
+  imprimir_tabla(yytext, "INICIO_ETIQUETA");
   return INICIO_ETIQUETA;
 }
 
 ["][^"]*["]  {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "CADENA_DE_TEXTO");
+  imprimir_tabla(yytext, "CADENA_DE_TEXTO");
   return CADENA_DE_TEXTO;
 }
 
 [>] {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "CIERRE_ETIQUETA");
+  imprimir_tabla(yytext, "CIERRE_ETIQUETA");
   return CIERRE_ETIQUETA;
 }
 
 [:][a-z_]+  {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "ATRIBUTO");
+  imprimir_tabla(yytext, "ATRIBUTO");
   return ATRIBUTO;
 }
 
 [:][a-z_]+[=]["][^"]*["]   {
   yylval.cadena = strdup(yytext);
-  //imprimir_tabla(yytext, "ATRIBUTO_VALOR");
+  imprimir_tabla(yytext, "ATRIBUTO_VALOR");
   return ATRIBUTO_VALOR;
 }
 

@@ -67,7 +67,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     // Text view para la salida de compilación en la cuarta fila
     GtkWidget *salida_compilacion = gtk_text_view_new();
-    gtk_grid_attach(GTK_GRID(grid), salida_compilacion, 0, 3, 2, 1); // Ocupa columnas 0 y 1, fila 3
+    gtk_grid_attach(GTK_GRID(grid), salida_compilacion, 0, 3, 100, 1); // Ocupa columnas 0 y 1, fila 3
 
     g_object_set_data(G_OBJECT(window), "codigo_fuente", codigo_fuente);
     g_object_set_data(G_OBJECT(window), "salida_compilacion", salida_compilacion);
