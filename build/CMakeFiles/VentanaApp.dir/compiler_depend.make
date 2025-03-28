@@ -13,6 +13,7 @@ CMakeFiles/VentanaApp.dir/ventana.c.obj: C:/Users/PC/Desktop/repositorios/Compil
   C:/msys64/ucrt64/include/cairo/cairo-version.h \
   C:/msys64/ucrt64/include/cairo/cairo.h \
   C:/msys64/ucrt64/include/corecrt.h \
+  C:/msys64/ucrt64/include/corecrt_startup.h \
   C:/msys64/ucrt64/include/corecrt_stdio_config.h \
   C:/msys64/ucrt64/include/corecrt_wstdlib.h \
   C:/msys64/ucrt64/include/crtdefs.h \
@@ -29,6 +30,7 @@ CMakeFiles/VentanaApp.dir/ventana.c.obj: C:/Users/PC/Desktop/repositorios/Compil
   C:/msys64/ucrt64/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-simple-anim.h \
   C:/msys64/ucrt64/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-transform.h \
   C:/msys64/ucrt64/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h \
+  C:/msys64/ucrt64/include/getopt.h \
   C:/msys64/ucrt64/include/glib-2.0/gio/gaction.h \
   C:/msys64/ucrt64/include/glib-2.0/gio/gactiongroup.h \
   C:/msys64/ucrt64/include/glib-2.0/gio/gactiongroupexporter.h \
@@ -694,6 +696,7 @@ CMakeFiles/VentanaApp.dir/ventana.c.obj: C:/Users/PC/Desktop/repositorios/Compil
   C:/msys64/ucrt64/include/harfbuzz/hb-version.h \
   C:/msys64/ucrt64/include/harfbuzz/hb.h \
   C:/msys64/ucrt64/include/inttypes.h \
+  C:/msys64/ucrt64/include/io.h \
   C:/msys64/ucrt64/include/limits.h \
   C:/msys64/ucrt64/include/malloc.h \
   C:/msys64/ucrt64/include/math.h \
@@ -727,9 +730,11 @@ CMakeFiles/VentanaApp.dir/ventana.c.obj: C:/Users/PC/Desktop/repositorios/Compil
   C:/msys64/ucrt64/include/pango-1.0/pango/pango-version-macros.h \
   C:/msys64/ucrt64/include/pango-1.0/pango/pango.h \
   C:/msys64/ucrt64/include/pango-1.0/pango/pangocairo.h \
+  C:/msys64/ucrt64/include/process.h \
   C:/msys64/ucrt64/include/pthread_compat.h \
   C:/msys64/ucrt64/include/pthread_signal.h \
   C:/msys64/ucrt64/include/pthread_time.h \
+  C:/msys64/ucrt64/include/pthread_unistd.h \
   C:/msys64/ucrt64/include/sdks/_mingw_ddk.h \
   C:/msys64/ucrt64/include/sec_api/stdio_s.h \
   C:/msys64/ucrt64/include/sec_api/stdlib_s.h \
@@ -744,7 +749,9 @@ CMakeFiles/VentanaApp.dir/ventana.c.obj: C:/Users/PC/Desktop/repositorios/Compil
   C:/msys64/ucrt64/include/string.h \
   C:/msys64/ucrt64/include/swprintf.inl \
   C:/msys64/ucrt64/include/sys/timeb.h \
+  C:/msys64/ucrt64/include/sys/types.h \
   C:/msys64/ucrt64/include/time.h \
+  C:/msys64/ucrt64/include/unistd.h \
   C:/msys64/ucrt64/include/vadefs.h \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/emmintrin.h \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/float.h \
@@ -804,6 +811,10 @@ C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkdragsource.h:
 C:/msys64/ucrt64/include/corecrt_wstdlib.h:
 
 C:/msys64/ucrt64/include/glib-2.0/glib/gthread.h:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/float.h:
+
+C:/msys64/ucrt64/include/corecrt_startup.h:
 
 C:/msys64/ucrt64/include/_mingw_off_t.h:
 
@@ -913,6 +924,8 @@ C:/msys64/ucrt64/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-transform.h:
 
 C:/msys64/ucrt64/include/glib-2.0/glib/gversion.h:
 
+C:/msys64/ucrt64/include/io.h:
+
 C:/msys64/ucrt64/include/glib-2.0/gio/gdbusmethodinvocation.h:
 
 C:/msys64/ucrt64/include/glib-2.0/gio/gappinfo.h:
@@ -924,6 +937,26 @@ C:/msys64/ucrt64/include/glib-2.0/gio/gmemorymonitor.h:
 C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtktreemodel.h:
 
 C:/msys64/ucrt64/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h:
+
+C:/msys64/ucrt64/include/graphene-1.0/graphene-matrix.h:
+
+C:/msys64/ucrt64/include/gtk-4.0/gdk/gdktoplevelsize.h:
+
+C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkcellrendererspinner.h:
+
+C:/msys64/ucrt64/include/glib-2.0/gio/gdbusaddress.h:
+
+C:/msys64/ucrt64/include/glib-2.0/gio/gtlsserverconnection.h:
+
+C:/msys64/ucrt64/include/gtk-4.0/gdk/gdkdragsurfacesize.h:
+
+C:/msys64/ucrt64/include/getopt.h:
+
+C:/msys64/ucrt64/include/gtk-4.0/gdk/gdkdevice.h:
+
+C:/msys64/ucrt64/include/pango-1.0/pango/pango-direction.h:
+
+C:/msys64/ucrt64/include/glib-2.0/glib/gpoll.h:
 
 C:/msys64/ucrt64/include/pango-1.0/pango/pango-item.h:
 
@@ -981,10 +1014,6 @@ C:/msys64/ucrt64/include/glib-2.0/gio/gbufferedoutputstream.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkstylecontext.h:
 
-C:/msys64/ucrt64/include/glib-2.0/gio/gdbusnamewatching.h:
-
-C:/msys64/ucrt64/include/glib-2.0/glib/gkeyfile.h:
-
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtktextmark.h:
 
 C:/msys64/ucrt64/include/glib-2.0/gio/gdatagrambased.h:
@@ -1013,18 +1042,6 @@ C:/msys64/ucrt64/include/glib-2.0/gio/gcredentials.h:
 
 C:/msys64/ucrt64/include/glib-2.0/gio/gdbusactiongroup.h:
 
-C:/msys64/ucrt64/include/graphene-1.0/graphene-matrix.h:
-
-C:/msys64/ucrt64/include/gtk-4.0/gdk/gdktoplevelsize.h:
-
-C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkcellrendererspinner.h:
-
-C:/msys64/ucrt64/include/glib-2.0/gio/gdbusaddress.h:
-
-C:/msys64/ucrt64/include/glib-2.0/gio/gtlsserverconnection.h:
-
-C:/msys64/ucrt64/include/gtk-4.0/gdk/gdkdragsurfacesize.h:
-
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkeditablelabel.h:
 
 C:/msys64/ucrt64/include/glib-2.0/glib/ghostutils.h:
@@ -1042,6 +1059,10 @@ C:/msys64/ucrt64/include/glib-2.0/gio/gdbusmessage.h:
 C:/msys64/ucrt64/include/glib-2.0/gio/gvfs.h:
 
 C:/msys64/ucrt64/include/glib-2.0/gio/gzlibdecompressor.h:
+
+C:/msys64/ucrt64/include/glib-2.0/gio/gdbusnamewatching.h:
+
+C:/msys64/ucrt64/include/glib-2.0/glib/gkeyfile.h:
 
 C:/msys64/ucrt64/include/glib-2.0/gio/gdbusobject.h:
 
@@ -1447,7 +1468,11 @@ C:/msys64/ucrt64/include/gtk-4.0/gdk/gdkenums.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkcssprovider.h:
 
+C:/msys64/ucrt64/include/unistd.h:
+
 C:/msys64/ucrt64/include/glib-2.0/gio/gunixconnection.h:
+
+C:/msys64/ucrt64/include/pthread_unistd.h:
 
 C:/msys64/ucrt64/include/glib-2.0/gio/gunixcredentialsmessage.h:
 
@@ -1552,12 +1577,6 @@ C:/msys64/ucrt64/include/stddef.h:
 C:/msys64/ucrt64/include/glib-2.0/glib/gpathbuf.h:
 
 C:/msys64/ucrt64/include/glib-2.0/glib/gpattern.h:
-
-C:/msys64/ucrt64/include/gtk-4.0/gdk/gdkdevice.h:
-
-C:/msys64/ucrt64/include/pango-1.0/pango/pango-direction.h:
-
-C:/msys64/ucrt64/include/glib-2.0/glib/gpoll.h:
 
 C:/msys64/ucrt64/include/glib-2.0/glib/gprimes.h:
 
@@ -1853,8 +1872,6 @@ C:/msys64/ucrt64/include/gtk-4.0/gdk/gdksnapshot.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkcellrenderertext.h:
 
-C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkdrawingarea.h:
-
 C:/msys64/ucrt64/include/gtk-4.0/gdk/gdktexture.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gdk/gdktoplevellayout.h:
@@ -1939,6 +1956,8 @@ C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkfilechooserwidget.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkfontchooserdialog.h:
 
+C:/msys64/ucrt64/include/sys/types.h:
+
 C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkfontchooserwidget.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/deprecated/gtkrender.h:
@@ -1995,8 +2014,6 @@ C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkcolumnview.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkcolumnviewcell.h:
 
-C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkdropcontrollermotion.h:
-
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkconstraintguide.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkconstraintlayout.h:
@@ -2004,6 +2021,10 @@ C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkconstraintlayout.h:
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkcustomfilter.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkdirectorylist.h:
+
+C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkdrawingarea.h:
+
+C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkdropcontrollermotion.h:
 
 C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkdropdown.h:
 
@@ -2247,6 +2268,8 @@ C:/msys64/ucrt64/include/pango-1.0/pango/pango.h:
 
 C:/msys64/ucrt64/include/pango-1.0/pango/pangocairo.h:
 
+C:/msys64/ucrt64/include/process.h:
+
 C:/msys64/ucrt64/include/pthread_compat.h:
 
 C:/msys64/ucrt64/include/sdks/_mingw_ddk.h:
@@ -2262,8 +2285,6 @@ C:/msys64/ucrt64/include/string.h:
 C:/msys64/ucrt64/include/swprintf.inl:
 
 C:/msys64/ucrt64/include/vadefs.h:
-
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/float.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h:
 

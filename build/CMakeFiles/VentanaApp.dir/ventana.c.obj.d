@@ -759,4 +759,9 @@ CMakeFiles/VentanaApp.dir/ventana.c.obj: \
  C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkwidgetpaintable.h \
  C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkwindowcontrols.h \
  C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkwindowgroup.h \
- C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkwindowhandle.h
+ C:/msys64/ucrt64/include/gtk-4.0/gtk/gtkwindowhandle.h \
+ C:/msys64/ucrt64/include/unistd.h C:/msys64/ucrt64/include/io.h \
+ C:/msys64/ucrt64/include/process.h \
+ C:/msys64/ucrt64/include/corecrt_startup.h \
+ C:/msys64/ucrt64/include/sys/types.h C:/msys64/ucrt64/include/getopt.h \
+ C:/msys64/ucrt64/include/pthread_unistd.h

@@ -263,9 +263,6 @@ static void yy_flex_free YY_PROTO(( void * ));
 
 
 #define YY_USES_REJECT
-
-#define yywrap() 1
-#define YY_SKIP_YYWRAP
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
@@ -411,7 +408,7 @@ char *yytext;
       printf("|-------------------------------------------------------|-------------------------------|\n");
   }
 
-#line 415 "lex.yy.c"
+#line 412 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -565,7 +562,7 @@ YY_DECL
 #line 28 "lexer.l"
 
 
-#line 569 "lex.yy.c"
+#line 566 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -661,7 +658,7 @@ YY_RULE_SETUP
 #line 30 "lexer.l"
 {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
-  imprimir_tabla(yytext, "INICIO_ETIQUETA");
+  //imprimir_tabla(yytext, "INICIO_ETIQUETA");
   return INICIO_ETIQUETA;
 }
 	YY_BREAK
@@ -670,7 +667,7 @@ YY_RULE_SETUP
 #line 36 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "CADENA_DE_TEXTO");
+  //imprimir_tabla(yytext, "CADENA_DE_TEXTO");
   return CADENA_DE_TEXTO;
 }
 	YY_BREAK
@@ -679,7 +676,7 @@ YY_RULE_SETUP
 #line 42 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "CIERRE_ETIQUETA");
+  //imprimir_tabla(yytext, "CIERRE_ETIQUETA");
   return CIERRE_ETIQUETA;
 }
 	YY_BREAK
@@ -688,7 +685,7 @@ YY_RULE_SETUP
 #line 48 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "ATRIBUTO");
+  //imprimir_tabla(yytext, "ATRIBUTO");
   return ATRIBUTO;
 }
 	YY_BREAK
@@ -697,7 +694,7 @@ YY_RULE_SETUP
 #line 54 "lexer.l"
 {
   yylval.cadena = strdup(yytext);
-  imprimir_tabla(yytext, "ATRIBUTO_VALOR");
+  //imprimir_tabla(yytext, "ATRIBUTO_VALOR");
   return ATRIBUTO_VALOR;
 }
 	YY_BREAK
@@ -725,7 +722,7 @@ YY_RULE_SETUP
 #line 70 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 729 "lex.yy.c"
+#line 726 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1610,3 +1607,8 @@ int main()
 	}
 #endif
 #line 70 "lexer.l"
+
+
+int yywrap() {
+  return 1;
+}

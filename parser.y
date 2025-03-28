@@ -225,8 +225,6 @@
 
   extern int yylex(void);
   extern char *yytext;
-  //extern FILE *yyin;
-  //extern FILE *yyout;
   extern int yylineno;
 
   char salida[1024]; // Buffer para almacenar la salida
@@ -243,7 +241,7 @@
 
 %token <cadena> INICIO_ETIQUETA <cadena> CADENA_DE_TEXTO <cadena> CIERRE_ETIQUETA <cadena> ATRIBUTO <cadena> ATRIBUTO_VALOR
 
-%type <cadena> documento elemento inicio atributo contenido cerrar_inicio
+%type <cadena> elemento inicio atributo contenido cerrar_inicio
 
 %left INICIO_ETIQUETA
 %left ATRIBUTO
@@ -253,12 +251,41 @@
 
 %%
 
-documento: elemento documento {
-            $$ = $2;
-          };
-          | elemento {
-            $$ = $1;
-          };
+
+finish : elemento { 
+
+          // Imprimir errores después del análisis
+          if (num_errores > 0) {
+            fprintf(stderr, "\033[31m");
+            fprintf(stderr, "\n\nErrores encontrados:\n");
+            for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
+                fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+              for (int i = 0; i < num_errores; i++) { 
+                if (errores[i].tipo == tipo_error) {
+                fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                }
+              }
+            }
+
+          } else {
+            //Imprimir el árbol de análisis sintáctico
+            //imprimir_AST();
+
+            //fprintf(stderr, "\x1b[0m");
+            printf("Salida:\n");
+            printf("%s", salida);
+            //printf("\n\nTodo en orden.\n\n\n");
+          }
+
+          exit(0);
+
+        }
+        | /* vacío */ 
+        ;
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
   if($1 != " "){
@@ -395,40 +422,7 @@ contenido: contenido elemento  {
 %%
 
 int main(void) {
-  //yyin = fopen("eshtml.txt", "r");
-  //yyout = fopen("html.txt", "w");
-  //yyout = stdout;
-
-  //yyin = stdin;
-
-  int s = yyparse();  
-
-  // Imprimir errores después del análisis
-  if (num_errores > 0) {
-    fprintf(stderr, "\033[31m");
-    fprintf(stderr, "\n\nErrores encontrados:\n");
-    for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-        fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-        fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-      for (int i = 0; i < num_errores; i++) { 
-        if (errores[i].tipo == tipo_error) {
-        fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-        }
-      }
-    }
-
-  } else if (s == 0) {
-    //Imprimir el árbol de análisis sintáctico
-    imprimir_AST();
-
-    fprintf(stderr, "\x1b[0m");
-    printf("\n\nSalida:\n\n\n");
-    printf("%s", salida);
-    //printf("\n\nTodo en orden.\n\n\n");
-  }
+  yyparse();  
   return 0;
 }
 
