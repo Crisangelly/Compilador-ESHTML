@@ -253,10 +253,42 @@
 
 %%
 
-documento: elemento documento {
-            $$ = $2;
-          };
-          | elemento {
+finish : documento { 
+
+          // Imprimir errores después del análisis
+          if (num_errores > 0) {
+            fprintf(stderr, "\033[31m");
+            fprintf(stderr, "\n\nErrores encontrados:\n");
+            for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
+                fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+              for (int i = 0; i < num_errores; i++) { 
+                if (errores[i].tipo == tipo_error) {
+                fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                }
+              }
+            }
+
+          } else {
+            //Imprimir el árbol de análisis sintáctico
+            imprimir_AST();
+
+            fprintf(stderr, "\x1b[0m");
+            printf("Salida:\n");
+            printf("%s", salida);
+            //printf("\n\nTodo en orden.\n\n\n");
+          }
+
+          exit(0);
+
+        }
+        | /* vacío */ 
+        ;
+
+documento: elemento {
             $$ = $1;
           };
 
@@ -267,6 +299,8 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
 
     agregar_nodo("CIERRE_ETIQUETA", $1);
   }
+
+  $$ = salida;
 
 };
  | error { yyerror(); } ;
@@ -401,34 +435,8 @@ int main(void) {
 
   //yyin = stdin;
 
-  int s = yyparse();  
+  yyparse();  
 
-  // Imprimir errores después del análisis
-  if (num_errores > 0) {
-    fprintf(stderr, "\033[31m");
-    fprintf(stderr, "\n\nErrores encontrados:\n");
-    for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-        fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-        fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-      for (int i = 0; i < num_errores; i++) { 
-        if (errores[i].tipo == tipo_error) {
-        fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-        }
-      }
-    }
-
-  } else if (s == 0) {
-    //Imprimir el árbol de análisis sintáctico
-    imprimir_AST();
-
-    fprintf(stderr, "\x1b[0m");
-    printf("\n\nSalida:\n\n\n");
-    printf("%s", salida);
-    //printf("\n\nTodo en orden.\n\n\n");
-  }
   return 0;
 }
 

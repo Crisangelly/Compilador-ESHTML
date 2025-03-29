@@ -582,16 +582,16 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   15
+#define YYLAST   10
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  7
+#define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  13
+#define YYNRULES  14
 /* YYNRULES -- Number of states.  */
 #define YYNSTATES  16
 
@@ -639,24 +639,24 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     6,     8,    14,    16,    18,    21,    23,
-      24,    25,    28,    31
+       0,     0,     3,     5,     6,     8,    14,    16,    18,    21,
+      23,    24,    25,    28,    31
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-       9,     0,    -1,    10,     9,    -1,    10,    -1,    11,    12,
-      13,    14,     5,    -1,     1,    -1,     3,    -1,    12,     7,
-      -1,     6,    -1,    -1,    -1,    14,    10,    -1,    14,     4,
+       9,     0,    -1,    10,    -1,    -1,    11,    -1,    12,    13,
+      14,    15,     5,    -1,     1,    -1,     3,    -1,    13,     7,
+      -1,     6,    -1,    -1,    -1,    15,    11,    -1,    15,     4,
       -1,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   256,   256,   259,   263,   272,   274,   294,   342,   361,
-     365,   371,   375,   390
+       0,   256,   256,   288,   291,   295,   306,   308,   328,   376,
+     395,   399,   405,   409,   424
 };
 #endif
 
@@ -666,8 +666,9 @@ static const yytype_uint16 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "INICIO_ETIQUETA", "CADENA_DE_TEXTO",
-  "CIERRE_ETIQUETA", "ATRIBUTO", "ATRIBUTO_VALOR", "$accept", "documento",
-  "elemento", "inicio", "atributo", "cerrar_inicio", "contenido", 0
+  "CIERRE_ETIQUETA", "ATRIBUTO", "ATRIBUTO_VALOR", "$accept", "finish",
+  "documento", "elemento", "inicio", "atributo", "cerrar_inicio",
+  "contenido", 0
 };
 #endif
 
@@ -683,15 +684,15 @@ static const yytype_uint16 yytoknum[] =
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     8,     9,     9,    10,    10,    11,    12,    12,    12,
-      13,    14,    14,    14
+       0,     8,     9,     9,    10,    11,    11,    12,    13,    13,
+      13,    14,    15,    15,    15
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     2,     1,     5,     1,     1,     2,     1,     0,
-       0,     2,     2,     0
+       0,     2,     1,     0,     1,     5,     1,     1,     2,     1,
+       0,     0,     2,     2,     0
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -699,29 +700,29 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     5,     6,     0,     0,     9,     1,     2,     8,    10,
-       7,    13,     0,    12,     4,    11
+       0,     6,     7,     0,     2,     4,    10,     1,     9,    11,
+       8,    14,     0,    13,     5,    12
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,     4,     5,     9,    11,    12
+      -1,     3,     4,     5,     6,     9,    11,    12
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -2
+#define YYPACT_NINF -3
 static const yytype_int8 yypact[] =
 {
-       6,    -2,    -2,     1,     5,     4,    -2,    -2,    -2,     7,
-      -2,    -2,    -1,    -2,    -2,    -2
+       5,    -3,    -3,     1,    -3,    -3,     3,    -3,    -3,     0,
+      -3,    -3,    -1,    -3,    -3,    -3
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -2,     8,     3,    -2,    -2,    -2,    -2
+      -3,    -3,    -3,    -2,    -3,    -3,    -3,    -3
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -731,22 +732,22 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -4
 static const yytype_int8 yytable[] =
 {
-       1,     6,     2,    13,    14,    -3,     1,     1,     2,     2,
-       8,     0,     7,     0,    10,    15
+       1,     7,     2,    13,    14,    -3,     1,    10,     2,     8,
+      15
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       1,     0,     3,     4,     5,     0,     1,     1,     3,     3,
-       6,    -1,     4,    -1,     7,    12
+       1,     0,     3,     4,     5,     0,     1,     7,     3,     6,
+      12
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     1,     3,     9,    10,    11,     0,     9,     6,    12,
-       7,    13,    14,     4,     5,    10
+       0,     1,     3,     9,    10,    11,    12,     0,     6,    13,
+       7,    14,    15,     4,     5,    11
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1561,24 +1562,53 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 256 "parser.y"
-    {
-            (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
-          ;}
-    break;
+    { 
 
-  case 3:
+          // Imprimir errores después del análisis
+          if (num_errores > 0) {
+            fprintf(stderr, "\033[31m");
+            fprintf(stderr, "\n\nErrores encontrados:\n");
+            for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
+                fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+              for (int i = 0; i < num_errores; i++) { 
+                if (errores[i].tipo == tipo_error) {
+                fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                }
+              }
+            }
 
-/* Line 1455 of yacc.c  */
-#line 259 "parser.y"
-    {
-            (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
-          ;}
+          } else {
+            //Imprimir el árbol de análisis sintáctico
+            imprimir_AST();
+
+            fprintf(stderr, "\x1b[0m");
+            printf("Salida:\n");
+            printf("%s", salida);
+            //printf("\n\nTodo en orden.\n\n\n");
+          }
+
+          exit(0);
+
+        ;}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 263 "parser.y"
+#line 291 "parser.y"
+    {
+            (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
+          ;}
+    break;
+
+  case 5:
+
+/* Line 1455 of yacc.c  */
+#line 295 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     sprintf(salida + indice_salida, "%s", (yyvsp[(1) - (5)].cadena));
@@ -1587,20 +1617,22 @@ yyreduce:
     agregar_nodo("CIERRE_ETIQUETA", (yyvsp[(1) - (5)].cadena));
   }
 
+  (yyval.cadena) = salida;
+
 ;}
-    break;
-
-  case 5:
-
-/* Line 1455 of yacc.c  */
-#line 272 "parser.y"
-    { yyerror(); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 274 "parser.y"
+#line 306 "parser.y"
+    { yyerror(); ;}
+    break;
+
+  case 7:
+
+/* Line 1455 of yacc.c  */
+#line 308 "parser.y"
     {
     agregar_nodo("ELEMENTO","");
 
@@ -1622,10 +1654,10 @@ yyreduce:
 ;}
     break;
 
-  case 7:
+  case 8:
 
 /* Line 1455 of yacc.c  */
-#line 294 "parser.y"
+#line 328 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1676,10 +1708,10 @@ yyreduce:
         ;}
     break;
 
-  case 8:
+  case 9:
 
 /* Line 1455 of yacc.c  */
-#line 342 "parser.y"
+#line 376 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1701,19 +1733,19 @@ yyreduce:
         ;}
     break;
 
-  case 9:
+  case 10:
 
 /* Line 1455 of yacc.c  */
-#line 361 "parser.y"
+#line 395 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
     break;
 
-  case 10:
+  case 11:
 
 /* Line 1455 of yacc.c  */
-#line 365 "parser.y"
+#line 399 "parser.y"
     { 
   sprintf(salida + indice_salida, ">");
   indice_salida += strlen(">");
@@ -1721,20 +1753,20 @@ yyreduce:
 ;}
     break;
 
-  case 11:
+  case 12:
 
 /* Line 1455 of yacc.c  */
-#line 371 "parser.y"
+#line 405 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
             //agregar_nodo("CONTENIDO", "");
           ;}
     break;
 
-  case 12:
+  case 13:
 
 /* Line 1455 of yacc.c  */
-#line 375 "parser.y"
+#line 409 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1752,10 +1784,10 @@ yyreduce:
           ;}
     break;
 
-  case 13:
+  case 14:
 
 /* Line 1455 of yacc.c  */
-#line 390 "parser.y"
+#line 424 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1764,7 +1796,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1768 "parser.tab.c"
+#line 1800 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1976,7 +2008,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 395 "parser.y"
+#line 429 "parser.y"
 
 
 int main(void) {
@@ -1986,34 +2018,8 @@ int main(void) {
 
   //yyin = stdin;
 
-  int s = yyparse();  
+  yyparse();  
 
-  // Imprimir errores después del análisis
-  if (num_errores > 0) {
-    fprintf(stderr, "\033[31m");
-    fprintf(stderr, "\n\nErrores encontrados:\n");
-    for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-        fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-        fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-      for (int i = 0; i < num_errores; i++) { 
-        if (errores[i].tipo == tipo_error) {
-        fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-        }
-      }
-    }
-
-  } else if (s == 0) {
-    //Imprimir el árbol de análisis sintáctico
-    imprimir_AST();
-
-    fprintf(stderr, "\x1b[0m");
-    printf("\n\nSalida:\n\n\n");
-    printf("%s", salida);
-    //printf("\n\nTodo en orden.\n\n\n");
-  }
   return 0;
 }
 
