@@ -225,8 +225,6 @@
 
   extern int yylex(void);
   extern char *yytext;
-  //extern FILE *yyin;
-  //extern FILE *yyout;
   extern int yylineno;
 
   char salida[1024]; // Buffer para almacenar la salida
@@ -241,19 +239,20 @@
 }
 
 
-%token <cadena> INICIO_ETIQUETA <cadena> CADENA_DE_TEXTO <cadena> CIERRE_ETIQUETA <cadena> ATRIBUTO <cadena> ATRIBUTO_VALOR
+%token <cadena> INICIO_ETIQUETA <cadena> CADENA_DE_TEXTO <cadena> CIERRE_ETIQUETA <cadena> ATRIBUTO <cadena> ATRIBUTO_VALOR <cadena> FIN_LINEA
 
-%type <cadena> documento elemento inicio atributo contenido cerrar_inicio
+%type <cadena> elemento inicio atributo contenido cerrar_inicio
 
 %left INICIO_ETIQUETA
 %left ATRIBUTO
 %left ATRIBUTO_VALOR
 %left CADENA_DE_TEXTO
 %left CIERRE_ETIQUETA
+%left FIN_LINEA
 
 %%
 
-finish : documento { 
+finish : elemento { 
 
           // Imprimir errores después del análisis
           if (num_errores > 0) {
@@ -284,13 +283,9 @@ finish : documento {
 
           exit(0);
 
-        }
+        };
         | /* vacío */ 
         ;
-
-documento: elemento {
-            $$ = $1;
-          };
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
   if($1 != " "){
@@ -429,12 +424,6 @@ contenido: contenido elemento  {
 %%
 
 int main(void) {
-  //yyin = fopen("eshtml.txt", "r");
-  //yyout = fopen("html.txt", "w");
-  //yyout = stdout;
-
-  //yyin = stdin;
-
   yyparse();  
 
   return 0;

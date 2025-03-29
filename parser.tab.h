@@ -43,7 +43,8 @@
      CADENA_DE_TEXTO = 259,
      CIERRE_ETIQUETA = 260,
      ATRIBUTO = 261,
-     ATRIBUTO_VALOR = 262
+     ATRIBUTO_VALOR = 262,
+     FIN_LINEA = 263
    };
 #endif
 
@@ -54,14 +55,14 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 239 "parser.y"
+#line 237 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 65 "parser.tab.h"
+#line 66 "parser.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

@@ -64,9 +64,6 @@ static void activate(GtkApplication *app, gpointer user_data) {
 }
 
 int main(int argc, char **argv) {
-    char input[1024];
-    fgets(input, sizeof(input), stdin);
-    
     GtkApplication *app;
     int status;
 
