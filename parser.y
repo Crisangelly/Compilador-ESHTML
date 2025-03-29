@@ -224,6 +224,7 @@
   }
 
   extern int yylex(void);
+  extern FILE *yyin;
   extern char *yytext;
   extern int yylineno;
 
@@ -424,6 +425,8 @@ contenido: contenido elemento  {
 %%
 
 int main(void) {
+  yyin = fopen("temp.codigo", "r");
+  
   yyparse();  
 
   return 0;

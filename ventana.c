@@ -2,32 +2,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-static void on_show_text_from_buffer(GtkWidget *p_button, gpointer user_data) {
-    char *p_text_in_entry = g_strdup(gtk_entry_buffer_get_text(GTK_ENTRY_BUFFER(user_data)));
-    char command[1024];
-    FILE *pipe;
-    char buffer[128];
-    GtkWidget *scrolled_window = gtk_grid_get_child_at(GTK_GRID(gtk_widget_get_parent(p_button)), 0, 2);
-    GtkWidget *text_view = gtk_scrolled_window_get_child(GTK_SCROLLED_WINDOW(scrolled_window));
-    GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+static void compilar(GtkWidget *widget, gpointer data) {
+    GtkWidget *entry = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "entry")); // Obtener el GtkEntry
+    GtkWidget *salida_compilacion = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "salida_compilacion"));
 
-    snprintf(command, sizeof(command), "..\\a.exe"); // Sin redirección
-    pipe = popen(command, "w"); // Abrir la tubería en modo escritura
-    if (pipe) {
-        fprintf(pipe, "%s", p_text_in_entry); // Escribir la entrada en la tubería
-        fclose(pipe); // Cerrar la tubería después de escribir
-    } else {
-        gtk_text_buffer_set_text(text_buffer, "Error al ejecutar el compilador.", -1);
+    GtkEntryBuffer *buffer = gtk_entry_get_buffer(GTK_ENTRY(entry));
+    const char *codigo = gtk_entry_buffer_get_text(buffer);
+
+    FILE *temp_file = fopen("temp.codigo", "w");
+    if (temp_file) {
+        fprintf(temp_file, "%s", codigo);
+        fclose(temp_file);
     }
 
-    g_free(p_text_in_entry);
+    char comando[1024];
+    sprintf(comando, "..\\a.exe temp.codigo"); // Ruta relativa correcta
+
+    FILE *pipe = _popen(comando, "r"); 
+    
+    if (pipe) {
+        char buffer[1024];
+        char salida[4096] = "";
+        while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
+            strcat(salida, buffer);
+        }
+        pclose(pipe);
+
+        GtkTextBuffer *buffer_salida = gtk_text_view_get_buffer(GTK_TEXT_VIEW(salida_compilacion));
+        gtk_text_buffer_set_text(buffer_salida, salida, -1);
+    }
 }
 
 static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Compilador ESHTML");
-    gtk_window_set_default_size(GTK_WINDOW(window), 600, 400);
+    gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
 
     GtkWidget *grid = gtk_grid_new();
     gtk_window_set_child(GTK_WINDOW(window), grid);
@@ -38,39 +49,39 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_grid_attach(GTK_GRID(grid), initial_label, 0, 0, 3, 1); 
     gtk_label_set_xalign(GTK_LABEL(initial_label), 0.5); 
 
+    // Etiqueta "C:/" y entrada de texto en la primera fila
     GtkWidget *label = gtk_label_new("C:/");
-    gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1); // Columna 0, fila 0
     gtk_label_set_xalign(GTK_LABEL(label), 0.0);
 
     GtkWidget *entry = gtk_entry_new();
-    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1); // La entrada ocupa la columna 1
+    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1); // Columna 1, fila 0
 
-    GtkWidget *p_button = gtk_button_new_with_label("Compilar");
-    gtk_grid_attach(GTK_GRID(grid), p_button, 2, 1, 1, 1); // El botón ocupa la columna 2
+    // Text view para el código fuente en la segunda fila
+    GtkWidget *codigo_fuente = gtk_text_view_new();
+    gtk_grid_attach(GTK_GRID(grid), codigo_fuente, 0, 2, 2, 1); // Ocupa columnas 0 y 1, fila 1
 
-    GtkEntryBuffer *p_buffer_1 = gtk_entry_buffer_new(NULL, -1);
-    gtk_entry_set_buffer(GTK_ENTRY(entry), p_buffer_1);
+    // Botón "Compilar" en la tercera fila
+    GtkWidget *boton_compilar = gtk_button_new_with_label("Compilar");
+    gtk_grid_attach(GTK_GRID(grid), boton_compilar, 2, 1, 1, 1); // Cambiado a columna 2, fila 0
 
-    g_signal_connect(p_button, "clicked", G_CALLBACK(on_show_text_from_buffer), p_buffer_1);
+    // Text view para la salida de compilación en la cuarta fila
+    GtkWidget *salida_compilacion = gtk_text_view_new();
+    gtk_grid_attach(GTK_GRID(grid), salida_compilacion, 0, 3, 100, 1); // Ocupa columnas 0 y 1, fila 3
 
-    GtkWidget *scrolled_window = gtk_scrolled_window_new();
-    gtk_grid_attach(GTK_GRID(grid), scrolled_window, 0, 2, 2, 1); // El scrolled_window ocupa las 3 columnas
+    g_object_set_data(G_OBJECT(window), "entry", entry); // Guardar el GtkEntry
+    g_object_set_data(G_OBJECT(window), "codigo_fuente", codigo_fuente);
+    g_object_set_data(G_OBJECT(window), "salida_compilacion", salida_compilacion);
 
-    GtkWidget *text_view = gtk_text_view_new();
-    gtk_text_view_set_editable(GTK_TEXT_VIEW(text_view), FALSE);
-    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_window), text_view);
+    g_signal_connect(boton_compilar, "clicked", G_CALLBACK(compilar), window);
 
     gtk_window_present(GTK_WINDOW(window));
 }
 
 int main(int argc, char **argv) {
-    GtkApplication *app;
-    int status;
-
-    app = gtk_application_new("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
+    GtkApplication *app = gtk_application_new("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
-    status = g_application_run(G_APPLICATION(app), argc, argv);
+    int status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
-
     return status;
 }
