@@ -1,0 +1,41 @@
+**** Errores Léxicos ****
+
+- Ocurren cuando el analizador léxico encuentra tokens no reconocidos.
+
+|-------|------|----------------------------------------|------------|
+| Línea | Tipo |                Mensaje                 |    Token   |
+|-------|------|----------------------------------------|------------|
+|   X   |  0   | caracter no reconocido '<caracter>'    | <caracter> |
+|-------|------|----------------------------------------|------------|
+|   X   |  0   | caracter no reconocido '<caracter>'    | <caracter> |
+|-------|------|----------------------------------------|------------|
+
+
+**** Errores Sintácticos ****
+
+- Ocurren cuando la estructura del código no sigue las reglas gramaticales definidas.
+
+|-------|------|-------------------------------------------------------|------------|
+| Línea | Tipo | Mensaje                                               | Token      |
+|-------|------|-------------------------------------------------------|------------|
+|   X   |  1   | Error en la etiqueta de inicio                        | <etiqueta> |
+|-------|------|-------------------------------------------------------|------------|
+|   X   |  1   | Error en la sección de atributos                      | <atributo> |
+|-------|------|-------------------------------------------------------|------------|
+|   X   |  1   | Error en la sección de contenido o cierre de etiqueta | <token>    |
+|-------|------|-------------------------------------------------------|------------|
+
+
+**** Errores Semánticos ****
+
+- Estos errores se detectan durante la validación semántica, como en la verificación de etiquetas, atributos o valores no válidos.
+
+|-------|------|----------------------------------------|---------------|
+| Línea | Tipo |               Mensaje                  |    Token      |
+|-------|------|----------------------------------------|---------------|
+|   X   |  2   | etiqueta '<etiqueta>' no valida        |  <etiqueta>   |
+|-------|------|----------------------------------------|---------------|
+|   X   |  2   | atributo '<atributo>' no valido        |  <atributo>   |
+|-------|------|----------------------------------------|---------------|
+|   X   |  2   | valor del atributo '<valor>' no valido |  <valor>      |
+|-------|------|----------------------------------------|---------------|
