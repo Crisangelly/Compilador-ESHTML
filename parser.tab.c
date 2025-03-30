@@ -91,7 +91,7 @@
       nodos[num_nodos].terminal= terminal;
       num_nodos++;
     } else {
-      printf("\n\nDemasiados nodos.\n");
+      printf("\n\nEntrada demasiado grande para ser procesada.\n");
       exit(1);
     }
   }
