@@ -11,16 +11,16 @@
     char *terminal; 
   };
 
-  struct ASTNodo nodos[100];
+  struct ASTNodo nodos[30];
   int num_nodos = 0;
 
   void agregar_nodo(char *no_terminal, char *terminal){
-    if (num_nodos < 100) {
+    if (num_nodos < 30) {
       nodos[num_nodos].no_terminal = no_terminal;
       nodos[num_nodos].terminal= terminal;
       num_nodos++;
     } else {
-      printf("Demasiados nodos.\n");
+      printf("\n\nDemasiados nodos.\n");
       exit(1);
     }
   }
@@ -81,11 +81,11 @@
 
   // Función para acumular errores
 
-  struct error_estructura errores[100];
+  struct error_estructura errores[10];
   int num_errores = 0;
 
   void agregar_error(int linea, char *mensaje, int tipo, char *token) {
-    if (num_errores < 100) {
+    if (num_errores < 10) {
 
       //Verificar que no hayan mensajes duplicados en los errores sintácticos (debido a la recursividad)
       if(tipo == 1){
@@ -103,9 +103,9 @@
       num_errores++;
 
     } else {
-      printf("Demasiados errores.\n");
+      printf("\n\nDemasiados errores.\n");
       exit(1);
-      }
+    }
   }
 
 
