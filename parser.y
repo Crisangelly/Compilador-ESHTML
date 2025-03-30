@@ -300,7 +300,7 @@ inicio: INICIO_ETIQUETA {
 
     } else {
       char mensaje[256];
-      sprintf(mensaje, "etiqueta '%s' no valida", $1);
+      sprintf(mensaje, "N:0; etiqueta '%s' no valida", $1);
       agregar_error(yylineno, mensaje, 2, yytext); // 2 para error semántico
     }
 };
@@ -332,7 +332,7 @@ atributo: atributo ATRIBUTO_VALOR  {
 
               } else {
                 char mensaje[256];
-                sprintf(mensaje, "valor del atributo '%s' no valido", valor);
+                sprintf(mensaje, "N:1; valor del atributo '%s' no valido", valor);
                 agregar_error(yylineno, mensaje, 2, yytext);
               }
 
@@ -348,7 +348,7 @@ atributo: atributo ATRIBUTO_VALOR  {
 
           } else {
             char mensaje[256];
-            sprintf(mensaje, "atributo '%s' no valido", atributo);
+            sprintf(mensaje, "N:2; atributo '%s' no valido", atributo);
             agregar_error(yylineno, mensaje, 2, yytext);
           }
           
@@ -367,7 +367,7 @@ atributo: atributo ATRIBUTO_VALOR  {
             agregar_nodo("ATRIBUTO", tabla_atributos[traduccion].atributo_html);
           } else {
             char mensaje[256];
-            sprintf(mensaje, "atributo '%s' no valido", $1);
+            sprintf(mensaje, "N:2; atributo '%s' no valido", $1);
             agregar_error(yylineno, mensaje, 2, yytext);
           }
 
@@ -443,11 +443,11 @@ int main(void) {
 void yyerror(){
   char *s;
   if (yytext[0] == '<') {
-    s = "Error en la etiqueta de inicio";
+    s = "N:0; Error en la etiqueta de inicio";
   } else if (yytext[0] == ':') {
-    s = "Error en la seccion de atributos";
+    s = "N:1; Error en la seccion de atributos";
   } else {
-    s = "Error en la seccion de contenido o cierre de etiqueta";
+    s = "N:2; Error en la seccion de contenido o cierre de etiqueta";
   }
 
   char mensaje[256];

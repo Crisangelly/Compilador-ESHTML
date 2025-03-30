@@ -64,7 +64,7 @@ EOF { return 0; } //Fin entrada
 
 . { 
   char mensaje[256];
-  sprintf(mensaje, "caracter no reconocido '%c'", yytext[0]);
+  sprintf(mensaje, "N:0; caracter no reconocido '%c'", yytext[0]);
   agregar_error(yylineno, mensaje, 0, yytext); // 0 para error léxico
 }
 

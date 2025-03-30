@@ -720,7 +720,7 @@ YY_RULE_SETUP
 #line 65 "lexer.l"
 { 
   char mensaje[256];
-  sprintf(mensaje, "caracter no reconocido '%c'", yytext[0]);
+  sprintf(mensaje, "N:0; caracter no reconocido '%c'", yytext[0]);
   agregar_error(yylineno, mensaje, 0, yytext); // 0 para error léxico
 }
 	YY_BREAK
