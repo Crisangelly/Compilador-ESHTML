@@ -5,14 +5,11 @@
 #include <unistd.h>
 
 static void compilar(GtkWidget *widget, gpointer data) {
-    GtkWidget *codigo_fuente = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "codigo_fuente"));
+    GtkWidget *entry = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "entry")); // Obtener el GtkEntry
     GtkWidget *salida_compilacion = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "salida_compilacion"));
 
-    GtkTextBuffer *buffer_codigo = gtk_text_view_get_buffer(GTK_TEXT_VIEW(codigo_fuente));
-    GtkTextIter start, end;
-    gtk_text_buffer_get_start_iter(buffer_codigo, &start);
-    gtk_text_buffer_get_end_iter(buffer_codigo, &end);
-    char *codigo = gtk_text_buffer_get_text(buffer_codigo, &start, &end, TRUE);
+    GtkEntryBuffer *buffer = gtk_entry_get_buffer(GTK_ENTRY(entry));
+    const char *codigo = gtk_entry_buffer_get_text(buffer);
 
     FILE *temp_file = fopen("temp.codigo", "w");
     if (temp_file) {
@@ -36,7 +33,6 @@ static void compilar(GtkWidget *widget, gpointer data) {
         GtkTextBuffer *buffer_salida = gtk_text_view_get_buffer(GTK_TEXT_VIEW(salida_compilacion));
         gtk_text_buffer_set_text(buffer_salida, salida, -1);
     }
-    g_free(codigo);
 }
 
 static void activate(GtkApplication *app, gpointer user_data) {
@@ -49,26 +45,31 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_grid_set_row_spacing(GTK_GRID(grid), 5);
     gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
 
+    GtkWidget *initial_label = gtk_label_new("Ingresa tu etiqueta ESHTML");
+    gtk_grid_attach(GTK_GRID(grid), initial_label, 0, 0, 3, 1); 
+    gtk_label_set_xalign(GTK_LABEL(initial_label), 0.5); 
+
     // Etiqueta "C:/" y entrada de texto en la primera fila
     GtkWidget *label = gtk_label_new("C:/");
-    gtk_grid_attach(GTK_GRID(grid), label, 0, 0, 1, 1); // Columna 0, fila 0
+    gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1); // Columna 0, fila 0
     gtk_label_set_xalign(GTK_LABEL(label), 0.0);
 
     GtkWidget *entry = gtk_entry_new();
-    gtk_grid_attach(GTK_GRID(grid), entry, 1, 0, 1, 1); // Columna 1, fila 0
+    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1); // Columna 1, fila 0
 
     // Text view para el código fuente en la segunda fila
     GtkWidget *codigo_fuente = gtk_text_view_new();
-    gtk_grid_attach(GTK_GRID(grid), codigo_fuente, 0, 1, 2, 1); // Ocupa columnas 0 y 1, fila 1
+    gtk_grid_attach(GTK_GRID(grid), codigo_fuente, 0, 2, 2, 1); // Ocupa columnas 0 y 1, fila 1
 
     // Botón "Compilar" en la tercera fila
     GtkWidget *boton_compilar = gtk_button_new_with_label("Compilar");
-    gtk_grid_attach(GTK_GRID(grid), boton_compilar, 2, 0, 1, 1); // Cambiado a columna 2, fila 0
+    gtk_grid_attach(GTK_GRID(grid), boton_compilar, 2, 1, 1, 1); // Cambiado a columna 2, fila 0
 
     // Text view para la salida de compilación en la cuarta fila
     GtkWidget *salida_compilacion = gtk_text_view_new();
     gtk_grid_attach(GTK_GRID(grid), salida_compilacion, 0, 3, 100, 1); // Ocupa columnas 0 y 1, fila 3
 
+    g_object_set_data(G_OBJECT(window), "entry", entry); // Guardar el GtkEntry
     g_object_set_data(G_OBJECT(window), "codigo_fuente", codigo_fuente);
     g_object_set_data(G_OBJECT(window), "salida_compilacion", salida_compilacion);
 

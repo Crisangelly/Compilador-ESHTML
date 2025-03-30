@@ -1,3 +1,0 @@
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E rm -f CMakeFiles\VentanaApp.dir/objects.a
-C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\VentanaApp.dir/objects.a @CMakeFiles\VentanaApp.dir\objects1.rsp
-C:\msys64\ucrt64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\VentanaApp.dir/objects.a -Wl,--no-whole-archive -o VentanaApp.exe -Wl,--out-implib,libVentanaApp.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\VentanaApp.dir\linkLibs.rsp
