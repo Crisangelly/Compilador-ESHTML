@@ -36,7 +36,7 @@ ATRIBUTOS CON VALOR
 |----------------------------|--------------------------|
 
 
- VALOR DE ATRIBUTO
+ VALOR DE ATRIBUTO (Aplica para los de :tipo/type)
 
 |----------------------------|--------------------------|
 |          ESHTML            |           HTML           |          
