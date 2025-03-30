@@ -4,6 +4,12 @@
 #include <string.h>
 #include <unistd.h>
 
+static void limpiar_entrada(GtkWidget *widget, gpointer data) {
+    GtkWidget *entry = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "entry"));
+    GtkEntryBuffer *buffer = gtk_entry_get_buffer(GTK_ENTRY(entry));
+    gtk_entry_buffer_set_text(buffer, "", 0); // Establecer el texto a vacío
+}
+
 static void compilar(GtkWidget *widget, gpointer data) {
     GtkWidget *entry = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "entry")); // Obtener el GtkEntry
     GtkWidget *salida_compilacion = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "salida_compilacion"));
@@ -61,6 +67,11 @@ static void activate(GtkApplication *app, gpointer user_data) {
     // Botón "Compilar" en la tercera fila
     GtkWidget *boton_compilar = gtk_button_new_with_label("Compilar");
     gtk_grid_attach(GTK_GRID(grid), boton_compilar, 21, 1, 1, 1); // Cambiado a columna 2, fila 0
+
+    // Botón "Limpiar"
+    GtkWidget *boton_limpiar = gtk_button_new_with_label("Limpiar");
+    gtk_grid_attach(GTK_GRID(grid), boton_limpiar, 22, 1, 1, 1); 
+    g_signal_connect(boton_limpiar, "clicked", G_CALLBACK(limpiar_entrada), window);
 
     // Text view para la salida de compilación en la cuarta fila
     GtkWidget *salida_compilacion = gtk_text_view_new();
