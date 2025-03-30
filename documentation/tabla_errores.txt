@@ -2,6 +2,8 @@
 
 ERRORES LÉXICOS
 
+- Ocurren cuando el analizador léxico encuentra tokens no reconocidos.
+
 |----------------------------|---------------------------------|
 |          ID                |             MENSAJE             |            
 |----------------------------|---------------------------------|
@@ -10,6 +12,8 @@ ERRORES LÉXICOS
 
 
 ERRORES SINTÁCTICOS
+
+- Ocurren cuando la estructura del código no sigue las reglas gramaticales definidas.
 
 |----------------------------|----------------------------------------------------------------|
 |          ID                |                           MENSAJE                              |            
@@ -22,6 +26,9 @@ ERRORES SINTÁCTICOS
 |----------------------------|----------------------------------------------------------------|
 
 ERRORES SEMÁNTICOS
+
+
+- Estos errores se detectan durante la validación semántica, como en la verificación de etiquetas, atributos o valores no válidos.
 
 |----------------------------|------------------------------------------|
 |          ID                |             MENSAJE                      |            
