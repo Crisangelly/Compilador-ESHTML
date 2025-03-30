@@ -55,11 +55,8 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_label_set_xalign(GTK_LABEL(label), 0.0);
 
     GtkWidget *entry = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(entry), 150);
     gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 20, 1); // Columna 1, fila 0
-
-    // Text view para el código fuente en la segunda fila
-    GtkWidget *codigo_fuente = gtk_text_view_new();
-    gtk_grid_attach(GTK_GRID(grid), codigo_fuente, 0, 2, 2, 1); // Ocupa columnas 0 y 1, fila 1
 
     // Botón "Compilar" en la tercera fila
     GtkWidget *boton_compilar = gtk_button_new_with_label("Compilar");
@@ -84,7 +81,6 @@ static void activate(GtkApplication *app, gpointer user_data) {
     g_object_unref(provider);
 
     g_object_set_data(G_OBJECT(window), "entry", entry); // Guardar el GtkEntry
-    g_object_set_data(G_OBJECT(window), "codigo_fuente", codigo_fuente);
     g_object_set_data(G_OBJECT(window), "salida_compilacion", salida_compilacion);
 
     g_signal_connect(boton_compilar, "clicked", G_CALLBACK(compilar), window);
