@@ -580,18 +580,18 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  6
+#define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   13
+#define YYLAST   9
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  7
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  13
+#define YYNRULES  11
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  15
+#define YYNSTATES  14
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -637,23 +637,23 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,     6,    12,    14,    16,    19,    21,
-      22,    23,    26,    29
+       0,     0,     3,     9,    11,    13,    16,    18,    19,    20,
+      23,    26
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-       9,     0,    -1,    10,    -1,    -1,    11,    12,    13,    14,
-       5,    -1,     1,    -1,     3,    -1,    12,     7,    -1,     6,
-      -1,    -1,    -1,    14,    10,    -1,    14,     4,    -1,    -1
+       9,     0,    -1,    10,    11,    12,    13,     5,    -1,     1,
+      -1,     3,    -1,    11,     7,    -1,     6,    -1,    -1,    -1,
+      13,     9,    -1,    13,     4,    -1,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   254,   254,   284,   287,   298,   300,   320,   368,   387,
-     391,   397,   401,   416
+       0,   254,   254,   265,   267,   287,   335,   354,   358,   364,
+     368,   383
 };
 #endif
 
@@ -663,8 +663,8 @@ static const yytype_uint16 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "INICIO_ETIQUETA", "CADENA_DE_TEXTO",
-  "CIERRE_ETIQUETA", "ATRIBUTO", "ATRIBUTO_VALOR", "$accept", "finish",
-  "elemento", "inicio", "atributo", "cerrar_inicio", "contenido", 0
+  "CIERRE_ETIQUETA", "ATRIBUTO", "ATRIBUTO_VALOR", "$accept", "elemento",
+  "inicio", "atributo", "cerrar_inicio", "contenido", 0
 };
 #endif
 
@@ -680,15 +680,15 @@ static const yytype_uint16 yytoknum[] =
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     8,     9,     9,    10,    10,    11,    12,    12,    12,
-      13,    14,    14,    14
+       0,     8,     9,     9,    10,    11,    11,    11,    12,    13,
+      13,    13
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     0,     5,     1,     1,     2,     1,     0,
-       0,     2,     2,     0
+       0,     2,     5,     1,     1,     2,     1,     0,     0,     2,
+       2,     0
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -696,54 +696,52 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     5,     6,     0,     2,     9,     1,     8,    10,     7,
-      13,     0,    12,     4,    11
+       0,     3,     4,     0,     7,     1,     6,     8,     5,    11,
+       0,    10,     2,     9
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,     4,     5,     8,    10,    11
+      -1,     3,     4,     7,     9,    10
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -2
+#define YYPACT_NINF -3
 static const yytype_int8 yypact[] =
 {
-       5,    -2,    -2,     1,    -2,     3,    -2,    -2,     0,    -2,
-      -2,    -1,    -2,    -2,    -2
+       4,    -3,    -3,     1,     0,    -3,    -3,     2,    -3,    -3,
+      -1,    -3,    -3,    -3
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -2,    -2,     2,    -2,    -2,    -2,    -2
+      -3,    -2,    -3,    -3,    -3,    -3
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule which
    number is the opposite.  If zero, do what YYDEFACT says.
    If YYTABLE_NINF, syntax error.  */
-#define YYTABLE_NINF -4
-static const yytype_int8 yytable[] =
+#define YYTABLE_NINF -1
+static const yytype_uint8 yytable[] =
 {
-       1,     6,     2,    12,    13,    -3,     1,     9,     2,     7,
-       0,     0,     0,    14
+       1,     5,     2,    11,    12,     1,     6,     2,    13,     8
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       1,     0,     3,     4,     5,     0,     1,     7,     3,     6,
-      -1,    -1,    -1,    11
+       1,     0,     3,     4,     5,     1,     6,     3,    10,     7
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     1,     3,     9,    10,    11,     0,     6,    12,     7,
-      13,    14,     4,     5,    10
+       0,     1,     3,     9,    10,     0,     6,    11,     7,    12,
+      13,     4,     5,     9
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1558,42 +1556,6 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 254 "parser.y"
-    { 
-
-          // Imprimir errores después del análisis
-          if (num_errores > 0) {
-            printf("\n\nErrores encontrados:\n");
-            for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-                printf("\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-                printf("|    Linea   |                              Mensaje                                                   |      Token                         | \n");
-                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-              for (int i = 0; i < num_errores; i++) { 
-                if (errores[i].tipo == tipo_error) {
-                printf("|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-                }
-              }
-            }
-
-          } else {
-            //Imprimir el árbol de análisis sintáctico
-            imprimir_AST();
-
-            printf("\n\nSalida:\n\n");
-            printf("%s", salida);
-            //printf("\n\nTodo en orden.\n\n\n");
-          }
-
-          exit(0);
-
-        ;}
-    break;
-
-  case 4:
-
-/* Line 1455 of yacc.c  */
-#line 287 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     sprintf(salida + indice_salida, "%s", (yyvsp[(1) - (5)].cadena));
@@ -1607,17 +1569,17 @@ yyreduce:
 ;}
     break;
 
-  case 5:
+  case 3:
 
 /* Line 1455 of yacc.c  */
-#line 298 "parser.y"
+#line 265 "parser.y"
     { yyerror(); ;}
     break;
 
-  case 6:
+  case 4:
 
 /* Line 1455 of yacc.c  */
-#line 300 "parser.y"
+#line 267 "parser.y"
     {
     agregar_nodo("ELEMENTO","");
 
@@ -1639,10 +1601,10 @@ yyreduce:
 ;}
     break;
 
-  case 7:
+  case 5:
 
 /* Line 1455 of yacc.c  */
-#line 320 "parser.y"
+#line 287 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1693,10 +1655,10 @@ yyreduce:
         ;}
     break;
 
-  case 8:
+  case 6:
 
 /* Line 1455 of yacc.c  */
-#line 368 "parser.y"
+#line 335 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1718,19 +1680,19 @@ yyreduce:
         ;}
     break;
 
-  case 9:
+  case 7:
 
 /* Line 1455 of yacc.c  */
-#line 387 "parser.y"
+#line 354 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
     break;
 
-  case 10:
+  case 8:
 
 /* Line 1455 of yacc.c  */
-#line 391 "parser.y"
+#line 358 "parser.y"
     { 
   sprintf(salida + indice_salida, ">");
   indice_salida += strlen(">");
@@ -1738,20 +1700,20 @@ yyreduce:
 ;}
     break;
 
-  case 11:
+  case 9:
 
 /* Line 1455 of yacc.c  */
-#line 397 "parser.y"
+#line 364 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
             //agregar_nodo("CONTENIDO", "");
           ;}
     break;
 
-  case 12:
+  case 10:
 
 /* Line 1455 of yacc.c  */
-#line 401 "parser.y"
+#line 368 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1769,10 +1731,10 @@ yyreduce:
           ;}
     break;
 
-  case 13:
+  case 11:
 
 /* Line 1455 of yacc.c  */
-#line 416 "parser.y"
+#line 383 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1781,7 +1743,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1785 "parser.tab.c"
+#line 1747 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1993,13 +1955,37 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 421 "parser.y"
+#line 388 "parser.y"
 
 
 int main(void) {
   yyin = fopen("temp.codigo", "r");
   
   yyparse();  
+
+  // Imprimir errores después del análisis
+  if (num_errores > 0) {
+    printf("\n\nErrores encontrados:\n");
+    for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
+        printf("\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+        printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        printf("|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+        printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+      for (int i = 0; i < num_errores; i++) { 
+        if (errores[i].tipo == tipo_error) {
+          printf("|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+          printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        }
+      }
+    }
+  } else {
+    //Imprimir el árbol de análisis sintáctico
+    imprimir_AST();
+    printf("\n\nSalida:\n\n");
+    printf("%s", salida);
+    //printf("\n\nTodo en orden.\n\n\n");
+  }
+  exit(0);
 
   return 0;
 }

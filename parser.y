@@ -251,39 +251,6 @@
 
 %%
 
-finish : elemento { 
-
-          // Imprimir errores después del análisis
-          if (num_errores > 0) {
-            printf("\n\nErrores encontrados:\n");
-            for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-                printf("\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-                printf("|    Linea   |                              Mensaje                                                   |      Token                         | \n");
-                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-              for (int i = 0; i < num_errores; i++) { 
-                if (errores[i].tipo == tipo_error) {
-                printf("|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-                }
-              }
-            }
-
-          } else {
-            //Imprimir el árbol de análisis sintáctico
-            imprimir_AST();
-
-            printf("\n\nSalida:\n\n");
-            printf("%s", salida);
-            //printf("\n\nTodo en orden.\n\n\n");
-          }
-
-          exit(0);
-
-        };
-        | /* vacío */ 
-        ;
-
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
   if($1 != " "){
     sprintf(salida + indice_salida, "%s", $1);
@@ -424,6 +391,30 @@ int main(void) {
   yyin = fopen("temp.codigo", "r");
   
   yyparse();  
+
+  // Imprimir errores después del análisis
+  if (num_errores > 0) {
+    printf("\n\nErrores encontrados:\n");
+    for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
+        printf("\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+        printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        printf("|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+        printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+      for (int i = 0; i < num_errores; i++) { 
+        if (errores[i].tipo == tipo_error) {
+          printf("|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+          printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        }
+      }
+    }
+  } else {
+    //Imprimir el árbol de análisis sintáctico
+    imprimir_AST();
+    printf("\n\nSalida:\n\n");
+    printf("%s", salida);
+    //printf("\n\nTodo en orden.\n\n\n");
+  }
+  exit(0);
 
   return 0;
 }
