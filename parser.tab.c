@@ -99,8 +99,7 @@
   void imprimir_AST() {
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
     if (inicio_arbol) {
-      printf("\033[32m");
-      printf("\n\nAnalisis Sintactico\n");
+      printf("\n\nAnalisis Sintactico\n\n\n");
       printf("DOCUMENTO\n");
       printf("  |\n");
       inicio_arbol = 0;
@@ -307,7 +306,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 311 "parser.tab.c"
+#line 310 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -350,14 +349,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 238 "parser.y"
+#line 237 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 361 "parser.tab.c"
+#line 360 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -369,7 +368,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 373 "parser.tab.c"
+#line 372 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -654,8 +653,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   256,   256,   288,   291,   302,   304,   324,   372,   391,
-     395,   401,   405,   420
+       0,   255,   255,   285,   288,   299,   301,   321,   369,   388,
+     392,   398,   402,   417
 };
 #endif
 
@@ -1559,12 +1558,11 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 256 "parser.y"
+#line 255 "parser.y"
     { 
 
           // Imprimir errores después del análisis
           if (num_errores > 0) {
-            fprintf(stderr, "\033[31m");
             fprintf(stderr, "\n\nErrores encontrados:\n");
             for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
                 fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
@@ -1583,8 +1581,7 @@ yyreduce:
             //Imprimir el árbol de análisis sintáctico
             imprimir_AST();
 
-            fprintf(stderr, "\x1b[0m");
-            printf("Salida:\n");
+            printf("\n\nSalida:\n");
             printf("%s", salida);
             //printf("\n\nTodo en orden.\n\n\n");
           }
@@ -1597,7 +1594,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 291 "parser.y"
+#line 288 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     sprintf(salida + indice_salida, "%s", (yyvsp[(1) - (5)].cadena));
@@ -1614,14 +1611,14 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 302 "parser.y"
+#line 299 "parser.y"
     { yyerror(); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 304 "parser.y"
+#line 301 "parser.y"
     {
     agregar_nodo("ELEMENTO","");
 
@@ -1646,7 +1643,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 324 "parser.y"
+#line 321 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1700,7 +1697,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 372 "parser.y"
+#line 369 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1725,7 +1722,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 391 "parser.y"
+#line 388 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1734,7 +1731,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 395 "parser.y"
+#line 392 "parser.y"
     { 
   sprintf(salida + indice_salida, ">");
   indice_salida += strlen(">");
@@ -1745,7 +1742,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 401 "parser.y"
+#line 398 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
             //agregar_nodo("CONTENIDO", "");
@@ -1755,7 +1752,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 405 "parser.y"
+#line 402 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1776,7 +1773,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 420 "parser.y"
+#line 417 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1785,7 +1782,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1789 "parser.tab.c"
+#line 1786 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1997,7 +1994,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 425 "parser.y"
+#line 422 "parser.y"
 
 
 int main(void) {

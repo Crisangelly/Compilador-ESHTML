@@ -28,8 +28,7 @@
   void imprimir_AST() {
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
     if (inicio_arbol) {
-      printf("\033[32m");
-      printf("\n\nAnalisis Sintactico\n");
+      printf("\n\nAnalisis Sintactico\n\n\n");
       printf("DOCUMENTO\n");
       printf("  |\n");
       inicio_arbol = 0;
@@ -257,7 +256,6 @@ finish : elemento {
 
           // Imprimir errores después del análisis
           if (num_errores > 0) {
-            fprintf(stderr, "\033[31m");
             fprintf(stderr, "\n\nErrores encontrados:\n");
             for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
                 fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
@@ -276,8 +274,7 @@ finish : elemento {
             //Imprimir el árbol de análisis sintáctico
             imprimir_AST();
 
-            fprintf(stderr, "\x1b[0m");
-            printf("Salida:\n");
+            printf("\n\nSalida:\n");
             printf("%s", salida);
             //printf("\n\nTodo en orden.\n\n\n");
           }
