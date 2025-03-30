@@ -25,6 +25,7 @@
     }
   }
 
+  //Imprimir arbol
   void imprimir_AST() {
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
     if (inicio_arbol) {
@@ -53,9 +54,19 @@
 
         // Imprimir el nodo
         if (nodos[i].terminal[0] == '\0') {
-          printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          if(strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0){
+            printf("  "); // 2 espacios por nivel de indentación
+            printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          }else{
+            printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          }
         } else {
-          printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          if(strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0){
+            printf("  "); // 2 espacios por nivel de indentación
+            printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          }else{
+            printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          }
         }
 
         // Ajustar la indentación después de imprimir el nodo
@@ -66,6 +77,7 @@
       }
     }
   }
+
 
   // Función para acumular errores
 
@@ -264,6 +276,8 @@ elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
     indice_salida += strlen($1);
 
     agregar_nodo("CIERRE_ETIQUETA", $1);
+  }else{
+    agregar_nodo("CIERRE_ETIQUETA", "");
   }
 
   $$ = salida;

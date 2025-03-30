@@ -96,6 +96,7 @@
     }
   }
 
+  //Imprimir arbol
   void imprimir_AST() {
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
     if (inicio_arbol) {
@@ -124,9 +125,19 @@
 
         // Imprimir el nodo
         if (nodos[i].terminal[0] == '\0') {
-          printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          if(strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0){
+            printf("  "); // 2 espacios por nivel de indentación
+            printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          }else{
+            printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          }
         } else {
-          printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          if(strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0){
+            printf("  "); // 2 espacios por nivel de indentación
+            printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          }else{
+            printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          }
         }
 
         // Ajustar la indentación después de imprimir el nodo
@@ -137,6 +148,7 @@
       }
     }
   }
+
 
   // Función para acumular errores
 
@@ -306,7 +318,7 @@
 
 
 /* Line 189 of yacc.c  */
-#line 310 "parser.tab.c"
+#line 322 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -348,14 +360,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 237 "parser.y"
+#line 249 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 359 "parser.tab.c"
+#line 371 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -367,7 +379,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 371 "parser.tab.c"
+#line 383 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -653,8 +665,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   254,   254,   257,   261,   272,   274,   294,   342,   361,
-     365,   371,   375,   390
+       0,   266,   266,   269,   273,   286,   288,   308,   356,   375,
+     379,   385,   389,   404
 };
 #endif
 
@@ -1558,7 +1570,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 254 "parser.y"
+#line 266 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1567,7 +1579,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 257 "parser.y"
+#line 269 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1576,13 +1588,15 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 261 "parser.y"
+#line 273 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
     sprintf(salida + indice_salida, "%s", (yyvsp[(1) - (5)].cadena));
     indice_salida += strlen((yyvsp[(1) - (5)].cadena));
 
     agregar_nodo("CIERRE_ETIQUETA", (yyvsp[(1) - (5)].cadena));
+  }else{
+    agregar_nodo("CIERRE_ETIQUETA", "");
   }
 
   (yyval.cadena) = salida;
@@ -1593,14 +1607,14 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 272 "parser.y"
+#line 286 "parser.y"
     { yyerror(); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 274 "parser.y"
+#line 288 "parser.y"
     {
     agregar_nodo("ELEMENTO","");
 
@@ -1625,7 +1639,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 294 "parser.y"
+#line 308 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1679,7 +1693,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 342 "parser.y"
+#line 356 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1704,7 +1718,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 361 "parser.y"
+#line 375 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1713,7 +1727,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 365 "parser.y"
+#line 379 "parser.y"
     { 
   sprintf(salida + indice_salida, ">");
   indice_salida += strlen(">");
@@ -1724,7 +1738,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 371 "parser.y"
+#line 385 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
             //agregar_nodo("CONTENIDO", "");
@@ -1734,7 +1748,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 375 "parser.y"
+#line 389 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1755,7 +1769,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 390 "parser.y"
+#line 404 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1764,7 +1778,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1768 "parser.tab.c"
+#line 1782 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1976,7 +1990,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 395 "parser.y"
+#line 409 "parser.y"
 
 
 int main(void) {
