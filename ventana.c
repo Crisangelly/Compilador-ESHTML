@@ -38,7 +38,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_grid_attach(GTK_GRID(grid), initial_label, 0, 0, 3, 1); 
     gtk_label_set_xalign(GTK_LABEL(initial_label), 0.5); 
 
-    GtkWidget *label = gtk_label_new("C:/");
+    GtkWidget *label = gtk_label_new("C:\\");
     gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1);
     gtk_label_set_xalign(GTK_LABEL(label), 0.0);
 
