@@ -50,12 +50,12 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_label_set_xalign(GTK_LABEL(initial_label), 0.5); 
 
     // Etiqueta "C:/" y entrada de texto en la primera fila
-    GtkWidget *label = gtk_label_new("C:/");
+    GtkWidget *label = gtk_label_new("C:\\");
     gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1); // Columna 0, fila 0
     gtk_label_set_xalign(GTK_LABEL(label), 0.0);
 
     GtkWidget *entry = gtk_entry_new();
-    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1); // Columna 1, fila 0
+    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 20, 1); // Columna 1, fila 0
 
     // Text view para el código fuente en la segunda fila
     GtkWidget *codigo_fuente = gtk_text_view_new();
@@ -63,11 +63,19 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     // Botón "Compilar" en la tercera fila
     GtkWidget *boton_compilar = gtk_button_new_with_label("Compilar");
-    gtk_grid_attach(GTK_GRID(grid), boton_compilar, 2, 1, 1, 1); // Cambiado a columna 2, fila 0
+    gtk_grid_attach(GTK_GRID(grid), boton_compilar, 21, 1, 1, 1); // Cambiado a columna 2, fila 0
 
     // Text view para la salida de compilación en la cuarta fila
     GtkWidget *salida_compilacion = gtk_text_view_new();
-    gtk_grid_attach(GTK_GRID(grid), salida_compilacion, 0, 3, 100, 1); // Ocupa columnas 0 y 1, fila 3
+    gtk_grid_attach(GTK_GRID(grid), salida_compilacion, 0, 3, 200, 1);
+    
+    // Configurar la fuente monoespaciada
+    gtk_widget_set_css_classes(salida_compilacion, (const char*[]){ "monospace", NULL });
+    const char *css = "textview.monospace { font-family: Monospace; }";
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_string(provider, css);
+    gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref(provider);
 
     g_object_set_data(G_OBJECT(window), "entry", entry); // Guardar el GtkEntry
     g_object_set_data(G_OBJECT(window), "codigo_fuente", codigo_fuente);

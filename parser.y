@@ -20,7 +20,7 @@
       nodos[num_nodos].terminal= terminal;
       num_nodos++;
     } else {
-      fprintf(stderr, "Demasiados nodos.\n");
+      printf("Demasiados nodos.\n");
       exit(1);
     }
   }
@@ -91,7 +91,7 @@
       num_errores++;
 
     } else {
-      fprintf(stderr, "Demasiados errores.\n");
+      printf("Demasiados errores.\n");
       exit(1);
       }
   }
@@ -239,7 +239,7 @@
 }
 
 
-%token <cadena> INICIO_ETIQUETA <cadena> CADENA_DE_TEXTO <cadena> CIERRE_ETIQUETA <cadena> ATRIBUTO <cadena> ATRIBUTO_VALOR <cadena> FIN_LINEA
+%token <cadena> INICIO_ETIQUETA <cadena> CADENA_DE_TEXTO <cadena> CIERRE_ETIQUETA <cadena> ATRIBUTO <cadena> ATRIBUTO_VALOR
 
 %type <cadena> elemento inicio atributo contenido cerrar_inicio
 
@@ -248,7 +248,6 @@
 %left ATRIBUTO_VALOR
 %left CADENA_DE_TEXTO
 %left CIERRE_ETIQUETA
-%left FIN_LINEA
 
 %%
 
@@ -256,16 +255,16 @@ finish : elemento {
 
           // Imprimir errores después del análisis
           if (num_errores > 0) {
-            fprintf(stderr, "\n\nErrores encontrados:\n");
+            printf("\n\nErrores encontrados:\n");
             for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-                fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-                fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
-                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                printf("\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                printf("|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
               for (int i = 0; i < num_errores; i++) { 
                 if (errores[i].tipo == tipo_error) {
-                fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-                fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+                printf("|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+                printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
                 }
               }
             }
@@ -274,7 +273,7 @@ finish : elemento {
             //Imprimir el árbol de análisis sintáctico
             imprimir_AST();
 
-            printf("\n\nSalida:\n");
+            printf("\n\nSalida:\n\n");
             printf("%s", salida);
             //printf("\n\nTodo en orden.\n\n\n");
           }
