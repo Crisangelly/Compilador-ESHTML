@@ -241,7 +241,7 @@
 
 %token <cadena> INICIO_ETIQUETA <cadena> CADENA_DE_TEXTO <cadena> CIERRE_ETIQUETA <cadena> ATRIBUTO <cadena> ATRIBUTO_VALOR
 
-%type <cadena> elemento inicio atributo contenido cerrar_inicio
+%type <cadena> documento elemento inicio atributo contenido cerrar_inicio
 
 %left INICIO_ETIQUETA
 %left ATRIBUTO
@@ -250,6 +250,13 @@
 %left CIERRE_ETIQUETA
 
 %%
+
+documento: elemento documento {
+            $$ = $2;
+          };
+          | elemento {
+            $$ = $1;
+          };
 
 elemento: inicio atributo cerrar_inicio contenido CIERRE_ETIQUETA {
   if($1 != " "){
