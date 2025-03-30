@@ -67,7 +67,13 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     // Text view para la salida de compilación en la cuarta fila
     GtkWidget *salida_compilacion = gtk_text_view_new();
-    gtk_grid_attach(GTK_GRID(grid), salida_compilacion, 0, 3, 200, 1);
+    GtkWidget *scrolled_salida = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_salida), salida_compilacion);
+    gtk_grid_attach(GTK_GRID(grid), scrolled_salida, 0, 3, 200, 1);
+
+    // Permitir que la ventana de desplazamiento se expanda verticalmente
+    gtk_widget_set_hexpand(scrolled_salida, TRUE);
+    gtk_widget_set_vexpand(scrolled_salida, TRUE);
     
     // Configurar la fuente monoespaciada
     gtk_widget_set_css_classes(salida_compilacion, (const char*[]){ "monospace", NULL });
