@@ -9,9 +9,8 @@
   void imprimir_tabla(const char *lexema, const char *token) {
     static int encabezado_unico = 1; //imprimir un encabezado una sola vez
     if (encabezado_unico){
-      printf("\033[35m");
-      printf("\n\nAnalisis Lexico\n\n");
-      printf("\n\nTabla de Tokens:\n\n");
+      printf("\n\nAnalisis Lexico\n");
+      printf("\n\nTabla de Tokens:\n");
       printf("|-------------------------------------------------------|-------------------------------|\n");
       printf("|                       Lexema                          |             Token             |\n");
       printf("|-------------------------------------------------------|-------------------------------|\n");
@@ -22,10 +21,12 @@
   }
 
 %}
-%option noyywrap
+
 %option yylineno
 
 %%
+
+EOF { return 0; } //Fin entrada
 
 [<][a-z_]+[1-6]? {
   yylval.cadena = strdup(yytext); // Almacena el valor del token en yylval.cadena
@@ -59,12 +60,16 @@
 
 [ \t] { /* Ignorar espacios en blanco */ }
 
-\n { /* Reconocer saltos de línea */ }
+\n { /* Ignorar saltos de linea */ }
 
 . { 
   char mensaje[256];
-  sprintf(mensaje, "caracter no reconocido '%c'", yytext[0]);
+  sprintf(mensaje, "N:0; caracter no reconocido '%c'", yytext[0]);
   agregar_error(yylineno, mensaje, 0, yytext); // 0 para error léxico
 }
 
 %%
+
+int yywrap() {
+  return 1;
+}

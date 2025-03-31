@@ -8,7 +8,7 @@ struct error_estructura{
     char token[100];
 };
 
-extern struct error_estructura errores[100];
+extern struct error_estructura errores[10];
 extern int num_errores;
 
 void agregar_error(int linea, char *mensaje, int tipo, char *token);

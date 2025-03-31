@@ -1,0 +1,41 @@
+**** Documentación Tabla de Errores ESHTML ****
+
+ERRORES LÉXICOS
+
+- Ocurren cuando el analizador léxico encuentra tokens no reconocidos.
+
+|----------------------------|---------------------------------|
+|          ID                |             MENSAJE             |            
+|----------------------------|---------------------------------|
+|          0                 |     carácter no reconocido      |
+|----------------------------|---------------------------------|
+
+
+ERRORES SINTÁCTICOS
+
+- Ocurren cuando la estructura del código no sigue las reglas gramaticales definidas.
+
+|----------------------------|----------------------------------------------------------------|
+|          ID                |                           MENSAJE                              |            
+|----------------------------|----------------------------------------------------------------|
+|          0                 |               Error en la etiqueta de inicio                   |
+|----------------------------|----------------------------------------------------------------|
+|          1                 |               Error en la sección de atributos                 |
+|----------------------------|----------------------------------------------------------------|
+|          2                 |     Error en la sección de contenido o cierre de etiqueta      |
+|----------------------------|----------------------------------------------------------------|
+
+ERRORES SEMÁNTICOS
+
+
+- Estos errores se detectan durante la validación semántica, como en la verificación de etiquetas, atributos o valores no válidos.
+
+|----------------------------|------------------------------------------|
+|          ID                |             MENSAJE                      |            
+|----------------------------|------------------------------------------|
+|          0                 |            etiqueta no valida            |
+|----------------------------|------------------------------------------|
+|          1                 |      valor del atributo no válido        |
+|----------------------------|------------------------------------------|
+|          2                 |           atributo no válido             |
+|----------------------------|------------------------------------------|

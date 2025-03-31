@@ -1,0 +1,8 @@
+[
+{
+  "directory": "C:/Users/PC/Desktop/repositorios/Compilador-ESHTML/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe -DLIBDEFLATE_DLL @CMakeFiles/VentanaApp.dir/includes_C.rsp -g -std=gnu11   -mfpmath=sse -msse -msse2 -o CMakeFiles\\VentanaApp.dir\\ventana.c.obj -c C:\\Users\\PC\\Desktop\\repositorios\\Compilador-ESHTML\\ventana.c",
+  "file": "C:/Users/PC/Desktop/repositorios/Compilador-ESHTML/ventana.c",
+  "output": "CMakeFiles/VentanaApp.dir/ventana.c.obj"
+}
+]

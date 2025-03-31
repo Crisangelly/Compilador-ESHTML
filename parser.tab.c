@@ -82,25 +82,25 @@
     char *terminal; 
   };
 
-  struct ASTNodo nodos[100];
+  struct ASTNodo nodos[30];
   int num_nodos = 0;
 
   void agregar_nodo(char *no_terminal, char *terminal){
-    if (num_nodos < 100) {
+    if (num_nodos < 30) {
       nodos[num_nodos].no_terminal = no_terminal;
       nodos[num_nodos].terminal= terminal;
       num_nodos++;
     } else {
-      fprintf(stderr, "Demasiados nodos.\n");
+      printf("\n\nEntrada demasiado grande para ser procesada.\n");
       exit(1);
     }
   }
 
+  //Imprimir arbol
   void imprimir_AST() {
     static int inicio_arbol = 1; //imprimir un encabezado una sola vez
     if (inicio_arbol) {
-      printf("\033[32m");
-      printf("\n\nAnalisis Sintactico\n");
+      printf("\n\nAnalisis Sintactico\n\n\n");
       printf("DOCUMENTO\n");
       printf("  |\n");
       inicio_arbol = 0;
@@ -125,9 +125,19 @@
 
         // Imprimir el nodo
         if (nodos[i].terminal[0] == '\0') {
-          printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          if(strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0){
+            printf("  "); // 2 espacios por nivel de indentación
+            printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          }else{
+            printf("|____ %s \n", nodos[i].no_terminal); // Imprimir el no terminal padre
+          }
         } else {
-          printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          if(strcmp(nodos[i].no_terminal, "CIERRE_ETIQUETA") == 0){
+            printf("  "); // 2 espacios por nivel de indentación
+            printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          }else{
+            printf("|____ %s : %s \n", nodos[i].no_terminal, nodos[i].terminal);
+          }
         }
 
         // Ajustar la indentación después de imprimir el nodo
@@ -139,13 +149,14 @@
     }
   }
 
+
   // Función para acumular errores
 
-  struct error_estructura errores[100];
+  struct error_estructura errores[10];
   int num_errores = 0;
 
   void agregar_error(int linea, char *mensaje, int tipo, char *token) {
-    if (num_errores < 100) {
+    if (num_errores < 10) {
 
       //Verificar que no hayan mensajes duplicados en los errores sintácticos (debido a la recursividad)
       if(tipo == 1){
@@ -163,9 +174,9 @@
       num_errores++;
 
     } else {
-      fprintf(stderr, "Demasiados errores.\n");
+      printf("\n\nDemasiados errores.\n");
       exit(1);
-      }
+    }
   }
 
 
@@ -295,17 +306,19 @@
   }
 
   extern int yylex(void);
-  extern char *yytext;
   extern FILE *yyin;
-  extern FILE *yyout;
+  extern char *yytext;
   extern int yylineno;
+
+  char salida[1024]; // Buffer para almacenar la salida
+  int indice_salida = 0; // Índice para rastrear la posición en el buffer
 
   void yyerror();
 
 
 
 /* Line 189 of yacc.c  */
-#line 309 "parser.tab.c"
+#line 322 "parser.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -347,14 +360,14 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 236 "parser.y"
+#line 249 "parser.y"
 
   char *cadena;
 
 
 
 /* Line 214 of yacc.c  */
-#line 358 "parser.tab.c"
+#line 371 "parser.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -366,7 +379,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 370 "parser.tab.c"
+#line 383 "parser.tab.c"
 
 #ifdef short
 # undef short
@@ -652,8 +665,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   253,   253,   256,   260,   267,   269,   287,   331,   348,
-     352,   357,   361,   375
+       0,   266,   266,   269,   273,   286,   288,   308,   356,   375,
+     379,   385,   389,   404
 };
 #endif
 
@@ -1557,7 +1570,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 253 "parser.y"
+#line 266 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
           ;}
@@ -1566,7 +1579,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 256 "parser.y"
+#line 269 "parser.y"
     {
             (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
           ;}
@@ -1575,12 +1588,18 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 260 "parser.y"
+#line 273 "parser.y"
     {
   if((yyvsp[(1) - (5)].cadena) != " "){
-    fprintf(yyout, "%s", (yyvsp[(1) - (5)].cadena));
+    sprintf(salida + indice_salida, "%s", (yyvsp[(1) - (5)].cadena));
+    indice_salida += strlen((yyvsp[(1) - (5)].cadena));
+
     agregar_nodo("CIERRE_ETIQUETA", (yyvsp[(1) - (5)].cadena));
+  }else{
+    agregar_nodo("CIERRE_ETIQUETA", "");
   }
+
+  (yyval.cadena) = salida;
 
 ;}
     break;
@@ -1588,14 +1607,14 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 267 "parser.y"
+#line 286 "parser.y"
     { yyerror(); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 269 "parser.y"
+#line 288 "parser.y"
     {
     agregar_nodo("ELEMENTO","");
 
@@ -1603,13 +1622,15 @@ yyreduce:
 
     if (traduccion != -1) {
       (yyval.cadena) = tabla_etiquetas[traduccion].cierre_etiqueta_html;
-      fprintf(yyout, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+
+      sprintf(salida + indice_salida, "%s", tabla_etiquetas[traduccion].inicio_etiqueta_html);
+      indice_salida += strlen(tabla_etiquetas[traduccion].inicio_etiqueta_html);
 
       agregar_nodo("INICIO_ETIQUETA", tabla_etiquetas[traduccion].inicio_etiqueta_html);
 
     } else {
       char mensaje[256];
-      sprintf(mensaje, "etiqueta '%s' no valida", (yyvsp[(1) - (1)].cadena));
+      sprintf(mensaje, "N:0; etiqueta '%s' no valida", (yyvsp[(1) - (1)].cadena));
       agregar_error(yylineno, mensaje, 2, yytext); // 2 para error semántico
     }
 ;}
@@ -1618,7 +1639,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 287 "parser.y"
+#line 308 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1636,21 +1657,25 @@ yyreduce:
 
               int traduccion_valor =  traducir_valor(valor, tabla_atributos_valor[traduccion].valores_permitidos);
               if (traduccion_valor != -1) {
-          
-                fprintf(yyout, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
 
+                sprintf(salida + indice_salida, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
+                indice_salida += strlen(salida + indice_salida);
+                
                 char cadena_concatenada[256];
                 sprintf(cadena_concatenada, "%s=%s", tabla_atributos_valor[traduccion].atributo_valor_html, tabla_atributos_valor[traduccion].valores_permitidos[traduccion_valor].valor_html);
                 agregar_nodo("ATRIBUTO", cadena_concatenada);
 
               } else {
                 char mensaje[256];
-                sprintf(mensaje, "valor del atributo '%s' no valido", valor);
+                sprintf(mensaje, "N:1; valor del atributo '%s' no valido", valor);
                 agregar_error(yylineno, mensaje, 2, yytext);
               }
 
             }else{
-              fprintf(yyout, " %s=%s ",tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+
+              sprintf(salida + indice_salida, " %s=%s ", tabla_atributos_valor[traduccion].atributo_valor_html, valor);
+              indice_salida += strlen(salida + indice_salida);
+
               char cadena_concatenada[256];
               sprintf(cadena_concatenada, "%s=%s", tabla_atributos_valor[traduccion].atributo_valor_html, valor);
               agregar_nodo("ATRIBUTO", cadena_concatenada);
@@ -1658,7 +1683,7 @@ yyreduce:
 
           } else {
             char mensaje[256];
-            sprintf(mensaje, "atributo '%s' no valido", atributo);
+            sprintf(mensaje, "N:2; atributo '%s' no valido", atributo);
             agregar_error(yylineno, mensaje, 2, yytext);
           }
           
@@ -1668,7 +1693,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 331 "parser.y"
+#line 356 "parser.y"
     { 
           (yyval.cadena) = (yyvsp[(1) - (1)].cadena);
 
@@ -1676,12 +1701,14 @@ yyreduce:
 
           if (traduccion != -1) {
             (yyval.cadena) = tabla_atributos[traduccion].atributo_html;
-            fprintf(yyout, "%s", tabla_atributos[traduccion].atributo_html);
+
+            sprintf(salida + indice_salida, "%s", tabla_atributos[traduccion].atributo_html);
+            indice_salida += strlen(tabla_atributos[traduccion].atributo_html);
             
             agregar_nodo("ATRIBUTO", tabla_atributos[traduccion].atributo_html);
           } else {
             char mensaje[256];
-            sprintf(mensaje, "atributo '%s' no valido", (yyvsp[(1) - (1)].cadena));
+            sprintf(mensaje, "N:2; atributo '%s' no valido", (yyvsp[(1) - (1)].cadena));
             agregar_error(yylineno, mensaje, 2, yytext);
           }
 
@@ -1691,7 +1718,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 348 "parser.y"
+#line 375 "parser.y"
     { 
           (yyval.cadena) = " ";
         ;}
@@ -1700,9 +1727,10 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 352 "parser.y"
+#line 379 "parser.y"
     { 
-  fprintf(yyout, ">"); 
+  sprintf(salida + indice_salida, ">");
+  indice_salida += strlen(">");
   agregar_nodo("CERRAR_INICIO", ">");
 ;}
     break;
@@ -1710,7 +1738,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 357 "parser.y"
+#line 385 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
             //agregar_nodo("CONTENIDO", "");
@@ -1720,7 +1748,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 361 "parser.y"
+#line 389 "parser.y"
     { 
             (yyval.cadena) = (yyvsp[(2) - (2)].cadena);
 
@@ -1729,7 +1757,8 @@ yyreduce:
 
             if (first_quote && second_quote && first_quote != second_quote) {
                 *second_quote = '\0'; // Termina la cadena en la segunda comilla
-                fprintf(yyout, first_quote + 1);
+                sprintf(salida + indice_salida, first_quote + 1);
+                indice_salida += strlen(first_quote + 1);
             }
 
             agregar_nodo("CONTENIDO", (yyvsp[(2) - (2)].cadena));
@@ -1740,7 +1769,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 375 "parser.y"
+#line 404 "parser.y"
     {  
             (yyval.cadena) = " ";
           ;}
@@ -1749,7 +1778,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1753 "parser.tab.c"
+#line 1782 "parser.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1961,47 +1990,49 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 380 "parser.y"
+#line 409 "parser.y"
 
 
 int main(void) {
-  yyin = fopen("eshtml.txt", "r");
-  yyout = fopen("html.txt", "w");
-  int s = yyparse();  
+  yyin = fopen("temp.codigo", "r");
+  
+  yyparse();  
 
   // Imprimir errores después del análisis
   if (num_errores > 0) {
-    fprintf(stderr, "\033[31m");
-    fprintf(stderr, "\n\nErrores encontrados:\n");
+    printf("\n\nErrores encontrados:\n");
     for (int tipo_error = 0; tipo_error < 3; tipo_error++) {
-        fprintf(stderr, "\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
-        fprintf(stderr, "|    Linea   |                              Mensaje                                                   |      Token                         | \n");
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        printf("\n\nErrores %s:\n", tipo_error == 0 ? "lexicos" : (tipo_error == 1 ? "sintacticos" : "semanticos"));
+        printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+        printf("|    Linea   |                              Mensaje                                                   |      Token                         | \n");
+        printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
       for (int i = 0; i < num_errores; i++) { 
         if (errores[i].tipo == tipo_error) {
-        fprintf(stderr, "|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
-        fprintf(stderr, "|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
+          printf("|   %-6d   | %-86s | %-34s | \n", errores[i].linea, errores[i].mensaje, errores[i].token);
+          printf("|------------|----------------------------------------------------------------------------------------|------------------------------------| \n");
         }
       }
     }
-
-  } else if (s == 0) {
+  } else {
     //Imprimir el árbol de análisis sintáctico
     imprimir_AST();
-
-    printf("\n\nTodo en orden.\n\n\n");
+    printf("\n\nSalida:\n\n");
+    printf("%s", salida);
+    //printf("\n\nTodo en orden.\n\n\n");
   }
+  exit(0);
+
+  return 0;
 }
 
 void yyerror(){
   char *s;
   if (yytext[0] == '<') {
-    s = "Error en la etiqueta de inicio";
+    s = "N:0; Error en la etiqueta de inicio";
   } else if (yytext[0] == ':') {
-    s = "Error en la seccion de atributos";
+    s = "N:1; Error en la seccion de atributos";
   } else {
-    s = "Error en la seccion de contenido o cierre de etiqueta";
+    s = "N:2; Error en la seccion de contenido o cierre de etiqueta";
   }
 
   char mensaje[256];
