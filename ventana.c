@@ -6,8 +6,15 @@
 
 static void limpiar_entrada(GtkWidget *widget, gpointer data) {
     GtkWidget *entry = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "entry"));
-    GtkEntryBuffer *buffer = gtk_entry_get_buffer(GTK_ENTRY(entry));
-    gtk_entry_buffer_set_text(buffer, "", 0); // Establecer el texto a vacío
+    GtkWidget *salida_compilacion = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "salida_compilacion"));
+
+    // Limpiar el GtkEntry
+    GtkEntryBuffer *buffer_entrada = gtk_entry_get_buffer(GTK_ENTRY(entry));
+    gtk_entry_buffer_set_text(buffer_entrada, "", 0);
+
+    // Limpiar el GtkTextView
+    GtkTextBuffer *buffer_salida = gtk_text_view_get_buffer(GTK_TEXT_VIEW(salida_compilacion));
+    gtk_text_buffer_set_text(buffer_salida, "", -1);
 }
 
 static void compilar(GtkWidget *widget, gpointer data) {
