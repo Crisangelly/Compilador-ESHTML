@@ -2037,9 +2037,9 @@ void yyerror(){
 
   char mensaje[256];
   if (yytext && yytext[0] != '\0') {
-    sprintf(mensaje, "token: %s, error: %s", yytext, s);
+    sprintf(mensaje, "token: %s, %s", yytext, s);
   } else {
-    sprintf(mensaje, "error: %s", s); // No incluir el token si está vacío
+    sprintf(mensaje, "%s", s); // No incluir el token si está vacío
   }
   agregar_error(yylineno, mensaje, 1, yytext); // 1 para error sintáctico
 }

@@ -399,7 +399,7 @@ char *yytext;
   void imprimir_tabla(const char *lexema, const char *token) {
     static int encabezado_unico = 1; //imprimir un encabezado una sola vez
     if (encabezado_unico){
-      printf("\n\nAnalisis Lexico\n");
+      printf("\nAnalisis Lexico\n");
       printf("\n\nTabla de Tokens:\n");
       printf("|-------------------------------------------------------|-------------------------------|\n");
       printf("|                       Lexema                          |             Token             |\n");
