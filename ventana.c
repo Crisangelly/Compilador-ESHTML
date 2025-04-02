@@ -6,8 +6,15 @@
 
 static void limpiar_entrada(GtkWidget *widget, gpointer data) {
     GtkWidget *entry = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "entry"));
-    GtkEntryBuffer *buffer = gtk_entry_get_buffer(GTK_ENTRY(entry));
-    gtk_entry_buffer_set_text(buffer, "", 0); // Establecer el texto a vacío
+    GtkWidget *salida_compilacion = GTK_WIDGET(g_object_get_data(G_OBJECT(data), "salida_compilacion"));
+
+    // Limpiar el GtkEntry
+    GtkEntryBuffer *buffer_entrada = gtk_entry_get_buffer(GTK_ENTRY(entry));
+    gtk_entry_buffer_set_text(buffer_entrada, "", 0);
+
+    // Limpiar el GtkTextView
+    GtkTextBuffer *buffer_salida = gtk_text_view_get_buffer(GTK_TEXT_VIEW(salida_compilacion));
+    gtk_text_buffer_set_text(buffer_salida, "", -1);
 }
 
 static void compilar(GtkWidget *widget, gpointer data) {
@@ -52,26 +59,31 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
 
     GtkWidget *initial_label = gtk_label_new("Ingresa tu etiqueta ESHTML");
+    gtk_widget_set_css_classes(initial_label, (const char*[]){ "initial-label", NULL });
     gtk_grid_attach(GTK_GRID(grid), initial_label, 0, 0, 3, 1); 
     gtk_label_set_xalign(GTK_LABEL(initial_label), 0.5); 
 
     // Etiqueta "C:/" y entrada de texto en la primera fila
     GtkWidget *label = gtk_label_new("C:\\");
+    gtk_widget_set_css_classes(label, (const char*[]){ "C-label", NULL });
     gtk_grid_attach(GTK_GRID(grid), label, 0, 1, 1, 1); // Columna 0, fila 0
-    gtk_label_set_xalign(GTK_LABEL(label), 0.0);
 
     GtkWidget *entry = gtk_entry_new();
     gtk_entry_set_max_length(GTK_ENTRY(entry), 150);
-    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 20, 1); // Columna 1, fila 0
+    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 25, 1); // Columna 1, fila 0
 
     // Botón "Compilar" en la tercera fila
     GtkWidget *boton_compilar = gtk_button_new_with_label("Compilar");
-    gtk_grid_attach(GTK_GRID(grid), boton_compilar, 21, 1, 1, 1); // Cambiado a columna 2, fila 0
+    gtk_grid_attach(GTK_GRID(grid), boton_compilar, 26, 1, 1, 1); // Cambiado a columna 2, fila 0
 
     // Botón "Limpiar"
     GtkWidget *boton_limpiar = gtk_button_new_with_label("Limpiar");
-    gtk_grid_attach(GTK_GRID(grid), boton_limpiar, 22, 1, 1, 1); 
+    gtk_grid_attach(GTK_GRID(grid), boton_limpiar, 27, 1, 1, 1); 
     g_signal_connect(boton_limpiar, "clicked", G_CALLBACK(limpiar_entrada), window);
+
+    GtkWidget *procesos_label = gtk_label_new("Procesos:");
+    gtk_widget_set_css_classes(procesos_label, (const char*[]){ "procesos-label", NULL });
+    gtk_grid_attach(GTK_GRID(grid), procesos_label, 0, 2, 200, 1); 
 
     // Text view para la salida de compilación en la cuarta fila
     GtkWidget *salida_compilacion = gtk_text_view_new();
@@ -83,9 +95,12 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_set_hexpand(scrolled_salida, TRUE);
     gtk_widget_set_vexpand(scrolled_salida, TRUE);
     
-    // Configurar la fuente monoespaciada
+    // Configurar la fuente monoespaciada y otros estilos
     gtk_widget_set_css_classes(salida_compilacion, (const char*[]){ "monospace", NULL });
-    const char *css = "textview.monospace { font-family: Monospace; }";
+    const char *css = "textview.monospace { font-family: Monospace; padding: 10px; margin: 0 10px 10px 10px; border: 2px solid #dfddd8; }\n"
+                      "label.procesos-label { font-weight: bold; font-size: 14px; color: #393848; background-color: #e8e6e1; padding: 5px 10px 5px 10px; margin: 10px 10px 0px 10px; }\n"
+                      "label.initial-label { font-weight: bold; font-size: 14px; color: #393848; padding: 5px 10px 5px 10px; margin: 10px 10px 0px 10px; }\n"
+                      "label.C-label { font-weight: bold; font-size: 14px; color: #393848; }";
     GtkCssProvider *provider = gtk_css_provider_new();
     gtk_css_provider_load_from_string(provider, css);
     gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
